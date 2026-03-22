@@ -1,4 +1,4 @@
-﻿{
+{
 	"Ascadian Isles": [
 	{
 		"name": "Vivec",
@@ -1266,6 +1266,118 @@
 			"transport": {
 				"divine_intervention": ["Ald'ruhn"],
 				"almsivi_intervention": ["Ald'ruhn"]
+			},
+
+			"buildings": {
+				"ghostgate_tower_of_dusk": [
+				{
+					"instance": {
+					"name": "Tower of Dusk",
+					"condition": "fortified",
+					"modifier": "Redoran volunteers and Buoyant Armigers hold the western tower against the Blight"
+					},
+					"content": {
+					"npcs": {
+						"forced": ["galore_salvi", "fonas_retheran", "drelyne_llenim", "galdal_omayn", "wulf"],
+						"pool": [
+						"redoran_guard",
+						"buoyant_armiger"
+						]
+					},
+					"items": {
+						"pool": ["glass_armor", "redoran_token"]
+					}
+					}
+				}
+				],
+
+				"ghostgate_tower_of_dusk_lower": [
+				{
+					"instance": {
+					"name": "Tower of Dusk Lower Level",
+					"condition": "spartan",
+					"modifier": "an armory and training hall where Redoran soldiers sharpen their skills for the war with Dagoth Ur"
+					},
+					"content": {
+					"npcs": {
+						"forced": ["dronos_llervu", "mertis_falandas", "berela_andrano", "mandran_indrano", "taluro_athren", "salyn_sarethi", "enar_dralor", "elvasea_thalas"],
+						"pool": [
+						"redoran_guard",
+						"fighter_recruit"
+						]
+					},
+					"items": {
+						"pool": ["glass_armor", "spear", "smith_tools"]
+					}
+					}
+				}
+				],
+
+				"ghostgate_tower_of_dawn": [
+				{
+					"instance": {
+					"name": "Tower of Dawn",
+					"condition": "sacred",
+					"modifier": "Tribunal Temple fighters and healers occupy the eastern tower"
+					},
+					"content": {
+					"npcs": {
+						"forced": ["faras_thirano", "rilvase_avani", "teril_savani", "ferone_veran", "selmen_relas", "ralyn_othravel"],
+						"pool": [
+						"ordinator",
+						"temple_priest"
+						]
+					},
+					"items": {
+						"pool": ["enchanted_item", "healing_potion"]
+					}
+					}
+				}
+				],
+
+				"ghostgate_tower_of_dawn_lower": [
+				{
+					"instance": {
+					"name": "Tower of Dawn Lower Level",
+					"condition": "sacred",
+					"modifier": "healers tend to soldiers and pilgrims wounded by the Blight"
+					},
+					"content": {
+					"npcs": {
+						"forced": ["ulmiso_maloren"],
+						"pool": [
+						"temple_priest",
+						"acolyte"
+						]
+					},
+					"items": {
+						"pool": ["healing_potion", "restore_attribute_potion"]
+					}
+					}
+				}
+				],
+
+				"ghostgate_temple": [
+				{
+					"instance": {
+					"name": "Ghostgate Temple",
+					"condition": "solemn",
+					"modifier": "shrines line the tunnel passage through the Ghostfence itself"
+					},
+					"content": {
+					"npcs": {
+						"forced": ["nilvyn_drothan", "uvoo_llaren"],
+						"pool": [
+						"temple_priest",
+						"pilgrim"
+						]
+					},
+					"items": {
+						"pool": ["shrine_offering", "pilgrim_token"]
+					}
+					}
+				}
+				]
 			}
 		},
 		{

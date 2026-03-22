@@ -21,36 +21,27 @@ import Tree from './tree.js';
 			await this.loadIconList();
 			this.setupEventListeners();
 
-			Ghostgate.generate(); // This is a cheat! Skip!
+			Ghostgate.generate(); // We're cheating! Skip GenDiag!
 
+		},
+		async loadJson(filePath) {
+			try {
+				const response = await fetch(filePath);
+				const data = await response.json();
+				if (this.config.debug) console.log(`Loaded ${filePath}:`, data);
+				return data;
+			} catch (error) {
+				console.error(`Error loading ${filePath}:`, error);
+				throw error;
+			}
 		},
 
 		async loadCanonList() {
-			// Load your canon list here
-			try {
-				const response = await fetch('json/canon list.json');
-				const data = await response.json();
-				this.canonList = data;
-				if (this.config.debug) console.log('Canon list loaded:', data);
-				return data;
-			} catch (error) {
-				console.error('Error loading canon list:', error);
-				throw error;
-			}
+			this.canonList = await this.loadJson('json/canon list.json');
 		},
 
 		async loadIconList() {
-			// Load your icon list here
-			try {
-				const response = await fetch('json/icon list.json');
-				const data = await response.json();
-				this.iconList = data;
-				if (this.config.debug) console.log('Icon list loaded:', data);
-				return data;
-			} catch (error) {
-				console.error('Error loading icon list:', error);
-				throw error;
-			}
+			this.iconList = await this.loadJson('json/icon list.json');
 		},
 
 		formatNpcName(name) {
