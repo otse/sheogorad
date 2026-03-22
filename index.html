@@ -40,14 +40,14 @@
 
 	:root {
 		/* muted light tones for dark-stone */
-		--region-ascadian-isles: #c8cec0;
-		--region-bitter-coast: #ced1c9;
-		--region-west-gash-x: #e9ddc5;
-		--region-ashlands-x: #e2bfac;
-		--region-molag-amur-x: #d8b8a8;
-		--region-azura-s-coast: #d7e0dd;
+		--region-ascadian-isles: #ccd4c1;
+		--region-bitter-coast: #c6dcd1;
+		--region-west-gash: #e9ddc5;
+		--region-ashlands: #e2bfac;
+		--region-molag-amur: #d8b8a8;
+		--region-azura-s-coast: #ccdcd7;
 		--region-grazelands: #d1d7c8;
-		--region-sheogorad-x: #e8e4d8;
+		--region-sheogorad: #e8e4d8;
 	}
 
 	h0 {}
@@ -55,7 +55,7 @@
 	dark-stone-user-interface {
 		display: contents;
 		/* this means the element itself is not rendered, only its children are */
-		color: #cacaca;
+		color: #dddddd;
 		font-family: 'Pelagiad', serif;
 		text-shadow: rgb(126 126 126 / 50%) 0px 2px 0px, rgb(0 0 0 / 50%) 0px -2px 0px;
 	}
@@ -102,7 +102,7 @@
 			url(img/menu/grayscale_menu_thin_border_bottom.png),
 			url(img/menu/grayscale_menu_thin_border_left.png),
 			url(img/menu/grayscale_menu_thin_border_right.png);
-		background-size:
+		background-size: /* full hd */
 			1px 1px,
 			1px 1px,
 			1px 1px,
@@ -111,6 +111,15 @@
 			256px 1px,
 			1px 256px,
 			1px 256px;
+		bbackground-size: /* 4k version */
+			2px 2px,
+			2px 2px,
+			2px 2px,
+			2px 2px,
+			256px 2px,
+			256px 2px,
+			2px 256px,
+			2px 256px;
 		background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, repeat-x, repeat-x, repeat-y, repeat-y;
 		background-position: top left, top right, bottom left, bottom right, top, bottom, left, right;
 	}
@@ -119,6 +128,15 @@
 		background: url(img/RockRough0001_1_download600.jpg);
 		padding: 10px;
 
+	}
+
+	.dark-stone-smooth {
+		display: block;
+		padding: 0;
+		margin: 0;
+		bbackground: url(img/RockRough0001_1_download600.jpg);
+		background-size: 50%;
+		box-sizing: border-box;
 	}
 
 	#genericList {
@@ -404,8 +422,9 @@
 
 		<div id="mainView" style="display:none;">
 			<div style="display:flex; gap:20px;">
-				<div id="genericList" class="thinBorder innerScroll" style="flex:2;;">
-
+				<div class="dark-stone-smooth" style="flex:2;;">
+					<div id="genericList" class="thinBorder innerScroll">
+					</div>
 				</div>
 				<div id="mainViewArea" style="flex:2;">
 					<h0>Island View</h0>

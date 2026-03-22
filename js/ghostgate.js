@@ -57,7 +57,7 @@ import Tree from './tree.js';
 		},
 
 		formatRegionName(regionName) {
-			return `${regionName/*.toUpperCase()*/}`;
+			return `Region:${regionName/*.toUpperCase()*/}`;
 		},
 
 		setupEventListeners() {

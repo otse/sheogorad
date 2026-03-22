@@ -12,8 +12,8 @@ export default class Tree {
             const caret = document.createElement('span');
             const expandedClass = 'expanded';
             caret.textContent = '';
-            label.appendChild(caret);
             label.appendChild(document.createTextNode(options.name));
+            label.appendChild(caret);
             label.style.cursor = 'pointer';
             label.classList.add('label');
             if (options.labelClassName) {
@@ -27,7 +27,7 @@ export default class Tree {
                 this.ul.hidden = !shouldShow;
                 this.ul.style.display = shouldShow ? 'block' : 'none';
                 label.classList.toggle(expandedClass, shouldShow);
-                caret.textContent = shouldShow ? '☇ ' : '';
+                caret.textContent = shouldShow ? ' ↴' : ''; // ☇
             });
 
             wrapper.appendChild(label);
