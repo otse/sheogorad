@@ -243,7 +243,7 @@
 
 	/* Scrollbar styling with Morrowind textures */
 	.innerScroll::-webkit-scrollbar {
-		width: 30px;
+		width: 22px;
 	}
 
 	/* Hide duplicate scrollbar buttons (double-button mode) */
@@ -268,7 +268,7 @@
 			url('img/menu/grayscale_menu_scroll_vertbar_top.png') no-repeat top center / 1px 1px,
 			url('img/menu/grayscale_menu_scroll_vertbar_bottom.png') no-repeat bottom center / 1px 1px;
 		background-clip: content-box;
-		border: 5px solid transparent;
+		border: 2px solid transparent;
 		border-top: 2px solid transparent;
 		border-bottom: 2px solid transparent;
 		box-sizing: border-box;
@@ -277,17 +277,24 @@
 	.innerScroll::-webkit-scrollbar-thumb {
 		background: #cacaca;
 		background-clip: content-box;
-		border: 8px solid transparent;
+		border: 4px solid transparent;
 		border-top: 4px solid transparent;
 		border-bottom: 5px solid transparent;
 		box-sizing: border-box;
 		border-radius: 4px;
 	}
 
+	.innerScroll::-webkit-scrollbar-button:vertical:start,
+	.innerScroll::-webkit-scrollbar-button:vertical:end {
+		height: 20px;
+		width: 20px;
+		border: 2px solid transparent;
+		box-sizing: border-box;
+		background-color: transparent;
+	 }
+	 
 	/* Buttons: thin border frame + arrow icon (inline SVG for proper centering), inset 5px */
 	.innerScroll::-webkit-scrollbar-button:vertical:start {
-		height: 25px;
-		width: 25px;
 		background:
 			url('img/menu/grayscale_menu_thin_border_top_left_corner.png') no-repeat top left / 1px 1px,
 			url('img/menu/grayscale_menu_thin_border_top_right_corner.png') no-repeat top right / 1px 1px,
@@ -300,15 +307,10 @@
 			url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M6 3L2 9h8z' fill='%23cacaca'/%3E%3C/svg%3E") no-repeat center / 15px 15px;
 		bbackground-size: auto, auto, auto, auto, auto, auto, auto, auto, 15px 15px;
 		background-clip: content-box;
-		border: 5px solid transparent;
 		border-bottom-width: 0px;
-		box-sizing: border-box;
-		background-color: transparent;
 	}
 
 	.innerScroll::-webkit-scrollbar-button:vertical:end {
-		height: 25px;
-		width: 25px;
 		background:
 			url('img/menu/grayscale_menu_thin_border_top_left_corner.png') no-repeat top left / 1px 1px,
 			url('img/menu/grayscale_menu_thin_border_top_right_corner.png') no-repeat top right / 1px 1px,
@@ -321,77 +323,7 @@
 			url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M6 9l4-6H2z' fill='%23cacaca'/%3E%3C/svg%3E") no-repeat center / 15px 15px;
 		bbackground-size: auto, auto, auto, auto, auto, auto, auto, auto, 15px 15px;
 		background-clip: content-box;
-		border: 5px solid transparent;
 		border-top-width: 0px;
-		box-sizing: border-box;
-		background-color: transparent;
-	}
-
-	/* Horizontal scrollbar */
-	.innerScroll::-webkit-scrollbar:horizontal {
-		height: 20px;
-	}
-
-	.innerScroll::-webkit-scrollbar-track:horizontal {
-		background:
-			url('img/menu/grayscale_menu_thin_border_top_left_corner.png') no-repeat top left / 1px 1px,
-			url('img/menu/grayscale_menu_thin_border_top_right_corner.png') no-repeat top right / 1px 1px,
-			url('img/menu/grayscale_menu_thin_border_bottom_left_corner.png') no-repeat bottom left / 1px 1px,
-			url('img/menu/grayscale_menu_thin_border_bottom_right_corner.png') no-repeat bottom right / 1px 1px,
-			url('img/menu/grayscale_menu_thin_border_top.png') repeat-x top / 256px 1px,
-			url('img/menu/grayscale_menu_thin_border_bottom.png') repeat-x bottom / 256px 1px,
-			url('img/menu/grayscale_menu_thin_border_left.png') repeat-y left / 1px 256px,
-			url('img/menu/grayscale_menu_thin_border_right.png') repeat-y right / 1px 256px,
-			url('img/menu/grayscale_menu_scroll_hortbar_top.png') no-repeat left center,
-			url('img/menu/grayscale_menu_scroll_hortbar_vert.png') repeat-x center,
-			url('img/menu/grayscale_menu_scroll_hortbar_bottom.png') no-repeat right center;
-		background-color: #0d0a08;
-	}
-
-	.innerScroll::-webkit-scrollbar-thumb:horizontal {
-		background: rgb(203, 203, 203);
-		background-clip: content-box;
-		border: 8px solid transparent;
-		box-sizing: border-box;
-		border-radius: 4px;
-	}
-
-	.innerScroll::-webkit-scrollbar-button:horizontal:start {
-		width: 20px;
-		background:
-			url('img/menu/grayscale_menu_thin_border_top_left_corner.png') no-repeat top left,
-			url('img/menu/grayscale_menu_thin_border_top_right_corner.png') no-repeat top right,
-			url('img/menu/grayscale_menu_thin_border_bottom_left_corner.png') no-repeat bottom left,
-			url('img/menu/grayscale_menu_thin_border_bottom_right_corner.png') no-repeat bottom right,
-			url('img/menu/grayscale_menu_thin_border_top.png') repeat-x top,
-			url('img/menu/grayscale_menu_thin_border_bottom.png') repeat-x bottom,
-			url('img/menu/grayscale_menu_thin_border_left.png') repeat-y left,
-			url('img/menu/grayscale_menu_thin_border_right.png') repeat-y right,
-			url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M3 6l6-4v8z' fill='%23cdaf75'/%3E%3C/svg%3E") no-repeat center;
-		background-size: auto, auto, auto, auto, auto, auto, auto, auto, 10px 10px;
-		background-clip: content-box;
-		border: 5px solid transparent;
-		box-sizing: border-box;
-		background-color: transparent;
-	}
-
-	.innerScroll::-webkit-scrollbar-button:horizontal:end {
-		width: 20px;
-		background:
-			url('img/menu/grayscale_menu_thin_border_top_left_corner.png') no-repeat top left,
-			url('img/menu/grayscale_menu_thin_border_top_right_corner.png') no-repeat top right,
-			url('img/menu/grayscale_menu_thin_border_bottom_left_corner.png') no-repeat bottom left,
-			url('img/menu/grayscale_menu_thin_border_bottom_right_corner.png') no-repeat bottom right,
-			url('img/menu/grayscale_menu_thin_border_top.png') repeat-x top,
-			url('img/menu/grayscale_menu_thin_border_bottom.png') repeat-x bottom,
-			url('img/menu/grayscale_menu_thin_border_left.png') repeat-y left,
-			url('img/menu/grayscale_menu_thin_border_right.png') repeat-y right,
-			url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M9 6L3 2v8z' fill='%23cdaf75'/%3E%3C/svg%3E") no-repeat center;
-		background-size: auto, auto, auto, auto, auto, auto, auto, auto, 10px 10px;
-		background-clip: content-box;
-		border: 5px solid transparent;
-		box-sizing: border-box;
-		background-color: transparent;
 	}
 </style>
 
