@@ -6,8 +6,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Ghostgate</title>
 
-    <script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
-	
+	<script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
+
 	<script type="module" src="js/ghostgate.js"></script>
 
 	<style>
@@ -68,11 +68,37 @@
 	#generationDialog,
 	#mainView {
 		background-color: #322f00;
-		background: url(img/rocks2.jpg);
+		background: url(img/RockRough0001_2_download600.jpg);
 		background-size: 50%;
 		width: 700px;
 		padding: 20px;
 		border-radius: 8px;
+	}
+
+	.thinBorder {
+		box-sizing: border-box;
+		padding: 10px !important;
+		background-color: transparent;
+		background-image:
+		url(img/menu/grayscale_menu_thin_border_top_left_corner.png),
+		url(img/menu/grayscale_menu_thin_border_top_right_corner.png),
+		url(img/menu/grayscale_menu_thin_border_bottom_left_corner.png),
+		url(img/menu/grayscale_menu_thin_border_bottom_right_corner.png),
+		url(img/menu/grayscale_menu_thin_border_top.png),
+		url(img/menu/grayscale_menu_thin_border_bottom.png),
+		url(img/menu/grayscale_menu_thin_border_left.png),
+		url(img/menu/grayscale_menu_thin_border_right.png);
+		background-size:
+		1px 1px,
+		1px 1px,
+		1px 1px,
+		1px 1px,
+		256px 1px,
+		256px 1px,
+		1px 256px,
+		1px 256px;
+		background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, repeat-x, repeat-x, repeat-y, repeat-y;
+		background-position: top left, top right, bottom left, bottom right, top, bottom, left, right;
 	}
 
 	#genericList {
@@ -82,8 +108,7 @@
 	#enemyList,
 	#genericList,
 	#mainViewArea {
-		padding: 2px;
-		border: 2px outset #953c00;
+		bbackground-image: url(img/RockRough0001_1_download600.jpg);
 	}
 
 	ul {
@@ -105,7 +130,7 @@
 		ttext-decoration: underline;
 	}
 
-	li > div {
+	li>div {
 		display: contents;
 	}
 
@@ -153,9 +178,7 @@
 
 	<div id="mainView" style="display:none;">
 		<div style="display:flex; gap:20px;">
-			<div id="genericList" style="flex:1;;">
-				<h0>Total Tree:</h0>
-				<ul id="fullTree" class="treeSet"></ul>
+			<div id="genericList" class="thinBorder" style="flex:1;;">
 
 			</div>
 			<div id="mainViewArea" style="flex:2;">

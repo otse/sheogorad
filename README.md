@@ -6,7 +6,7 @@
 
 ## 🎨 Mood & Theme
 
-- **Mood:** older dungeon, neverending legacy
+- **Mood:** folder dungeon, neverending legacy
 - **Setting:** Vvardenfell, fragmented and mutable  
 - **Theme:** Morrowind reinterpreted
 
