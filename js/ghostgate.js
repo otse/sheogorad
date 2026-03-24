@@ -130,7 +130,7 @@ import Map from './map.js';
 				genericList.appendChild(tree.getElement());
 				const divider = document.createElement('div');
 				divider.className = 'menuDividerH';
-				genericList.appendChild(divider);
+				// genericList.appendChild(divider);
 
 			}
 
