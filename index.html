@@ -217,6 +217,24 @@
 			50%;
 	}
 
+	.darkstone-window-close {
+		position: absolute;
+		top: 0;
+		right: 0;
+		width: calc(24px / 2);
+		height: calc(28px / 2);
+		padding: 0;
+		border: none;
+		cursor: pointer;
+		background: url('img/darkstone-menu/close-active.png') center/contain no-repeat;
+		background-size: calc(24px / 2) calc(28px / 2);
+		z-index: 20;
+	}
+
+	.darkstone-window-close.pressed {
+		background-image: url('img/darkstone-menu/close-pressed.png');
+	}
+
 	.thinBorder {
 		box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.20);
 		box-sizing: border-box;
@@ -468,6 +486,7 @@
 	<br />
 	<darkstone-user-interface>
 		<div class="darkstone-window stats" title="Sheogorad!" style="width: 250px;">
+			<button type="button" class="darkstone-window-close" title="Close"></button>
 			<div class="darkstone-window-title"><span>History</span></div>
 			<div class="darkstone-window-content">
 				Dark Elves
