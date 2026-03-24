@@ -66,7 +66,7 @@
 		/* this means the element itself is not rendered, only its children are */
 		color: #dddddd;
 		font-family: 'Pelagiad', serif;
-		text-shadow: rgb(126 126 126 / 50%) 0px 1px 1px, rgb(0 0 0 / 40%) 0px -1px 1px;
+		text-shadow: rgb(126 126 126 / 50%) 0px 1px 1px, rgb(0 0 0 / 100%) 0px -1px 1px;
 	}
 
 	darkstone-user-interface :is(input, select, button) {
@@ -116,6 +116,7 @@
 	}
 
 	.darkstone-window-content {
+		color: #e5e5e3;
 		padding-top: calc(20px / 2);
 		gap: 10px;
 		display: flex;
@@ -139,48 +140,51 @@
 
 	.darkstone-window-title span {
 		display: inline-block;
-		padding: 0 calc(24px / 2);
+		ppadding: 0 5px;
 		height: 100%;
 		line-height: calc(25px / 2);
 		font-family: 'Pelagiad', serif;
-		font-size: 1.25rem;
-		color: #ccc6bb;
+		ffont-size: calc(1.25rem / 2);
+		color: #b9b5ac;
 		text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
-		background-image: url('img/menu/grayscale_title-3-active.png');
+		background-image: url('img/darkstone-menu/title-3-active.png');
 		background-size: calc(74px / 2) calc(28px / 2);
 		background-repeat: repeat-x;
 		background-position: center;
 	}
 
 	.darkstone-window-title span {
-		font-size: 12px;
+		ffont-size: 12px;
 	}
 
 	.darkstone-window {
-		box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.50);
+		box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.50);
 		position: fixed;
 		touch-action: none;
 		user-select: none;
 		top: 50%;
 		left: 50%;
 		transform: translate(-50%, -50%);
-		background: rgba(0, 0, 0, 0.6);
+		bbackground: rgba(127, 127, 127, 0.5);
+
+		background-image: url(img/RockRough0001_1_download600.jpg);
 		box-sizing: border-box;
-		padding: 20px 20px;
+		padding: calc(20px /2) calc(20px / 2);
 		min-width: 200px;
-		min-height: 150px;
+		min-height: 120px;
 		overflow: hidden;
 		display: flex;
 		flex-direction: column;
 		background-image:
-			url('img/menu/grayscale_top-left-active.png'),
-			url('img/menu/grayscale_top-right-active.png'),
-			url('img/menu/grayscale_bottom-left-active.png'),
-			url('img/menu/grayscale_bottom-right-active.png'),
-			url('img/menu/grayscale_left-active.png'),
-			url('img/menu/grayscale_right-active.png'),
-			url('img/menu/grayscale_title-1-active.png'),
-			url('img/menu/grayscale_bottom-active.png');
+			url('img/darkstone-menu/top-left-active.png'),
+			url('img/darkstone-menu/top-right-active.png'),
+			url('img/darkstone-menu/bottom-left-active.png'),
+			url('img/darkstone-menu/bottom-right-active.png'),
+			url('img/darkstone-menu/left-active.png'),
+			url('img/darkstone-menu/right-active.png'),
+			url('img/darkstone-menu/title-1-active.png'),
+			url('img/darkstone-menu/bottom-active.png'),
+			url(img/RockRough0001_2_download600.jpg);
 		background-repeat:
 			no-repeat,
 			no-repeat,
@@ -189,7 +193,8 @@
 			repeat-y,
 			repeat-y,
 			repeat-x,
-			repeat-x;
+			repeat-x,
+			repeat;
 		background-position:
 			top left,
 			top right,
@@ -198,7 +203,8 @@
 			left,
 			right,
 			top,
-			bottom;
+			bottom,
+			center;
 		background-size:
 			calc(30px /2) calc(28px / 2),
 			calc(31px / 2) calc(28px / 2),
@@ -207,22 +213,24 @@
 			calc(8px / 2) calc(40px / 2),
 			calc(8px / 2) calc(40px / 2),
 			calc(60px / 2) calc(28px / 2),
-			calc(40px / 2) calc(8px / 2);
+			calc(40px / 2) calc(8px / 2),
+			50%;
 	}
 
 	.thinBorder {
+		box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.20);
 		box-sizing: border-box;
 		ppadding: 10px !important;
 		background-color: transparent;
 		background-image:
-			url(img/menu/grayscale_menu_thin_border_top_left_corner.png),
-			url(img/menu/grayscale_menu_thin_border_top_right_corner.png),
-			url(img/menu/grayscale_menu_thin_border_bottom_left_corner.png),
-			url(img/menu/grayscale_menu_thin_border_bottom_right_corner.png),
-			url(img/menu/grayscale_menu_thin_border_top.png),
-			url(img/menu/grayscale_menu_thin_border_bottom.png),
-			url(img/menu/grayscale_menu_thin_border_left.png),
-			url(img/menu/grayscale_menu_thin_border_right.png);
+			url(img/darkstone-menu/menu_thin_border_top_left_corner.png),
+			url(img/darkstone-menu/menu_thin_border_top_right_corner.png),
+			url(img/darkstone-menu/menu_thin_border_bottom_left_corner.png),
+			url(img/darkstone-menu/menu_thin_border_bottom_right_corner.png),
+			url(img/darkstone-menu/menu_thin_border_top.png),
+			url(img/darkstone-menu/menu_thin_border_bottom.png),
+			url(img/darkstone-menu/menu_thin_border_left.png),
+			url(img/darkstone-menu/menu_thin_border_right.png);
 		background-size:
 			/* full hd */
 			1px 1px,
@@ -246,7 +254,6 @@
 		background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, repeat-x, repeat-x, repeat-y, repeat-y;
 		background-position: top left, top right, bottom left, bottom right, top, bottom, left, right;
 	}
-
 
 	#genericList {
 		ccolor: cyan;
@@ -358,7 +365,7 @@
 		width: 100%;
 		height: 2px;
 		margin: 0px 0;
-		background: url('img/menu/grayscale_menu_divider.png') center repeat-x;
+		background: url('img/darkstone-menu/menu_divider.png') center repeat-x;
 		background-size: 16px 1px;
 	}
 
@@ -386,16 +393,16 @@
 	/* Track: thin border frame + vertbar fill, inset 5px from edge */
 	.innerScroll::-webkit-scrollbar-track {
 		background:
-			url('img/menu/grayscale_menu_thin_border_top_left_corner.png') no-repeat top left / 1px 1px,
-			url('img/menu/grayscale_menu_thin_border_top_right_corner.png') no-repeat top right / 1px 1px,
-			url('img/menu/grayscale_menu_thin_border_bottom_left_corner.png') no-repeat bottom left / 1px 1px,
-			url('img/menu/grayscale_menu_thin_border_bottom_right_corner.png') no-repeat bottom right / 1px 1px,
-			url('img/menu/grayscale_menu_thin_border_top.png') repeat-x top / 256px 1px,
-			url('img/menu/grayscale_menu_thin_border_bottom.png') repeat-x bottom / 256px 1px,
-			url('img/menu/grayscale_menu_thin_border_left.png') repeat-y left / 1px 256px,
-			url('img/menu/grayscale_menu_thin_border_right.png') repeat-y right / 1px 256px,
-			url('img/menu/grayscale_menu_scroll_vertbar_top.png') no-repeat top center / 1px 1px,
-			url('img/menu/grayscale_menu_scroll_vertbar_bottom.png') no-repeat bottom center / 1px 1px;
+			url('img/darkstone-menu/menu_thin_border_top_left_corner.png') no-repeat top left / 1px 1px,
+			url('img/darkstone-menu/menu_thin_border_top_right_corner.png') no-repeat top right / 1px 1px,
+			url('img/darkstone-menu/menu_thin_border_bottom_left_corner.png') no-repeat bottom left / 1px 1px,
+			url('img/darkstone-menu/menu_thin_border_bottom_right_corner.png') no-repeat bottom right / 1px 1px,
+			url('img/darkstone-menu/menu_thin_border_top.png') repeat-x top / 256px 1px,
+			url('img/darkstone-menu/menu_thin_border_bottom.png') repeat-x bottom / 256px 1px,
+			url('img/darkstone-menu/menu_thin_border_left.png') repeat-y left / 1px 256px,
+			url('img/darkstone-menu/menu_thin_border_right.png') repeat-y right / 1px 256px,
+			url('img/darkstone-menu/menu_scroll_vertbar_top.png') no-repeat top center / 1px 1px,
+			url('img/darkstone-menu/menu_scroll_vertbar_bottom.png') no-repeat bottom center / 1px 1px;
 		background-clip: content-box;
 		border: 2px solid transparent;
 		border-top: 1px solid transparent;
@@ -425,14 +432,14 @@
 	/* Buttons: thin border frame + arrow icon (inline SVG for proper centering), inset 5px */
 	.innerScroll::-webkit-scrollbar-button:vertical:start {
 		background:
-			url('img/menu/grayscale_menu_thin_border_top_left_corner.png') no-repeat top left / 1px 1px,
-			url('img/menu/grayscale_menu_thin_border_top_right_corner.png') no-repeat top right / 1px 1px,
-			url('img/menu/grayscale_menu_thin_border_bottom_left_corner.png') no-repeat bottom left / 1px 1px,
-			url('img/menu/grayscale_menu_thin_border_bottom_right_corner.png') no-repeat bottom right / 1px 1px,
-			url('img/menu/grayscale_menu_thin_border_top.png') repeat-x top / 256px 1px,
-			url('img/menu/grayscale_menu_thin_border_bottom.png') repeat-x bottom / 256px 1px,
-			url('img/menu/grayscale_menu_thin_border_left.png') repeat-y left / 1px 256px,
-			url('img/menu/grayscale_menu_thin_border_right.png') repeat-y right / 1px 256px,
+			url('img/darkstone-menu/menu_thin_border_top_left_corner.png') no-repeat top left / 1px 1px,
+			url('img/darkstone-menu/menu_thin_border_top_right_corner.png') no-repeat top right / 1px 1px,
+			url('img/darkstone-menu/menu_thin_border_bottom_left_corner.png') no-repeat bottom left / 1px 1px,
+			url('img/darkstone-menu/menu_thin_border_bottom_right_corner.png') no-repeat bottom right / 1px 1px,
+			url('img/darkstone-menu/menu_thin_border_top.png') repeat-x top / 256px 1px,
+			url('img/darkstone-menu/menu_thin_border_bottom.png') repeat-x bottom / 256px 1px,
+			url('img/darkstone-menu/menu_thin_border_left.png') repeat-y left / 1px 256px,
+			url('img/darkstone-menu/menu_thin_border_right.png') repeat-y right / 1px 256px,
 			url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M6 3L2 9h8z' fill='%23cacaca'/%3E%3C/svg%3E") no-repeat center / 15px 15px;
 		bbackground-size: auto, auto, auto, auto, auto, auto, auto, auto, 15px 15px;
 		background-clip: content-box;
@@ -441,14 +448,14 @@
 
 	.innerScroll::-webkit-scrollbar-button:vertical:end {
 		background:
-			url('img/menu/grayscale_menu_thin_border_top_left_corner.png') no-repeat top left / 1px 1px,
-			url('img/menu/grayscale_menu_thin_border_top_right_corner.png') no-repeat top right / 1px 1px,
-			url('img/menu/grayscale_menu_thin_border_bottom_left_corner.png') no-repeat bottom left / 1px 1px,
-			url('img/menu/grayscale_menu_thin_border_bottom_right_corner.png') no-repeat bottom right / 1px 1px,
-			url('img/menu/grayscale_menu_thin_border_top.png') repeat-x top / 256px 1px,
-			url('img/menu/grayscale_menu_thin_border_bottom.png') repeat-x bottom / 256px 1px,
-			url('img/menu/grayscale_menu_thin_border_left.png') repeat-y left / 1px 256px,
-			url('img/menu/grayscale_menu_thin_border_right.png') repeat-y right / 1px 256px,
+			url('img/darkstone-menu/menu_thin_border_top_left_corner.png') no-repeat top left / 1px 1px,
+			url('img/darkstone-menu/menu_thin_border_top_right_corner.png') no-repeat top right / 1px 1px,
+			url('img/darkstone-menu/menu_thin_border_bottom_left_corner.png') no-repeat bottom left / 1px 1px,
+			url('img/darkstone-menu/menu_thin_border_bottom_right_corner.png') no-repeat bottom right / 1px 1px,
+			url('img/darkstone-menu/menu_thin_border_top.png') repeat-x top / 256px 1px,
+			url('img/darkstone-menu/menu_thin_border_bottom.png') repeat-x bottom / 256px 1px,
+			url('img/darkstone-menu/menu_thin_border_left.png') repeat-y left / 1px 256px,
+			url('img/darkstone-menu/menu_thin_border_right.png') repeat-y right / 1px 256px,
 			url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M6 9l4-6H2z' fill='%23cacaca'/%3E%3C/svg%3E") no-repeat center / 15px 15px;
 		bbackground-size: auto, auto, auto, auto, auto, auto, auto, auto, 15px 15px;
 		background-clip: content-box;
@@ -460,12 +467,13 @@
 	<h0></h0>
 	<br />
 	<darkstone-user-interface>
-		<div class="darkstone-window stats" title="Sheogorad!">
-			<div class="darkstone-window-title"><span>Sheogorad!</span></div>
+		<div class="darkstone-window stats" title="Sheogorad!" style="width: 250px;">
+			<div class="darkstone-window-title"><span>History</span></div>
 			<div class="darkstone-window-content">
-				Sheogorad!
-				<div class="thinBorder">
-					Smud
+				Dark Elves
+				<div class="thinBorder innerScroll" style="height: 4em;">
+					Dunmer distrust and are treated distrustfully by other races. They are often proud, clannish,
+					ruthless, and cruel, from an outsider's point of view, but greatly value loyalty and family.
 				</div>
 			</div>
 		</div>
