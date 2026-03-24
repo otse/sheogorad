@@ -1,4 +1,5 @@
 import Tree from './tree.js';
+import Map from './map.js';
 
 (function () {
 

@@ -4,7 +4,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Ghostgate</title>
+	<title>Sheogorad</title>
 
 	<script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
 
@@ -48,20 +48,20 @@
 	}
 
 	:root {
-		/* muted light tones for dark-stone */
-		--region-ascadian-isles: #ccd4c1;
-		--region-bitter-coast: #c6dcd1;
-		--region-west-gash: #e9ddc5;
-		--region-ashlands: #e2bfac;
-		--region-molag-amur: #d8b8a8;
-		--region-azura-s-coast: #ccdcd7;
-		--region-grazelands: #d1d7c8;
-		--region-sheogorad: #e8e4d8;
+		/* muted light tones for darkstone */
+		--region-ascadian-isles-x: #ccd4c1;
+		--region-bitter-coast-x: #c3d7cd;
+		--region-west-gash-x: #d5cfc2;
+		--region-ashlands-x: #e2bfac;
+		--region-molag-amur-x: #d8b8a8;
+		--region-azura-s-coast-x: #ccdcd7;
+		--region-grazelands-x: #d1d7c8;
+		--region-sheogorad-x: #e8e4d8;
 	}
 
 	h0 {}
 
-	dark-stone-user-interface {
+	darkstone-user-interface {
 		display: contents;
 		/* this means the element itself is not rendered, only its children are */
 		color: #dddddd;
@@ -69,7 +69,7 @@
 		text-shadow: rgb(126 126 126 / 50%) 0px 1px 1px, rgb(0 0 0 / 40%) 0px -1px 1px;
 	}
 
-	dark-stone-user-interface :is(input, select, button) {
+	darkstone-user-interface :is(input, select, button) {
 		background-color: transparent;
 		font-family: inherit;
 		border: 2px outset #854026;
@@ -79,22 +79,22 @@
 		font-size: 17px;
 	}
 
-	dark-stone-user-interface button {
+	darkstone-user-interface button {
 		cursor: pointer;
 		background-color: #aa9a00;
 	}
 
-	dark-stone-user-interface button:hover {
+	darkstone-user-interface button:hover {
 		background-color: #0a5a62;
 	}
 
-	.dark-stone-button {
+	.darkstone-button {
 		background: url(img/RockRough0001_1_download600.jpg);
 		padding: 10px;
 
 	}
 
-	.dark-stone-smooth {
+	.darkstone-smooth {
 		display: block;
 		padding: 0;
 		margin: 0;
@@ -108,11 +108,106 @@
 	#mainView {
 		background-color: #322f00;
 		background: url(img/RockRough0001_2_download600.jpg);
-		background-size: 30%;
+		background-size: 50%;
 		width: 700px;
-		padding: 5px;
+		ppadding: 5px;
 		box-shadow: 0px 0px 10px black;
 		bborder-radius: 8px;
+	}
+
+	.darkstone-window-content {
+		padding-top: calc(20px / 2);
+		gap: 10px;
+		display: flex;
+		flex-direction: column;
+		flex: 1 1 0;
+		min-height: 0;
+		overflow: hidden;
+	}
+
+	.darkstone-window-title {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		height: calc(28px / 2);
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		user-select: none;
+	}
+
+	.darkstone-window-title span {
+		display: inline-block;
+		padding: 0 calc(24px / 2);
+		height: 100%;
+		line-height: calc(25px / 2);
+		font-family: 'Pelagiad', serif;
+		font-size: 1.25rem;
+		color: #ccc6bb;
+		text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+		background-image: url('img/menu/grayscale_title-3-active.png');
+		background-size: calc(74px / 2) calc(28px / 2);
+		background-repeat: repeat-x;
+		background-position: center;
+	}
+
+	.darkstone-window-title span {
+		font-size: 12px;
+	}
+
+	.darkstone-window {
+		box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.50);
+		position: fixed;
+		touch-action: none;
+		user-select: none;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		background: rgba(0, 0, 0, 0.6);
+		box-sizing: border-box;
+		padding: 20px 20px;
+		min-width: 200px;
+		min-height: 150px;
+		overflow: hidden;
+		display: flex;
+		flex-direction: column;
+		background-image:
+			url('img/menu/grayscale_top-left-active.png'),
+			url('img/menu/grayscale_top-right-active.png'),
+			url('img/menu/grayscale_bottom-left-active.png'),
+			url('img/menu/grayscale_bottom-right-active.png'),
+			url('img/menu/grayscale_left-active.png'),
+			url('img/menu/grayscale_right-active.png'),
+			url('img/menu/grayscale_title-1-active.png'),
+			url('img/menu/grayscale_bottom-active.png');
+		background-repeat:
+			no-repeat,
+			no-repeat,
+			no-repeat,
+			no-repeat,
+			repeat-y,
+			repeat-y,
+			repeat-x,
+			repeat-x;
+		background-position:
+			top left,
+			top right,
+			bottom left,
+			bottom right,
+			left,
+			right,
+			top,
+			bottom;
+		background-size:
+			calc(30px /2) calc(28px / 2),
+			calc(31px / 2) calc(28px / 2),
+			calc(8px / 2) calc(40px / 2),
+			calc(8px / 2) calc(40px / 2),
+			calc(8px / 2) calc(40px / 2),
+			calc(8px / 2) calc(40px / 2),
+			calc(60px / 2) calc(28px / 2),
+			calc(40px / 2) calc(8px / 2);
 	}
 
 	.thinBorder {
@@ -190,7 +285,7 @@
 		lletter-spacing: 0.03em;
 	}
 
-	.label.tree-building {
+	.tree-building.label {
 		color: #e7e7e7;
 	}
 
@@ -251,10 +346,14 @@
 	}
 
 	.explanator {
-		font-weight: bold;
+		color: #d7d6d4;
+		ffont-weight: bold;
+		padding: 5px;
+		padding-bottom: 0;
 	}
 
 	.menuDividerH {
+		display: none;
 		flex-shrink: 0;
 		width: 100%;
 		height: 2px;
@@ -360,8 +459,17 @@
 <body>
 	<h0></h0>
 	<br />
-	<dark-stone-user-interface>
-		<div id="generationDialog" dark-stone-user-interface>
+	<darkstone-user-interface>
+		<div class="darkstone-window stats" title="Sheogorad!">
+			<div class="darkstone-window-title"><span>Sheogorad!</span></div>
+			<div class="darkstone-window-content">
+				Sheogorad!
+				<div class="thinBorder">
+					Smud
+				</div>
+			</div>
+		</div>
+		<div id="generationDialog" darkstone-user-interface>
 			<h2>Ghostgate Options</h2>
 			<label for="islandName">Name for this generation:</label>
 			<input type="text" id="islandName" placeholder="Slavewind" value="Slavewind">
@@ -384,9 +492,9 @@
 
 		<div id="mainView" style="display:none;">
 			<div style="display:flex; gap:20px;">
-				<div class="dark-stone-smooth" style="flex:2;;">
+				<div class="darkstone-smooth" style="flex:2;;">
 					<div class="thinBorder">
-						<span class="explanator">Tree View:</span>
+						<div class="explanator">Tree View:</div>
 						<!-- <div class="menuDividerH"></div> -->
 						<div id="genericList" class="innerScroll" style="">
 						</div>
@@ -398,7 +506,7 @@
 				</div>
 			</div>
 		</div>
-	</dark-stone-user-interface>
+	</darkstone-user-interface>
 
 	<script>
 		function generateIsland() {
