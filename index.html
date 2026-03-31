@@ -8,7 +8,7 @@
 
 	<script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
 
-	<script type="module" src="js/ghostgate.js"></script>
+	<script type="module" src="js/sheogorad.js"></script>
 
 	<style>
 		@font-face {
@@ -88,6 +88,20 @@
 		background-color: #0a5a62;
 	}
 
+	.darkstone-wnd-resize-handle {
+		position: absolute;
+		z-index: 10;
+	}
+
+	.darkstone-wnd-resize-n { top: 0; left: 30px; right: 30px; height: 8px; cursor: n-resize; }
+	.darkstone-wnd-resize-s { bottom: 0; left: 30px; right: 30px; height: 8px; cursor: s-resize; }
+	.darkstone-wnd-resize-e { top: 28px; right: 0; bottom: 28px; width: 8px; cursor: e-resize; }
+	.darkstone-wnd-resize-w { top: 28px; left: 0; bottom: 28px; width: 8px; cursor: w-resize; }
+	.darkstone-wnd-resize-ne { top: 0; right: 28px; width: 8px; height: 28px; cursor: ne-resize; }
+	.darkstone-wnd-resize-nw { top: 0; left: 0; width: 30px; height: 28px; cursor: nw-resize; }
+	.darkstone-wnd-resize-se { bottom: 0; right: 0; width: 30px; height: 28px; cursor: se-resize; }
+	.darkstone-wnd-resize-sw { bottom: 0; left: 0; width: 30px; height: 28px; cursor: sw-resize; }
+
 	.darkstone-button {
 		background: url(img/RockRough0001_1_download600.jpg);
 		padding: 10px;
@@ -115,7 +129,7 @@
 		bborder-radius: 8px;
 	}
 
-	.darkstone-window-content {
+	.darkstone-wnd-content {
 		box-shadow: inset 0 0 30px rgb(103 103 103);
 		padding: 2px;
 		color: #2d2d2d;
@@ -129,7 +143,7 @@
 		overflow: hidden;
 	}
 
-	.darkstone-window-title {
+	.darkstone-wnd-title {
 		position: absolute;
 		top: 0;
 		left: 0;
@@ -139,7 +153,7 @@
 		box-sizing: border-box;
 		margin: 2px 4px;
 		border-radius: 3px;
-		box-shadow: inset 0 0 10px color(srgb 0.3 0.32 0.32);
+		box-shadow: inset 0 0 6px color(srgb 0.3 0.32 0.32);
 		background: linear-gradient(to bottom, transparent, color(srgb 0.51 0.52 0.52 / 0.5));
 		bbackground: url(img/RockRough0001_1_download600.jpg);
 		bbackground-position: 10px -40px;
@@ -148,7 +162,7 @@
 		user-select: none;
 	}
 
-	.darkstone-window-title span {
+	.darkstone-wnd-title span {
 		display: inline-block;
 		ccolor: #bfcfd3;
 		/*padding: 0 2px;
@@ -163,11 +177,11 @@
 		background-position: center;*/
 	}
 
-	.darkstone-window-title span {
+	.darkstone-wnd-title span {
 		ffont-size: 12px;
 	}
 
-	.darkstone-window {
+	.darkstone-wnd {
 		box-shadow: 0px 0px 6px rgb(88 88 88);
 		position: fixed;
 		touch-action: none;
@@ -227,7 +241,7 @@
 			50%;
 	}
 
-	.darkstone-window-close {
+	.darkstone-wnd-close {
 		position: absolute;
 		top: 0;
 		right: 0;
@@ -245,7 +259,7 @@
 		z-index: 20;
 	}
 
-	.darkstone-window-close.pressed {
+	.darkstone-wnd-close.pressed {
 		background-image: url('img/darkstone-menu/close-pressed.png');
 	}
 
@@ -464,6 +478,7 @@
 
 	/* Buttons: thin border frame + arrow icon (inline SVG for proper centering), inset 5px */
 	.innerScroll::-webkit-scrollbar-button:vertical:start {
+		color: #bbbbbb;
 		background:
 			url('img/darkstone-menu/menu_thin_border_top_left_corner.png') no-repeat top left / 1px 1px,
 			url('img/darkstone-menu/menu_thin_border_top_right_corner.png') no-repeat top right / 1px 1px,
@@ -500,14 +515,29 @@
 	<h0></h0>
 	<br />
 	<darkstone-user-interface>
-		<div class="darkstone-window stats" title="Sheogorad!" style="width: 200px; min-height: 100px;">
-			<!--<button type="button" class="darkstone-window-close" title="Close">
+		<template id="darkstone-wnd-template">
+			<div class="darkstone-wnd" moveable resizeable closeable title="Example">
+				<div class="darkstone-wnd-title">
+					<span>Wnd</span>
+				</div>
+				<div class="darkstone-wnd-content">
+					Dark Elves
+					<div class="thinBorder innerScroll" style="hheight: 4em;">
+						Dunmer distrust and are treated distrustfully by other races. They are often proud, clannish,
+						ruthless, and cruel, from an outsider's point of view, but greatly value loyalty and family.
+					</div>
+				</div>
+			</div>
+		</template>
+
+		<div class="darkstone-wnd stats" title="Sheogorad!" style="width: 200px; min-height: 100px;">
+			<!--<button type="button" class="darkstone-wnd-close" title="Close">
 				x
 			</button>-->
-			<div class="darkstone-window-title">
+			<div class="darkstone-wnd-title">
 				<span>The Dunmer</span>
 			</div>
-			<div class="darkstone-window-content">
+			<div class="darkstone-wnd-content">
 				Dark Elves
 				<div class="thinBorder innerScroll" style="hheight: 4em;">
 					Dunmer distrust and are treated distrustfully by other races. They are often proud, clannish,
@@ -516,7 +546,7 @@
 			</div>
 		</div>
 		<div id="generationDialog" darkstone-user-interface>
-			<h2>Ghostgate Options</h2>
+			<h2>Sheogorad Options</h2>
 			<label for="islandName">Name for this generation:</label>
 			<input type="text" id="islandName" placeholder="Slavewind" value="Slavewind">
 
@@ -532,7 +562,7 @@
 				Wild Grass
 			</label>
 
-			<button onclick="Ghostgate.generate()">Generate</button>
+			<button onclick="Sheogorad.generate()">Generate</button>
 		</div>
 
 

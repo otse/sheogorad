@@ -1,14 +1,15 @@
 import Tree from './tree.js';
 import Map from './map.js';
+import Wnd from './wnd.js';
 
 (function () {
 
-	// ghostgate initialization
-	const Ghostgate = {
+	// sheogorad initialization
+	const Sheogorad = {
 
 		config: {
 			version: "0.1.0",
-			name: "ghostgate",
+			name: "sheogorad",
 			debug: true
 		},
 
@@ -16,13 +17,15 @@ import Map from './map.js';
 		iconList: {},
 
 		async init() {
-			console.log('ghostgate initialized');
+			console.log('sheogorad initialized');
 
 			await this.loadCanonList();
 			await this.loadIconList();
 			this.setupEventListeners();
 
-			Ghostgate.generate(); // We're cheating! Skip GenDiag!
+			Sheogorad.generate(); // We're cheating! Skip GenDiag!
+
+			new Wnd('Example', 'This is an example window');
 
 		},
 		async loadJson(filePath) {
@@ -138,8 +141,8 @@ import Map from './map.js';
 	};
 
 	// Run on page load
-	document.addEventListener('DOMContentLoaded', () => Ghostgate.init());
+	document.addEventListener('DOMContentLoaded', () => Sheogorad.init());
 
 	window.Tree = Tree;
-	window.Ghostgate = Ghostgate;
+	window.Sheogorad = Sheogorad;
 })();

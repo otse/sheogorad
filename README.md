@@ -1,6 +1,6 @@
-# Ghostgate — Vvardenfell Simulator
+# Sheogorad — Vvardenfell Simulator
 
-**Ghostgate** is an experimental AI simulation of the original game. It's not just a simulation, you can change story and see how the world would have behaved if it had new Narrative.
+**Sheogorad** is an experimental AI simulation of the original game. It's not just a simulation, you can change story and see how the world would have behaved if it had new Narrative.
 
 ---
 
