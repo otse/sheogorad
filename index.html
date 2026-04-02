@@ -88,6 +88,8 @@
 		background-color: #0a5a62;
 	}
 
+	
+
 	.darkstone-wnd-resize-handle {
 		position: absolute;
 		z-index: 10;
@@ -101,6 +103,11 @@
 	.darkstone-wnd-resize-nw { top: 0; left: 0; width: 30px; height: 28px; cursor: nw-resize; }
 	.darkstone-wnd-resize-se { bottom: 0; right: 0; width: 30px; height: 28px; cursor: se-resize; }
 	.darkstone-wnd-resize-sw { bottom: 0; left: 0; width: 30px; height: 28px; cursor: sw-resize; }
+
+	.darkstone-wnd:not([closeable]) .darkstone-wnd-resize-ne {
+		right: 0;
+		width: 30px;
+	}
 
 	.darkstone-button {
 		background: url(img/RockRough0001_1_download600.jpg);
@@ -516,7 +523,7 @@
 	<br />
 	<darkstone-user-interface>
 		<template id="darkstone-wnd-template">
-			<div class="darkstone-wnd" moveable resizeable closeable title="Example">
+			<div class="darkstone-wnd" moveable resizeable title="Example">
 				<div class="darkstone-wnd-title">
 					<span>Wnd</span>
 				</div>
