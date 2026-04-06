@@ -1,0 +1,31 @@
+sheogorad is built with npcs and ai in mind
+
+sheogorad is a peaceful, lively and intelligent simulation of vvardenfell
+
+sheogorad wants above all that the island remains "realistic" and not "an absurd sandbox"
+
+sheogorad has elements of a story generator, and uses roguelike text logs
+
+--- --- ---
+
+> i think morrowind is a cool, believable dark fantasy landscape
+
+canepaper got more into demoscene and i came to the idea of a morrowind regenerator
+
+it didn't work out in my mind so i tried understanding canon morrowind
+
+and discovered a pattern in the core design:
+region -> settlement -> building
+ashlands -> ghostgate -> tower of dusk -> stuff inside
+
+a "tree view" of vvardenfell reads "fantastically"
+
+i started generating a canon list.json by training a github copilot session
+
+and it quickly populated my favorite cities with npcs and items
+
+i worked on darkstone v1 and then v2 and you can see the progress in files/share x
+
+these darker wvo wnds are based on the dom, css and tech stack of canepaper/mw-menu-vanilla
+
+i wanted something more ashy and followed the stone realms wvo look
