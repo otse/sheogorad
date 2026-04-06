@@ -1,4 +1,6 @@
-const TASKBAR_INSET = 40;
+import Public from './public.js';
+
+const TASKBAR_INSET = 60;
 
 let gridContainer;
 
@@ -30,6 +32,13 @@ export default class Wnd {
 
 		const dsWnd = clone.querySelector('.darkstone-wnd');
 
+		dsWnd.querySelector('.darkstone-wnd-title').textContent = title;
+
+		const contentContainer = dsWnd.querySelector('.darkstone-wnd-content');
+
+		if (content)
+			contentContainer.textContent = content;
+
 		darkstoneUI.appendChild(clone);
 
 		const interactable = interact(dsWnd);
@@ -43,6 +52,25 @@ export default class Wnd {
 
 		// Set up interact let's
 
+		if (dsWnd.hasAttribute('closable')) {
+			const closeBtn = dsWnd.querySelector('.darkstone-wnd-close');
+			const removePressed = () => {
+				closeBtn.classList.remove('pressed');
+				document.removeEventListener('mouseup', removePressed);
+			};
+			closeBtn.addEventListener('mousedown', (e) => {
+				e.preventDefault();
+				e.stopPropagation();
+				closeBtn.classList.add('pressed');
+				Public.playClickSound();
+				document.addEventListener('mouseup', removePressed);
+			});
+			closeBtn.addEventListener('mouseleave', removePressed);
+			closeBtn.addEventListener('click', (e) => {
+				e.stopPropagation();
+				dsWnd.remove();
+			});
+		}
 		if (dsWnd.hasAttribute('moveable')) {
 			interactable.draggable({
 				allowFrom: '.darkstone-wnd-title',
@@ -90,7 +118,7 @@ export default class Wnd {
 				},
 				modifiers: [
 					interact.modifiers.restrictSize({
-						min: { width: 200, height: 150 },
+						min: { width: 100, height: 100 },
 					}),
 					interact.modifiers.restrictEdges({
 						outer: getGridRestriction,

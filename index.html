@@ -52,18 +52,21 @@
 		--region-ascadian-isles-x: #ccd4c1;
 		--region-bitter-coast-x: #c3d7cd;
 		--region-west-gash-x: #d5cfc2;
-		--region-ashlands-x: #e2bfac;
-		--region-molag-amur-x: #d8b8a8;
+		--region-ashlands-x: #d98659;
+		--region-molag-amur-x: #d98659;
 		--region-azura-s-coast-x: #ccdcd7;
 		--region-grazelands-x: #d1d7c8;
-		--region-sheogorad-x: #e8e4d8;
+		--region-sheogorad-x: #c162bc;
+
+		--text-blue: #6cacd5;
 	}
 
 	h0 {}
 
 	darkstone-user-interface {
-		display: contents;
 		/* this means the element itself is not rendered, only its children are */
+		display: contents;
+
 		color: #dddddd;
 		font-family: 'Pelagiad', serif;
 		text-shadow: rgb(126 126 126 / 50%) 0px 1px 1px, rgb(0 0 0 / 100%) 0px -1px 1px;
@@ -88,7 +91,7 @@
 		background-color: #0a5a62;
 	}
 
-	
+
 
 	.darkstone-wnd-resize-handle {
 		position: absolute;
@@ -202,7 +205,7 @@
 		box-sizing: border-box;
 		padding: calc(38px / 2) calc(8px / 2) calc(8px / 2);
 		min-width: 200px;
-		min-height: 120px;
+		min-height: 100px;
 		overflow: hidden;
 		display: flex;
 		flex-direction: column;
@@ -252,10 +255,12 @@
 		position: absolute;
 		top: 0;
 		right: 0;
-		ccolor: #b3a688;
-		ffont-size: 12px;
-		text-shadow: 2px 0px 0px #4d4d4d;
-		lline-height: calc(38px / 2);
+		font-size: 12px;
+		color: indigo;
+		color: inherit;
+		font-weight: bold;
+		ttext-shadow: 2px 0px 0px #4d4d4d;
+		line-height: calc(38px / 2);
 		width: calc(38px / 2);
 		height: calc(38px / 2);
 		padding: 0;
@@ -264,6 +269,10 @@
 		background: url('img/darkstone-menu/close-active.png') center/contain no-repeat;
 		background-size: calc(38px / 2) calc(38px / 2);
 		z-index: 20;
+
+		bbox-sizing: border-box;
+		bbox-shadow: inset 0 0 6px color(srgb 0.3 0.32 0.32);
+		bbackground: linear-gradient(to bottom, transparent, color(srgb 0.51 0.52 0.52 / 0.5));
 	}
 
 	.darkstone-wnd-close.pressed {
@@ -406,7 +415,7 @@
 	}
 
 	.explanator {
-		color: #d7d6d4;
+		color: var(--text-blue);
 		ffont-weight: bold;
 		padding: 5px;
 		padding-bottom: 0;
@@ -414,7 +423,7 @@
 
 	.menuDividerH {
 		ddisplay: none;
-		box-shadow: 0 0 6px rgb(181 181 181);
+		bbox-shadow: 0 0 6px rgb(181 181 181);
 		flex-shrink: 0;
 		width: 100%;
 		height: 2px;
@@ -523,7 +532,10 @@
 	<br />
 	<darkstone-user-interface>
 		<template id="darkstone-wnd-template">
-			<div class="darkstone-wnd" moveable resizeable title="Example">
+			<div class="darkstone-wnd" moveable resizeable closable title="Example">
+				<button type="button" class="darkstone-wnd-close" title="Close">
+					☇
+				</button>
 				<div class="darkstone-wnd-title">
 					<span>Wnd</span>
 				</div>
@@ -537,10 +549,10 @@
 			</div>
 		</template>
 
-		<div class="darkstone-wnd stats" title="Sheogorad!" style="width: 200px; min-height: 100px;">
-			<!--<button type="button" class="darkstone-wnd-close" title="Close">
+		<!--<div class="darkstone-wnd stats" title="Sheogorad!" style="width: 200px; min-height: 100px;">
+			<button type="button" class="darkstone-wnd-close" title="Close">
 				x
-			</button>-->
+			</button>
 			<div class="darkstone-wnd-title">
 				<span>The Dunmer</span>
 			</div>
@@ -551,7 +563,7 @@
 					ruthless, and cruel, from an outsider's point of view, but greatly value loyalty and family.
 				</div>
 			</div>
-		</div>
+		</div>-->
 		<div id="generationDialog" darkstone-user-interface>
 			<h2>Sheogorad Options</h2>
 			<label for="islandName">Name for this generation:</label>
@@ -572,7 +584,7 @@
 			<button onclick="Sheogorad.generate()">Generate</button>
 		</div>
 
-
+5
 		<div id="mainView" style="display:none;">
 			<div style="display:flex; gap:20px;">
 				<div class="darkstone-smooth" style="flex:2;;">

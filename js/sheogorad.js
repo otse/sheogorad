@@ -1,5 +1,6 @@
 import Tree from './tree.js';
 import Map from './map.js';
+import Npc from './npc.js';
 import Wnd from './wnd.js';
 
 (function () {
@@ -25,9 +26,13 @@ import Wnd from './wnd.js';
 
 			Sheogorad.generate(); // We're cheating! Skip GenDiag!
 
-			new Wnd('Example', 'This is an example window');
+			new Wnd('Example');
 
 		},
+		/*async playClickSound() {
+			const click = new Audio('sound/menu click.wav');
+			click.play().catch(() => { });
+		},*/
 		async loadJson(filePath) {
 			try {
 				const response = await fetch(filePath);
@@ -114,27 +119,31 @@ import Wnd from './wnd.js';
 
 
 							tree2.addItem(tree3);
-							if (buildingObject.content.npcs.forced) {
-								for (const npc of buildingObject.content.npcs.forced) {
-									const icon = this.iconList.npcIcons[npc] || '';
-									tree3.addItem(`${icon} ${this.formatNpcName(npc)}`);
-								}
-							}
-							if (buildingObject.content.npcs.pool) {
-								for (const npc of buildingObject.content.npcs.pool) {
-									const icon = this.iconList.npcIcons[npc] || '';
-									tree3.addItem(`${icon} ${this.formatNpcName(npc)}`);
-								}
+							const allNpcs = [
+								...(buildingObject.content.npcs.forced || []),
+								...(buildingObject.content.npcs.pool || [])
+							];
+
+							for (const npc of allNpcs) {
+								const icon = this.iconList.npcIcons[npc] || '';
+								tree3.addItem({
+									text: `${icon} ${this.formatNpcName(npc)}`,
+									onClick: () => {
+										const wnd = new Wnd(
+											`${icon} ${this.formatNpcName(npc)}`,
+											`Details about ${this.formatNpcName(npc)}`);
+									}
+								});
 							}
 						};
 					}
 					tree.addItem(tree2);
 				};
 				genericList.appendChild(tree.getElement());
+
 				const divider = document.createElement('div');
 				divider.className = 'menuDividerH';
-				// genericList.appendChild(divider);
-
+				genericList.appendChild(divider);
 			}
 
 		}

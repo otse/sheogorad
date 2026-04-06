@@ -48,7 +48,7 @@ export default class Tree {
 			span.className = 'clickable';
 			span.textContent = item.text || item.toString();
 			span.style.cursor = 'pointer';
-			// span.addEventListener('click', item.onClick);
+			span.addEventListener('click', item.onClick);
 			li.appendChild(span);
 		}
 
