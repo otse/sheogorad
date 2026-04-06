@@ -1,3 +1,5 @@
+[< Write-up](write-up.md)
+
 ## Rogue-like-Logs
 
 Sheogorad is not a roguelike!

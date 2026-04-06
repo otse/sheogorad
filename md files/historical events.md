@@ -1,3 +1,5 @@
+[< Write-up](write-up.md)
+
 # Historical events
 
 > [!NOTE]

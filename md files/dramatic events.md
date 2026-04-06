@@ -1,3 +1,5 @@
+[< Write-up](write-up.md)
+
 # Dramatic events
 
 Dramatic events make Sheogorad more interesting, but don't permanently change it; they "resolve." See [historical events.](historical%20events.md)
