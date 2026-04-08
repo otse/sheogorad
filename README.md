@@ -1,15 +1,18 @@
-# Sheogorad — Vvardenfell Simulator
+# Sheogorad
 
-**Sheogorad** is an experimental AI simulation of the original game. It's not just a simulation, you can change story and see how the world would have behaved if it had new Narrative.
+Sheogorad is a simulation of mostly canon morrowind. It has elements of roguelikes and story generators, while being absolutely neither.
+
+- **Mood:** fallout shelter, folder dungeon, neverending legacy
+
+## Non canon abominationworlds
+
+Experimental chaos simulations are supported:
+
+* Hostile Silt Strider World-1
+* Red Year
 
 ## Pretty .md files
 
-[Provided Here.](md%20files/write-up.md)
+[Provided Here (Docs).](md%20files/write-up.md)
 
----
-
-## 🎨 Mood & Theme
-
-- **Mood:** fallout shelter, folder dungeon, neverending legacy
-- **Setting:** vvrdenfell but with llms
-- **Theme:** light morrowind but not ultra-dark
+If you are okay with banter try /text files.
