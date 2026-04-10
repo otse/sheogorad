@@ -103,10 +103,10 @@
 	.darkstone-wnd-resize-s { bottom: 0; left: 30px; right: 30px; height: 8px; cursor: s-resize; }
 	.darkstone-wnd-resize-e { top: 28px; right: 0; bottom: 28px; width: 8px; cursor: e-resize; }
 	.darkstone-wnd-resize-w { top: 28px; left: 0; bottom: 28px; width: 8px; cursor: w-resize; }
-	.darkstone-wnd-resize-ne { top: 0; right: 28px; width: 8px; height: 28px; cursor: ne-resize; }
-	.darkstone-wnd-resize-nw { top: 0; left: 0; width: 30px; height: 28px; cursor: nw-resize; }
-	.darkstone-wnd-resize-se { bottom: 0; right: 0; width: 30px; height: 28px; cursor: se-resize; }
-	.darkstone-wnd-resize-sw { bottom: 0; left: 0; width: 30px; height: 28px; cursor: sw-resize; }
+	.darkstone-wnd-resize-ne { top: 0; right: 28px; width: 10px; height: 10px; cursor: ne-resize; }
+	.darkstone-wnd-resize-nw { top: 0; left: 0; width: 10px; height: 10px; cursor: nw-resize; }
+	.darkstone-wnd-resize-se { bottom: 0; right: 0; width: 10px; height: 10px; cursor: se-resize; }
+	.darkstone-wnd-resize-sw { bottom: 0; left: 0; width: 10px; height: 10px; cursor: sw-resize; }
 
 	.darkstone-wnd:not([closeable]) .darkstone-wnd-resize-ne {
 		right: 0;
@@ -137,13 +137,15 @@
 		ppadding: 5px;
 		box-shadow: 0px 0px 10px black;
 		bborder-radius: 8px;
+		overflow: hidden;
 	}
 
 	.darkstone-wnd-content {
 		box-shadow: inset 0 0 30px rgb(103 103 103);
-		padding: 2px;
+		padding: 4px;
 		color: #2d2d2d;
 		color: #2a2a2a;
+		color: #d3d3d3;
 		ppadding-top: calc(20px / 2);
 		gap: 10px;
 		display: flex;
@@ -190,6 +192,10 @@
 
 	.darkstone-wnd-title span {
 		ffont-size: 12px;
+	}
+
+	.darkstone-wnd.active {
+		z-index: 1;
 	}
 
 	.darkstone-wnd {
@@ -374,8 +380,9 @@
 			50%;
 	}
 
-	.thinBorder {
+	.darkstone-inner {
 		bbox-shadow: 0px 0px 5px rgb(127 127 127), inset 0px 0px 10px rgb(127 127 127);
+		box-shadow: 0px 0px 9px rgb(127 127 127), inset 0px 0px 10px rgb(127 127 127);
 		box-sizing: border-box;
 		ppadding: 10px !important;
 		background-color: transparent;
@@ -516,7 +523,7 @@
 		padding-bottom: 0;
 	}
 
-	.menuDividerH {
+	.darkstone-menu-divider {
 		ddisplay: none;
 		bbox-shadow: 0 0 6px rgb(181 181 181);
 		flex-shrink: 0;
@@ -527,7 +534,7 @@
 		background-size: 16px 1px;
 	}
 
-	.innerScroll {
+	.darkstone-inner-scroll {
 		overflow-y: auto;
 		scrollbar-gutter: stable;
 		/* Inset: scrollbar offset from inner window (top and sides) */
@@ -535,21 +542,21 @@
 	}
 
 	/* Scrollbar styling with Morrowind textures */
-	.innerScroll::-webkit-scrollbar {
+	.darkstone-inner-scroll::-webkit-scrollbar {
 		width: 22px;
 		/* 21 */
 	}
 
 	/* Hide duplicate scrollbar buttons (double-button mode) */
-	.innerScroll::-webkit-scrollbar-button:vertical:start:increment,
-	.innerScroll::-webkit-scrollbar-button:vertical:end:decrement,
-	.innerScroll::-webkit-scrollbar-button:horizontal:start:increment,
-	.innerScroll::-webkit-scrollbar-button:horizontal:end:decrement {
+	.darkstone-inner-scroll::-webkit-scrollbar-button:vertical:start:increment,
+	.darkstone-inner-scroll::-webkit-scrollbar-button:vertical:end:decrement,
+	.darkstone-inner-scroll::-webkit-scrollbar-button:horizontal:start:increment,
+	.darkstone-inner-scroll::-webkit-scrollbar-button:horizontal:end:decrement {
 		display: none;
 	}
 
 	/* Track: thin border frame + vertbar fill, inset 5px from edge */
-	.innerScroll::-webkit-scrollbar-track {
+	.darkstone-inner-scroll::-webkit-scrollbar-track {
 		background:
 			url('img/darkstone-menu/menu_thin_border_top_left_corner.png') no-repeat top left / 1px 1px,
 			url('img/darkstone-menu/menu_thin_border_top_right_corner.png') no-repeat top right / 1px 1px,
@@ -568,7 +575,7 @@
 		box-sizing: border-box;
 	}
 
-	.innerScroll::-webkit-scrollbar-thumb {
+	.darkstone-inner-scroll::-webkit-scrollbar-thumb {
 		background: #cacaca;
 		background-clip: content-box;
 		border: 3px solid transparent;
@@ -578,8 +585,8 @@
 		border-radius: 4px;
 	}
 
-	.innerScroll::-webkit-scrollbar-button:vertical:start,
-	.innerScroll::-webkit-scrollbar-button:vertical:end {
+	.darkstone-inner-scroll::-webkit-scrollbar-button:vertical:start,
+	.darkstone-inner-scroll::-webkit-scrollbar-button:vertical:end {
 		height: 20px;
 		width: 20px;
 		border: 2px solid transparent;
@@ -588,7 +595,7 @@
 	}
 
 	/* Buttons: thin border frame + arrow icon (inline SVG for proper centering), inset 5px */
-	.innerScroll::-webkit-scrollbar-button:vertical:start {
+	.darkstone-inner-scroll::-webkit-scrollbar-button:vertical:start {
 		color: #bbbbbb;
 		background:
 			url('img/darkstone-menu/menu_thin_border_top_left_corner.png') no-repeat top left / 1px 1px,
@@ -605,7 +612,7 @@
 		border-bottom-width: 0px;
 	}
 
-	.innerScroll::-webkit-scrollbar-button:vertical:end {
+	.darkstone-inner-scroll::-webkit-scrollbar-button:vertical:end {
 		background:
 			url('img/darkstone-menu/menu_thin_border_top_left_corner.png') no-repeat top left / 1px 1px,
 			url('img/darkstone-menu/menu_thin_border_top_right_corner.png') no-repeat top right / 1px 1px,
@@ -648,6 +655,112 @@
 		flex-direction: row-reverse;
 		gap: 16px;
 	}
+
+	.darkstone-stat-bar {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 8px;
+	}
+
+	.darkstone-stat-bar .darkstone-stat-label {
+		flex: 0 0 auto;
+		min-width: 4em;
+	}
+
+	.darkstone-stat-bar .darkstone-stat-value {
+		flex: 0 0 auto;
+		margin-left: auto;
+	}
+
+	.darkstone-stat-bar-track {
+		flex: 1 1 100%;
+		height: 8px;
+		background: rgba(0, 0, 0, 0.5);
+		border: 1px solid rgb(231 206 159 / 40%);
+	}
+
+	.darkstone-stat-bar-fill {
+		height: 100%;
+		transition: width 0.2s ease;
+	}
+
+	.darkstone-stat-bar-health { background: #8b2020; }
+	.darkstone-stat-bar-magicka { background: #2040a0; }
+	.darkstone-stat-bar-fatigue { background: #208020; }
+
+	.darkstone-stats-left {
+		flex: 0 0 160px;
+		min-width: 0;
+	}
+
+	.darkstone-stats-list {
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
+	}
+
+	.row {
+		display: flex;
+		flex-direction: row;
+		gap: 10px;
+		flex: 1;
+	}
+	
+	.column {
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+		flex: 1;
+	}
+
+	.darkstone-stats-list {
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
+	}
+
+	.darkstone-stat-row {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 2px 0;
+	}
+
+	.darkstone-stat-row .darkstone-stat-label {
+		flex: 0 0 auto;
+	}
+
+	.darkstone-stat-row .darkstone-stat-value {
+		flex: 0 0 auto;
+		margin-left: 8px;
+	}
+
+	.darkstone-stats-layout {
+		flex: 1;
+		min-height: 0;
+	}
+
+	.darkstone-stats-skills {
+		flex: 1;
+		min-width: 0;
+		color: #242424;
+		color: #bebbb0;
+	}
+
+	.darkstone-stats-skills > .darkstone-stat-row {
+		padding-left: 9px;
+	}
+
+	.darkstone-stats-skill-header {
+		font-weight: bold;
+		margin: 4px 0 2px;
+		ccolor: #bfbbac;
+	}
+
+	.darkstone-stats-skill-header:first-child {
+		margin-top: 0;
+	}
 </style>
 
 <body>
@@ -663,6 +776,59 @@
 				<button type="button" id="new-box-btn" class="darkstone-big-button" title="Open new window">New Window</button>
 			</div>
 		</nav>
+		<template id="npc-wnd-template">
+			<!--<div class="darkstone-inner darkstone-inner-scroll" style="width: 100%;">-->
+				<div class="darkstone-stats-layout row">
+					<div class="darkstone-stats-left column">
+						<div class="darkstone-inner" style="padding: 3px;">
+							<div class="darkstone-stat-bar"><span class="darkstone-stat-label">Health</span><span class="darkstone-stat-value">61/78</span><div class="darkstone-stat-bar-track"><div class="darkstone-stat-bar-fill darkstone-stat-bar-health" style="width: 78%"></div></div></div>
+							<div class="darkstone-stat-bar"><span class="darkstone-stat-label">Magicka</span><span class="darkstone-stat-value">206/206</span><div class="darkstone-stat-bar-track"><div class="darkstone-stat-bar-fill darkstone-stat-bar-magicka" style="width: 100%"></div></div></div>
+						</div>
+						<div class="darkstone-inner darkstone-stats-list" style="padding: 3px;">
+							<div class="darkstone-stat-row"><span class="darkstone-stat-label">Level</span><span class="darkstone-stat-value">6</span></div>
+							<div class="darkstone-stat-row"><span class="darkstone-stat-label">Race</span><span class="darkstone-stat-value">Dark Elf</span></div>
+							<div class="darkstone-stat-row"><span class="darkstone-stat-label">Class</span><span class="darkstone-stat-value">Mage Warrior</span></div>
+						</div>
+						<div class="darkstone-inner darkstone-stats-list" style="padding: 3px;">
+							<div class="darkstone-stat-row"><span class="darkstone-stat-label">Strength</span><span class="darkstone-stat-value">57</span></div>
+							<div class="darkstone-stat-row"><span class="darkstone-stat-label">Intelligence</span><span class="darkstone-stat-value">59</span></div>
+							<div class="darkstone-stat-row"><span class="darkstone-stat-label">Willpower</span><span class="darkstone-stat-value">41</span></div>
+							<div class="darkstone-stat-row"><span class="darkstone-stat-label">Agility</span><span class="darkstone-stat-value">50</span></div>
+							<div class="darkstone-stat-row"><span class="darkstone-stat-label">Speed</span><span class="darkstone-stat-value">40</span></div>
+							<div class="darkstone-stat-row"><span class="darkstone-stat-label">Endurance</span><span class="darkstone-stat-value">31</span></div>
+							<div class="darkstone-stat-row"><span class="darkstone-stat-label">Personality</span><span class="darkstone-stat-value">50</span></div>
+							<div class="darkstone-stat-row"><span class="darkstone-stat-label">Luck</span><span class="darkstone-stat-value">50</span></div>
+						</div>
+					</div>
+					<div class="darkstone-inner darkstone-stats-skills darkstone-inner-scroll" style="padding: 3px;">
+						<div class="darkstone-stats-skill-header">Major Skills:</div>
+						<div class="darkstone-stat-row"><span class="darkstone-stat-label">Medium Armor</span><span class="darkstone-stat-value">42</span></div>
+						<div class="darkstone-stat-row"><span class="darkstone-stat-label">Conjuration</span><span class="darkstone-stat-value">15</span></div>
+						<div class="darkstone-stat-row"><span class="darkstone-stat-label">Destruction</span><span class="darkstone-stat-value">25</span></div>
+						<div class="darkstone-stat-row"><span class="darkstone-stat-label">Alteration</span><span class="darkstone-stat-value">20</span></div>
+						<div class="darkstone-stat-row"><span class="darkstone-stat-label">Mysticism</span><span class="darkstone-stat-value">18</span></div>
+						<div class="darkstone-menu-divider darkstone-menu-divider-h"></div>
+						<div class="darkstone-stats-skill-header">Minor Skills:</div>
+						<div class="darkstone-stat-row"><span class="darkstone-stat-label">Heavy Armor</span><span class="darkstone-stat-value">15</span></div>
+						<div class="darkstone-stat-row"><span class="darkstone-stat-label">Enchant</span><span class="darkstone-stat-value">10</span></div>
+						<div class="darkstone-stat-row"><span class="darkstone-stat-label">Alchemy</span><span class="darkstone-stat-value">5</span></div>
+						<div class="darkstone-stat-row"><span class="darkstone-stat-label">Illusion</span><span class="darkstone-stat-value">10</span></div>
+						<div class="darkstone-stat-row"><span class="darkstone-stat-label">Restoration</span><span class="darkstone-stat-value">12</span></div>
+						<div class="darkstone-menu-divider darkstone-menu-divider-h"></div>
+						<div class="darkstone-stats-skill-header">Misc Skills:</div>
+						<div class="darkstone-stat-row"><span class="darkstone-stat-label">Block</span><span class="darkstone-stat-value">5</span></div>
+						<div class="darkstone-stat-row"><span class="darkstone-stat-label">Armorer</span><span class="darkstone-stat-value">5</span></div>
+						<div class="darkstone-stat-row"><span class="darkstone-stat-label">Athletics</span><span class="darkstone-stat-value">28</span></div>
+						<div class="darkstone-stat-row"><span class="darkstone-stat-label">Acrobatics</span><span class="darkstone-stat-value">15</span></div>
+						<div class="darkstone-stat-row"><span class="darkstone-stat-label">Light Armor</span><span class="darkstone-stat-value">10</span></div>
+						<div class="darkstone-stat-row"><span class="darkstone-stat-label">Sneak</span><span class="darkstone-stat-value">5</span></div>
+						<div class="darkstone-stat-row"><span class="darkstone-stat-label">Marksman</span><span class="darkstone-stat-value">5</span></div>
+						<div class="darkstone-stat-row"><span class="darkstone-stat-label">Mercantile</span><span class="darkstone-stat-value">10</span></div>
+						<div class="darkstone-stat-row"><span class="darkstone-stat-label">Speechcraft</span><span class="darkstone-stat-value">15</span></div>
+					</div>
+				</div>
+			<!--</div>-->
+		</template>
 		<template id="darkstone-wnd-template">
 			<div class="darkstone-wnd" moveable resizeable closable title="Example">
 				<button type="button" class="darkstone-wnd-close" title="Close">
@@ -674,7 +840,7 @@
 				<div class="darkstone-wnd-content">
 					Dark Elves
 					<div style="display: flex; flex-direction: column;">
-						<div class="thinBorder innerScroll" style="hheight: 4em;">
+						<div class="darkstone-inner darkstone-inner-scroll" style="hheight: 4em;">
 							Dunmer distrust and are treated distrustfully by other races. They are often proud,
 							clannish,
 							ruthless, and cruel, from an outsider's point of view, but greatly value loyalty and family.
@@ -703,7 +869,7 @@
 			</div>
 			<div class="darkstone-wnd-content">
 				Dark Elves
-				<div class="thinBorder innerScroll" style="hheight: 4em;">
+				<div class="darkstone-inner darkstone-inner-scroll" style="hheight: 4em;">
 					Dunmer distrust and are treated distrustfully by other races. They are often proud, clannish,
 					ruthless, and cruel, from an outsider's point of view, but greatly value loyalty and family.
 				</div>
@@ -733,10 +899,10 @@
 		<div id="mainView" style="display:none;">
 			<div style="display:flex; gap:20px;">
 				<div class="darkstone-smooth" style="flex:2;;">
-					<div class="thinBorder">
+					<div class="darkstone-inner">
 						<div class="explanator">Tree View:</div>
 						<div class="menuDividerH"></div>
-						<div id="genericList" class="innerScroll" style="">
+						<div id="genericList" class="darkstone-inner-scroll" style="">
 						</div>
 					</div>
 				</div>

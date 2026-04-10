@@ -1,21 +1,25 @@
 import Sheogorad from "./sheogorad.js";
 import Wnd from "./wnd.js";
-import Public from "./public.js";
-import NpcWnd from "./npc wnd.js";
 
 function formatNpcName(name) {
 	return name.replace(/_/g, ' ').replace(/\b\w/g, char => char.toUpperCase());
 }
 
 export default class Npc {
-	npcWnd = null;
+	wnd = null;
 	icon = '';
 	constructor(name) {
 		this.name = name;
 		this.icon = Sheogorad.iconList.npcIcons[name] || '';
-
 	}
 	makeWnd() {
-		this.npcWnd = new NpcWnd(this);
+		const mwMenuTemplate = document.getElementById('npc-wnd-template');
+		const clone = mwMenuTemplate.content.cloneNode(true);
+
+		this.wnd = new Wnd(
+			`${this.icon} ${formatNpcName(this.name)}`,
+			`Details about ${formatNpcName(this.name)}`,
+		{ width: 200, height: 300 });
+		this.wnd.setContent(clone);
 	}
 }

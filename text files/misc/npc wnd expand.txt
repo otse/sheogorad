@@ -1,0 +1,4 @@
+there should be an expand button that shows major, minor and misc skills
+
+so you click it and it expands the second column of the row
+> that means more work

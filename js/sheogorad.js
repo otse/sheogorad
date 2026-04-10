@@ -12,6 +12,8 @@ export const Sheogorad = {
 		debug: true
 	},
 
+	musicPlayer: null,
+
 	canonList: {},
 	iconList: {},
 
@@ -24,7 +26,7 @@ export const Sheogorad = {
 		await this.loadIconList();
 		this.setupEventListeners();
 
-		new Wnd('Example', null, { width: 300, height: 150 });
+		new Wnd('History', null, { width: 300, height: 150 });
 
 		Sheogorad.generate(); // We're cheating! Skip GenDiag!
 
@@ -34,6 +36,7 @@ export const Sheogorad = {
 
 		function playMusic() {
 			bgMusic.play().catch(() => { });
+			Sheogorad.musicPlayer = new MusicPlayer();
 		}
 
 		// Problem Clicking the button doesnt start the music (not document)
@@ -117,8 +120,8 @@ export const Sheogorad = {
 		const darvame = this.npcs.find(npc => npc.name === 'darvame_hleran');
 		if (darvame) {
 			darvame.makeWnd();
-			darvame.npcWnd.wnd.moveTo(30, 40);
-			// Problem npcWnd.wnd makes no sense
+			darvame.wnd.moveTo(30, 40);
+			// Problem wnd.wnd makes no sense
 		}
 		
 

@@ -1,4 +1,3 @@
-import Public from './public.js';
 
 const TASKBAR_INSET = 60;
 
@@ -32,6 +31,17 @@ export default class Wnd {
 		this.dsWnd.setAttribute('data-y', y);
 	}
 
+	setContent(content) {
+		const contentContainer = this.dsWnd.querySelector('.darkstone-wnd-content');
+		contentContainer.innerHTML = '';
+		if (content instanceof Node) {
+			contentContainer.appendChild(content);
+		} else if (typeof content === 'string') {
+			contentContainer.textContent = content;
+		}
+	}
+
+
 	constructor(title, content, options = {}) {
 		const darkstoneUI = document.querySelector('darkstone-user-interface');
 
@@ -64,6 +74,12 @@ export default class Wnd {
 
 		// Set up interact let's
 
+		// Problem This is a quick and dirty z-index hack
+		dsWnd.addEventListener('mousedown', () => {
+            document.querySelectorAll('.darkstone-wnd').forEach((box) => box.classList.remove('active'));
+            dsWnd.classList.add('active');
+        });
+
 		if (dsWnd.hasAttribute('closable')) {
 			const closeBtn = dsWnd.querySelector('.darkstone-wnd-close');
 			const removePressed = () => {
@@ -74,7 +90,7 @@ export default class Wnd {
 				e.preventDefault();
 				e.stopPropagation();
 				closeBtn.classList.add('pressed');
-				Public.playClickSound();
+				// Public.playClickSound();
 				document.addEventListener('mouseup', removePressed);
 			});
 			closeBtn.addEventListener('mouseleave', removePressed);
