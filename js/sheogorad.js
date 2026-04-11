@@ -3,6 +3,7 @@ import Map from './map.js';
 import Npc from './npc.js';
 import Wnd from './wnd.js';
 import MusicPlayer from './music player.js';
+import LorePanel from './lore panel.js';
 
 export const Sheogorad = {
 
@@ -12,6 +13,7 @@ export const Sheogorad = {
 		debug: true
 	},
 
+	lorePanel: null,
 	musicPlayer: null,
 
 	canonList: {},
@@ -30,20 +32,27 @@ export const Sheogorad = {
 
 		Sheogorad.generate(); // We're cheating! Skip GenDiag!
 
+		this.lorePanel = new LorePanel();
+		this.musicPlayer = new MusicPlayer();
 
 		const bgMusic = document.getElementById('bg-music');
 		const muteBtn = document.getElementById('mute-btn');
+		const lorePanelBtn = document.getElementById('new-box-btn');
 
-		// Sheogorad.musicPlayer = new MusicPlayer();
+		lorePanelBtn.addEventListener('click', (e) => {
+			// this.lorePanel.close();
+			this.lorePanel.tryMake();
+			Sheogorad.playClickSound();
+		});
 
-		function playMusic() {
+		function startMusicWhenPossible() {
 			bgMusic.play().catch(() => { });
 			// Sheogorad.musicPlayer = new MusicPlayer();
 		}
 
 		// Problem Clicking the button doesnt start the music (not document)
-		document.addEventListener('click', playMusic, { once: true });
-		document.addEventListener('keydown', playMusic, { once: true });
+		document.addEventListener('click', startMusicWhenPossible, { once: true });
+		document.addEventListener('keydown', startMusicWhenPossible, { once: true });
 
 		muteBtn.addEventListener('click', (e) => {
 			e.stopPropagation();

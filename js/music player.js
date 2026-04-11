@@ -4,8 +4,8 @@ import Wnd from "./wnd.js";
 export default class MusicPlayer {
 	constructor() {
 		this.wnd = new Wnd(
-			`${this.icon} ${formatNpcName(this.name)}`,
-			`Details about ${formatNpcName(this.name)}`,
+			`Music Player`,
+			`Yes`,
 			{ width: 200, height: 100 });
 	}
 }

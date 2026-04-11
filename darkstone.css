@@ -1,0 +1,585 @@
+darkstone-user-interface {
+    /* this means the element itself is not rendered, only its children are */
+    display: contents;
+
+    color: #dddddd;
+    font-family: 'Pelagiad', serif;
+    text-shadow: rgb(126 126 126 / 50%) 0px 1px 1px, rgb(0 0 0 / 100%) 0px -1px 1px;
+}
+
+darkstone-user-interface :is(input, select, button) {
+    background-color: transparent;
+    font-family: inherit;
+    border: 2px outset #854026;
+    color: #e0e0e0;
+    padding: 4px;
+    border-radius: 2px;
+    font-size: 17px;
+}
+
+/*darkstone-user-interface button {
+    cursor: pointer;
+    background-color: #aa9a00;
+}
+
+darkstone-user-interface button:hover {
+    background-color: #0a5a62;
+}*/
+
+.darkstone-wnd-resize-handle {
+    position: absolute;
+    z-index: 10;
+}
+
+.darkstone-wnd-resize-n { top: 0; left: 30px; right: 30px; height: 8px; cursor: n-resize; }
+.darkstone-wnd-resize-s { bottom: 0; left: 30px; right: 30px; height: 8px; cursor: s-resize; }
+.darkstone-wnd-resize-e { top: 28px; right: 0; bottom: 28px; width: 8px; cursor: e-resize; }
+.darkstone-wnd-resize-w { top: 28px; left: 0; bottom: 28px; width: 8px; cursor: w-resize; }
+.darkstone-wnd-resize-ne { top: 0; right: 28px; width: 10px; height: 10px; cursor: ne-resize; }
+.darkstone-wnd-resize-nw { top: 0; left: 0; width: 10px; height: 10px; cursor: nw-resize; }
+.darkstone-wnd-resize-se { bottom: 0; right: 0; width: 10px; height: 10px; cursor: se-resize; }
+.darkstone-wnd-resize-sw { bottom: 0; left: 0; width: 10px; height: 10px; cursor: sw-resize; }
+
+.darkstone-wnd:not([closeable]) .darkstone-wnd-resize-ne {
+    right: 0;
+    width: 30px;
+}
+
+.darkstone-button {
+    background: url(img/RockRough0001_1_download600.jpg);
+    padding: 10px;
+}
+
+.darkstone-smooth {
+    display: block;
+    padding: 0;
+    margin: 0;
+    bbackground: url(img/RockRough0001_1_download600.jpg);
+    background: rgb(127 127 127 / 50%);
+    background-size: 50%;
+    box-sizing: border-box;
+}
+
+#generationDialog,
+#mainView {
+    background-color: #322f00;
+    background: url(img/RockRough0001_2_download600.jpg);
+    background-size: 50%;
+    width: 700px;
+    ppadding: 5px;
+    box-shadow: 0px 0px 10px black;
+    bborder-radius: 8px;
+    overflow: hidden;
+}
+
+.darkstone-wnd-content {
+    box-shadow: inset 0 0 30px rgb(103 103 103);
+    padding: 4px;
+    color: #2d2d2d;
+    color: #2a2a2a;
+    color: #d3d3d3;
+    ppadding-top: calc(20px / 2);
+    gap: 10px;
+    display: flex;
+    fflex-direction: column;
+    flex: 1 1 0;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.darkstone-wnd-title {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: calc(28px / 2);
+    width: calc(100% - 8px);
+    padding: 0 12px;
+    box-sizing: border-box;
+    margin: 2px 2px;
+    border-radius: 2px;
+    box-shadow: inset 0 0 6px var(--title-bar-gradient-color);
+    background: linear-gradient(to bottom, transparent, var(--title-bar-gradient-color));
+    bbackground: url(img/RockRough0001_1_download600.jpg);
+    bbackground-position: 10px -40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+}
+
+.darkstone-wnd-title span {
+    display: inline-block;
+    ccolor: #bfcfd3;
+    /*padding: 0 2px;
+    font-size: calc(1.8rem / 2);
+    height: 100%;
+    line-height: calc(25px / 2);
+    font-family: 'Pelagiad', serif;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.8);
+    background-image: url('img/darkstone-menu/title-3-active.png');
+    background-size: calc(74px / 2) calc(28px / 2);
+    background-repeat: repeat-x;
+    background-position: center;*/
+}
+
+.darkstone-wnd-title span {
+    ffont-size: 12px;
+}
+
+.darkstone-wnd.active {
+    z-index: 1;
+}
+
+.darkstone-wnd {
+    box-shadow: 0px 0px 5px rgb(70 70 70);
+    position: fixed;
+    touch-action: none;
+    user-select: none;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    bbackground: rgba(127, 127, 127, 0.5);
+
+    background-image: url(img/RockRough0001_1_download600.jpg);
+    box-sizing: border-box;
+    padding: calc(38px / 2) calc(8px / 2) calc(8px / 2);
+    min-width: 200px;
+    min-height: 100px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    background-image:
+        url('img/darkstone-menu/top-left-active.png'),
+        url('img/darkstone-menu/top-right-active.png'),
+        url('img/darkstone-menu/bottom-left-active.png'),
+        url('img/darkstone-menu/bottom-right-active.png'),
+        url('img/darkstone-menu/left-active.png'),
+        url('img/darkstone-menu/right-active.png'),
+        url('img/darkstone-menu/title-1-active.png'),
+        url('img/darkstone-menu/bottom-active.png'),
+        url(img/RockRough0001_2_download600.jpg);
+    background-repeat:
+        no-repeat,
+        no-repeat,
+        no-repeat,
+        no-repeat,
+        repeat-y,
+        repeat-y,
+        repeat-x,
+        repeat-x,
+        repeat;
+    background-position:
+        top left,
+        top right,
+        bottom left,
+        bottom right,
+        left 0,
+        right 0,
+        top,
+        bottom,
+        0 0;
+    background-size:
+        calc(30px / 2) calc(38px / 2),
+        calc(30px / 2) calc(38px / 2),
+        calc(8px / 2) calc(40px / 2),
+        calc(8px / 2) calc(40px / 2),
+        calc(8px / 2) calc(40px / 2),
+        calc(8px / 2) calc(40px / 2),
+        calc(60px / 2) calc(38px / 2),
+        calc(40px / 2) calc(8px / 2),
+        50%;
+}
+
+.darkstone-wnd-min {
+    position: absolute;
+    top: 0;
+    right: calc(38px / 2);
+    font-size: 12px;
+    color: indigo;
+    color: inherit;
+    font-weight: bold;
+    ttext-shadow: 2px 0px 0px #4d4d4d;
+    line-height: calc(38px / 2);
+    width: calc(38px / 2);
+    height: calc(38px / 2);
+    padding: 0;
+    border: none;
+    cursor: pointer;
+    background: url('img/darkstone-menu/close-active.png') center/contain no-repeat;
+    background-size: calc(38px / 2) calc(38px / 2);
+    z-index: 20;
+
+    bbox-sizing: border-box;
+    bbox-shadow: inset 0 0 6px color(srgb 0.3 0.32 0.32);
+    bbackground: linear-gradient(to bottom, transparent, color(srgb 0.51 0.52 0.52 / 0.5));
+}
+
+.darkstone-wnd-close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 12px;
+    color: indigo;
+    color: inherit;
+    font-weight: bold;
+    ttext-shadow: 2px 0px 0px #4d4d4d;
+    line-height: calc(38px / 2);
+    width: calc(38px / 2);
+    height: calc(38px / 2);
+    padding: 0;
+    border: none;
+    cursor: pointer;
+    background: url('img/darkstone-menu/close-active.png') center/contain no-repeat;
+    background-size: calc(38px / 2) calc(38px / 2);
+    z-index: 20;
+
+    bbox-sizing: border-box;
+    bbox-shadow: inset 0 0 6px color(srgb 0.3 0.32 0.32);
+    bbackground: linear-gradient(to bottom, transparent, color(srgb 0.51 0.52 0.52 / 0.5));
+}
+
+.darkstone-wnd-close.pressed {
+    background-image: url('img/darkstone-menu/close-pressed.png');
+}
+
+.darkstone-big-button {
+    ccolor: #e3d4b6;
+    height: 30px;
+    margin: 0;
+    padding: 6px 9px;
+    line-height: calc(30px / 2);
+    border: none;
+    border-radius: 0;
+    cursor: pointer;
+    font-family: 'Pelagiad', serif;
+    font-size: 1rem;
+    bbox-shadow: inset 0px 0px 12px #676a5e;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+    box-sizing: border-box;
+    background-color: transparent;
+    background-image:
+        url('img/darkstone-menu/menu_button_frame_top_left_corner.png'),
+        url('img/darkstone-menu/menu_button_frame_top_right_corner.png'),
+        url('img/darkstone-menu/menu_button_frame_bottom_left_corner.png'),
+        url('img/darkstone-menu/menu_button_frame_bottom_right_corner.png'),
+        url('img/darkstone-menu/menu_button_frame_top.png'),
+        url('img/darkstone-menu/menu_button_frame_bottom.png'),
+        url('img/darkstone-menu/menu_button_frame_left.png'),
+        url('img/darkstone-menu/menu_button_frame_right.png'),
+        url(img/RockRough0001_2_download600.jpg);
+    background-repeat:
+        no-repeat,
+        no-repeat,
+        no-repeat,
+        no-repeat,
+        repeat-x,
+        repeat-x,
+        repeat-y,
+        repeat-y,
+        repeat;
+    background-position:
+        top left,
+        top right,
+        bottom left,
+        bottom right,
+        top,
+        bottom,
+        left,
+        right,
+        0 0;
+    background-size:
+        calc(4px / 2) calc(4px / 2),
+        calc(4px / 2) calc(4px / 2),
+        calc(4px / 2) calc(4px / 2),
+        calc(4px / 2) calc(4px / 2),
+        calc(100% - 16px) calc(4px / 2),
+        calc(100% - 16px) calc(4px / 2),
+        calc(4px / 2) calc(100% / 2),
+        calc(4px / 2) calc(100% / 2),
+        50%;
+}
+
+.darkstone-big-button:hover {
+    background-image:
+        url('img/darkstone-menu/menu_button_frame_top_left_corner.png'),
+        url('img/darkstone-menu/menu_button_frame_top_right_corner.png'),
+        url('img/darkstone-menu/menu_button_frame_bottom_left_corner.png'),
+        url('img/darkstone-menu/menu_button_frame_bottom_right_corner.png'),
+        url('img/darkstone-menu/menu_button_frame_top.png'),
+        url('img/darkstone-menu/menu_button_frame_bottom.png'),
+        url('img/darkstone-menu/menu_button_frame_left.png'),
+        url('img/darkstone-menu/menu_button_frame_right.png'),
+        url(img/RockRough0001_2_download600.jpg);
+}
+
+.darkstone-big-button.pressed,
+.darkstone-big-button:active {
+    background-image:
+        url('img/darkstone-menu/menu_rightbuttondown_top_left.png'),
+        url('img/darkstone-menu/menu_rightbuttondown_top_right.png'),
+        url('img/darkstone-menu/menu_rightbuttondown_bottom_left.png'),
+        url('img/darkstone-menu/menu_rightbuttondown_bottom_right.png'),
+        url('img/darkstone-menu/menu_rightbuttondown_top.png'),
+        url('img/darkstone-menu/menu_rightbuttondown_bottom.png'),
+        url('img/darkstone-menu/menu_rightbuttondown_left.png'),
+        url('img/darkstone-menu/menu_rightbuttondown_right.png'),
+        url(img/RockRough0001_2_download600.jpg);
+    background-size:
+        calc(4px / 2) calc(4px / 2),
+        calc(4px / 2) calc(4px / 2),
+        calc(4px / 2) calc(4px / 2),
+        calc(4px / 2) calc(4px / 2),
+        calc(16px / 2) calc(4px / 2),
+        calc(16px / 2) calc(4px / 2),
+        calc(4px / 2) calc(100% / 2),
+        calc(4px / 2) calc(100% / 2),
+        50%;
+}
+
+.darkstone-inner {
+    bbox-shadow: 0px 0px 5px rgb(127 127 127), inset 0px 0px 10px rgb(127 127 127);
+    box-shadow: 0px 0px 9px rgb(127 127 127), inset 0px 0px 10px rgb(127 127 127);
+    box-sizing: border-box;
+    ppadding: 10px !important;
+    background-color: transparent;
+    background-image:
+        url(img/darkstone-menu/menu_thin_border_top_left_corner.png),
+        url(img/darkstone-menu/menu_thin_border_top_right_corner.png),
+        url(img/darkstone-menu/menu_thin_border_bottom_left_corner.png),
+        url(img/darkstone-menu/menu_thin_border_bottom_right_corner.png),
+        url(img/darkstone-menu/menu_thin_border_top.png),
+        url(img/darkstone-menu/menu_thin_border_bottom.png),
+        url(img/darkstone-menu/menu_thin_border_left.png),
+        url(img/darkstone-menu/menu_thin_border_right.png);
+    background-size:
+        /* full hd */
+        1px 1px,
+        1px 1px,
+        1px 1px,
+        1px 1px,
+        256px 1px,
+        256px 1px,
+        1px 256px,
+        1px 256px;
+    bbackground-size:
+        /* 4k version */
+        2px 2px,
+        2px 2px,
+        2px 2px,
+        2px 2px,
+        256px 2px,
+        256px 2px,
+        2px 256px,
+        2px 256px;
+    background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, repeat-x, repeat-x, repeat-y, repeat-y;
+    background-position: top left, top right, bottom left, bottom right, top, bottom, left, right;
+}
+
+#genericList {
+    ccolor: cyan;
+    overflow-y: auto;
+    height: 200px;
+}
+
+#enemyList,
+#genericList,
+#mainViewArea {
+    bbackground-image: url(img/RockRough0001_1_download600.jpg);
+}
+
+ul {
+    mmargin: 0.25rem 0;
+    margin: 0;
+    padding-left: 1rem;
+}
+
+ul li {
+    list-style-type: none;
+    mmargin: 0.125rem 0;
+    padding: 0;
+}
+
+ul li .label {
+    cursor: pointer;
+}
+
+/* Region flavor colors for top-level menu labels */
+.label[class*="region-"] {
+    ddisplay: block;
+    ppadding: 1px;
+    ttext-shadow: none;
+    ffont-weight: 600;
+    lletter-spacing: 0.03em;
+}
+
+.tree-building.label {
+    color: #e7e7e7;
+}
+
+.label.region-ascadian-isles {
+    color: var(--region-ascadian-isles);
+}
+
+.label.region-bitter-coast {
+    color: var(--region-bitter-coast);
+}
+
+.label.region-west-gash {
+    color: var(--region-west-gash);
+}
+
+.label.region-ashlands {
+    color: var(--region-ashlands);
+}
+
+.label.region-molag-amur {
+    color: var(--region-molag-amur);
+}
+
+.label.region-azura-s-coast {
+    color: var(--region-azura-s-coast);
+}
+
+.label.region-grazelands {
+    color: var(--region-grazelands);
+}
+
+.label.region-sheogorad {
+    color: var(--region-sheogorad);
+}
+
+.label.expanded {
+    ttext-decoration: underline;
+}
+
+li>div {
+    display: contents;
+}
+
+/* a otse tree set is a list of items that can be expanded to show more items */
+ul.treeSet {
+    bbackground: rgba(0, 0, 0, 0.5);
+}
+
+ul li.dropdown {
+    position: relative;
+    display: flex;
+    cursor: pointer;
+    color: cyan;
+}
+
+ul li span {
+    text-wrap: nowrap;
+}
+
+.explanator {
+    color: var(--text-blue);
+    ffont-weight: bold;
+    padding: 5px;
+    padding-bottom: 0;
+}
+
+.darkstone-menu-divider {
+    ddisplay: none;
+    bbox-shadow: 0 0 6px rgb(181 181 181);
+    flex-shrink: 0;
+    width: 100%;
+    height: 2px;
+    margin: 0px 0;
+    background: url('img/darkstone-menu/menu_divider.png') center repeat-x;
+    background-size: 16px 1px;
+}
+
+.darkstone-inner-scroll {
+    overflow-y: auto;
+    scrollbar-gutter: stable;
+    /* Inset: scrollbar offset from inner window (top and sides) */
+    padding: 5px;
+}
+
+/* Scrollbar styling with Morrowind textures */
+.darkstone-inner-scroll::-webkit-scrollbar {
+    width: 22px;
+    /* 21 */
+}
+
+/* Hide duplicate scrollbar buttons (double-button mode) */
+.darkstone-inner-scroll::-webkit-scrollbar-button:vertical:start:increment,
+.darkstone-inner-scroll::-webkit-scrollbar-button:vertical:end:decrement,
+.darkstone-inner-scroll::-webkit-scrollbar-button:horizontal:start:increment,
+.darkstone-inner-scroll::-webkit-scrollbar-button:horizontal:end:decrement {
+    display: none;
+}
+
+/* Track: thin border frame + vertbar fill, inset 5px from edge */
+.darkstone-inner-scroll::-webkit-scrollbar-track {
+    background:
+        url('img/darkstone-menu/menu_thin_border_top_left_corner.png') no-repeat top left / 1px 1px,
+        url('img/darkstone-menu/menu_thin_border_top_right_corner.png') no-repeat top right / 1px 1px,
+        url('img/darkstone-menu/menu_thin_border_bottom_left_corner.png') no-repeat bottom left / 1px 1px,
+        url('img/darkstone-menu/menu_thin_border_bottom_right_corner.png') no-repeat bottom right / 1px 1px,
+        url('img/darkstone-menu/menu_thin_border_top.png') repeat-x top / 256px 1px,
+        url('img/darkstone-menu/menu_thin_border_bottom.png') repeat-x bottom / 256px 1px,
+        url('img/darkstone-menu/menu_thin_border_left.png') repeat-y left / 1px 256px,
+        url('img/darkstone-menu/menu_thin_border_right.png') repeat-y right / 1px 256px,
+        url('img/darkstone-menu/menu_scroll_vertbar_top.png') no-repeat top center / 1px 1px,
+        url('img/darkstone-menu/menu_scroll_vertbar_bottom.png') no-repeat bottom center / 1px 1px;
+    background-clip: content-box;
+    border: 2px solid transparent;
+    border-top: 1px solid transparent;
+    border-bottom: 1px solid transparent;
+    box-sizing: border-box;
+}
+
+.darkstone-inner-scroll::-webkit-scrollbar-thumb {
+    background: #cacaca;
+    background-clip: content-box;
+    border: 3px solid transparent;
+    border-right: 4.5px solid transparent !important;
+    border-left: 4px solid transparent !important;
+    box-sizing: border-box;
+    border-radius: 4px;
+}
+
+.darkstone-inner-scroll::-webkit-scrollbar-button:vertical:start,
+.darkstone-inner-scroll::-webkit-scrollbar-button:vertical:end {
+    height: 20px;
+    width: 20px;
+    border: 2px solid transparent;
+    box-sizing: border-box;
+    background-color: transparent;
+}
+
+/* Buttons: thin border frame + arrow icon (inline SVG for proper centering), inset 5px */
+.darkstone-inner-scroll::-webkit-scrollbar-button:vertical:start {
+    color: #bbbbbb;
+    background:
+        url('img/darkstone-menu/menu_thin_border_top_left_corner.png') no-repeat top left / 1px 1px,
+        url('img/darkstone-menu/menu_thin_border_top_right_corner.png') no-repeat top right / 1px 1px,
+        url('img/darkstone-menu/menu_thin_border_bottom_left_corner.png') no-repeat bottom left / 1px 1px,
+        url('img/darkstone-menu/menu_thin_border_bottom_right_corner.png') no-repeat bottom right / 1px 1px,
+        url('img/darkstone-menu/menu_thin_border_top.png') repeat-x top / 256px 1px,
+        url('img/darkstone-menu/menu_thin_border_bottom.png') repeat-x bottom / 256px 1px,
+        url('img/darkstone-menu/menu_thin_border_left.png') repeat-y left / 1px 256px,
+        url('img/darkstone-menu/menu_thin_border_right.png') repeat-y right / 1px 256px,
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M6 3L2 9h8z' fill='%23cacaca'/%3E%3C/svg%3E") no-repeat center / 15px 15px;
+    bbackground-size: auto, auto, auto, auto, auto, auto, auto, auto, 15px 15px;
+    background-clip: content-box;
+    border-bottom-width: 0px;
+}
+
+.darkstone-inner-scroll::-webkit-scrollbar-button:vertical:end {
+    background:
+        url('img/darkstone-menu/menu_thin_border_top_left_corner.png') no-repeat top left / 1px 1px,
+        url('img/darkstone-menu/menu_thin_border_top_right_corner.png') no-repeat top right / 1px 1px,
+        url('img/darkstone-menu/menu_thin_border_bottom_left_corner.png') no-repeat bottom left / 1px 1px,
+        url('img/darkstone-menu/menu_thin_border_bottom_right_corner.png') no-repeat bottom right / 1px 1px,
+        url('img/darkstone-menu/menu_thin_border_top.png') repeat-x top / 256px 1px,
+        url('img/darkstone-menu/menu_thin_border_bottom.png') repeat-x bottom / 256px 1px,
+        url('img/darkstone-menu/menu_thin_border_left.png') repeat-y left / 1px 256px,
+        url('img/darkstone-menu/menu_thin_border_right.png') repeat-y right / 1px 256px,
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M6 9l4-6H2z' fill='%23cacaca'/%3E%3C/svg%3E") no-repeat center / 15px 15px;
+    bbackground-size: auto, auto, auto, auto, auto, auto, auto, auto, 15px 15px;
+    background-clip: content-box;
+    border-top-width: 0px;
+}
