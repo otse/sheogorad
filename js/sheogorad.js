@@ -34,9 +34,11 @@ export const Sheogorad = {
 		const bgMusic = document.getElementById('bg-music');
 		const muteBtn = document.getElementById('mute-btn');
 
+		// Sheogorad.musicPlayer = new MusicPlayer();
+
 		function playMusic() {
 			bgMusic.play().catch(() => { });
-			Sheogorad.musicPlayer = new MusicPlayer();
+			// Sheogorad.musicPlayer = new MusicPlayer();
 		}
 
 		// Problem Clicking the button doesnt start the music (not document)
@@ -56,14 +58,11 @@ export const Sheogorad = {
 				muteBtn.classList.add('muted');
 				muteBtn.title = 'Unmute';
 			}
+			Sheogorad.playClickSound();
 		});
 
 
 	},
-	/*async playClickSound() {
-		const click = new Audio('sound/menu click.wav');
-		click.play().catch(() => { });
-	},*/
 	async loadJson(filePath) {
 		try {
 			const response = await fetch(filePath);
@@ -82,6 +81,11 @@ export const Sheogorad = {
 
 	async loadIconList() {
 		this.iconList = await this.loadJson('json/icon list.json');
+	},
+
+	playClickSound() {
+		const click = new Audio('sound/menu click.wav');
+		click.play().catch(() => { });
 	},
 
 	formatNpcName(name) {
@@ -123,7 +127,7 @@ export const Sheogorad = {
 			darvame.wnd.moveTo(30, 40);
 			// Problem wnd.wnd makes no sense
 		}
-		
+
 
 	},
 

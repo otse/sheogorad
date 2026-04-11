@@ -10,6 +10,8 @@
 
 	<script type="module" src="js/sheogorad.js"></script>
 
+	<link rel="stylesheet" href="messy.css">
+
 	<style>
 		@font-face {
 			font-family: 'Pelagiad';
@@ -159,7 +161,7 @@
 		position: absolute;
 		top: 0;
 		left: 0;
-		height: calc(32px / 2);
+		height: calc(28px / 2);
 		width: calc(100% - 8px);
 		padding: 0 12px;
 		box-sizing: border-box;
@@ -210,7 +212,7 @@
 
 		background-image: url(img/RockRough0001_1_download600.jpg);
 		box-sizing: border-box;
-		padding: calc(42px / 2) calc(8px / 2) calc(8px / 2);
+		padding: calc(38px / 2) calc(8px / 2) calc(8px / 2);
 		min-width: 200px;
 		min-height: 100px;
 		overflow: hidden;
@@ -247,13 +249,13 @@
 			bottom,
 			0 0;
 		background-size:
-			calc(30px / 2) calc(42px / 2),
-			calc(30px / 2) calc(42px / 2),
+			calc(30px / 2) calc(38px / 2),
+			calc(30px / 2) calc(38px / 2),
 			calc(8px / 2) calc(40px / 2),
 			calc(8px / 2) calc(40px / 2),
 			calc(8px / 2) calc(40px / 2),
 			calc(8px / 2) calc(40px / 2),
-			calc(60px / 2) calc(42px / 2),
+			calc(60px / 2) calc(38px / 2),
 			calc(40px / 2) calc(8px / 2),
 			50%;
 	}
@@ -656,111 +658,7 @@
 		gap: 16px;
 	}
 
-	.darkstone-stat-bar {
-		display: flex;
-		flex-wrap: wrap;
-		align-items: center;
-		gap: 8px;
-	}
-
-	.darkstone-stat-bar .darkstone-stat-label {
-		flex: 0 0 auto;
-		min-width: 4em;
-	}
-
-	.darkstone-stat-bar .darkstone-stat-value {
-		flex: 0 0 auto;
-		margin-left: auto;
-	}
-
-	.darkstone-stat-bar-track {
-		flex: 1 1 100%;
-		height: 8px;
-		background: rgba(0, 0, 0, 0.5);
-		border: 1px solid rgb(231 206 159 / 40%);
-	}
-
-	.darkstone-stat-bar-fill {
-		height: 100%;
-		transition: width 0.2s ease;
-	}
-
-	.darkstone-stat-bar-health { background: #8b2020; }
-	.darkstone-stat-bar-magicka { background: #2040a0; }
-	.darkstone-stat-bar-fatigue { background: #208020; }
-
-	.darkstone-stats-left {
-		flex: 0 0 160px;
-		min-width: 0;
-	}
-
-	.darkstone-stats-list {
-		display: flex;
-		flex-direction: column;
-		gap: 2px;
-	}
-
-	.row {
-		display: flex;
-		flex-direction: row;
-		gap: 10px;
-		flex: 1;
-	}
 	
-	.column {
-		display: flex;
-		flex-direction: column;
-		gap: 10px;
-		flex: 1;
-	}
-
-	.darkstone-stats-list {
-		display: flex;
-		flex-direction: column;
-		gap: 2px;
-	}
-
-	.darkstone-stat-row {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		padding: 2px 0;
-	}
-
-	.darkstone-stat-row .darkstone-stat-label {
-		flex: 0 0 auto;
-	}
-
-	.darkstone-stat-row .darkstone-stat-value {
-		flex: 0 0 auto;
-		margin-left: 8px;
-	}
-
-	.darkstone-stats-layout {
-		flex: 1;
-		min-height: 0;
-	}
-
-	.darkstone-stats-skills {
-		flex: 1;
-		min-width: 0;
-		color: #242424;
-		color: #bebbb0;
-	}
-
-	.darkstone-stats-skills > .darkstone-stat-row {
-		padding-left: 9px;
-	}
-
-	.darkstone-stats-skill-header {
-		font-weight: bold;
-		margin: 4px 0 2px;
-		ccolor: #bfbbac;
-	}
-
-	.darkstone-stats-skill-header:first-child {
-		margin-top: 0;
-	}
 </style>
 
 <body>
@@ -800,6 +698,7 @@
 							<div class="darkstone-stat-row"><span class="darkstone-stat-label">Luck</span><span class="darkstone-stat-value">50</span></div>
 						</div>
 					</div>
+					<!--
 					<div class="darkstone-inner darkstone-stats-skills darkstone-inner-scroll" style="padding: 3px;">
 						<div class="darkstone-stats-skill-header">Major Skills:</div>
 						<div class="darkstone-stat-row"><span class="darkstone-stat-label">Medium Armor</span><span class="darkstone-stat-value">42</span></div>
@@ -825,7 +724,7 @@
 						<div class="darkstone-stat-row"><span class="darkstone-stat-label">Marksman</span><span class="darkstone-stat-value">5</span></div>
 						<div class="darkstone-stat-row"><span class="darkstone-stat-label">Mercantile</span><span class="darkstone-stat-value">10</span></div>
 						<div class="darkstone-stat-row"><span class="darkstone-stat-label">Speechcraft</span><span class="darkstone-stat-value">15</span></div>
-					</div>
+					</div>-->
 				</div>
 			<!--</div>-->
 		</template>

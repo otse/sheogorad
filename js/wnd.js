@@ -90,7 +90,7 @@ export default class Wnd {
 				e.preventDefault();
 				e.stopPropagation();
 				closeBtn.classList.add('pressed');
-				// Public.playClickSound();
+				Sheogorad.playClickSound();
 				document.addEventListener('mouseup', removePressed);
 			});
 			closeBtn.addEventListener('mouseleave', removePressed);
