@@ -30,7 +30,9 @@ export const Sheogorad = {
 		await this.loadIconList();
 		this.setupEventListeners();
 
-		// new Wnd('History', null, { width: 300, height: 150 });
+		Wnd.init();
+
+		new Wnd('History', null, { width: 300, height: 150 });
 
 		Sheogorad.generate(); // We're cheating! Skip GenDiag!
 
@@ -131,11 +133,11 @@ export const Sheogorad = {
 
 		this.populate();
 
-		// Search for npc of name X and make a wnd for them
+		// Search for npc of name X and make a Wnd for them
 		const wulf = this.npcs.find(npc => npc.name === 'wulf');
 		if (wulf) {
 			wulf.makeWnd();
-			wulf.wnd.moveTo(30, 40);
+			//wulf.wnd.moveTo(30, 40);
 			// Problem wnd.wnd makes no sense
 		}
 

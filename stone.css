@@ -1,4 +1,4 @@
-stone-user-interface {
+stone-elements {
 	/* this means the element itself is not rendered, only its children are */
 	display: contents;
 
@@ -7,7 +7,7 @@ stone-user-interface {
 	text-shadow: rgb(126 126 126 / 50%) 0px 1px 1px, rgb(0 0 0 / 80%) 0px -1px 1px;
 }
 
-stone-user-interface :is(input, select, button) {
+stone-elements :is(input, select, button) {
 	background-color: transparent;
 	font-family: inherit;
 	border: 2px outset #854026;
@@ -16,12 +16,22 @@ stone-user-interface :is(input, select, button) {
 	font-size: 17px;
 }
 
-/*stone-user-interface button {
+stone-wnds {
+	position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    width: 100%;
+	height: 100%;
+	pointer-events: none;  /* Make the container click-through */	
+}
+
+/*stone-elements button {
 	cursor: pointer;
 	background-color: #aa9a00;
 }
 
-stone-user-interface button:hover {
+stone-elements button:hover {
 	background-color: #0a5a62;
 }*/
 
@@ -83,6 +93,14 @@ stone-user-interface button:hover {
 	overflow: hidden;
 }
 
+.stone-wnd-title div {
+	display: flex;
+	position: absolute;
+	right: 0;
+	margin-right: 1px;
+	white-space: nowrap;
+}
+
 .stone-wnd-title {
 	ffont-size: calc(1.8rem / 2);
 	lline-height: calc(28px / 2);
@@ -126,7 +144,33 @@ stone-user-interface button:hover {
 	z-index: 1;
 }
 
+.stone-wnd[data-minimized] {
+	cursor: zoom-in !important;
+	background-position:
+		left top,
+		right top,
+		left bottom,
+		right bottom,
+		left 0px,
+		right 0px,
+		center top,
+		100px 100px,
+		0 0;
+    padding: calc(15px) calc(4px) calc(4px);
+	height: calc(38px / 2) !important;
+}
+
+.stone-wnd[data-minimized] .stone-wnd-title div {
+	display: none;
+}
+
+.stone-wnd[data-minimized] .stone-wnd-resize-handle {
+	display: none;
+}
+
 .stone-wnd {
+	pointer-events: auto;  /* Re-enable interactions on windows */
+
 	/* Box shadows are not OSR */
 	bbox-shadow: 0px 0px 3px rgb(80 80 80);
 	position: fixed;
@@ -193,22 +237,18 @@ stone-user-interface button:hover {
     color: var(--dark-text);
     border: none;
     border-radius: 0;
-    margin-left: 5px;
+    margin-left: 2px;
     text-shadow: none;
     font-weight: bold;
     line-height: 0;
-    wwidth: calc(40px / 2);
+    width: calc(38px / 2);
     height: calc(28px / 2);
     cursor: pointer;
     z-index: 20;
-}
 
-/* Add background and shadow effect */
-.stone-title-bar-button {
-	margin-right: 4px;
-	margin-left: 0px;
-	background: rgb(140 140 140);
-	box-shadow: 1px -1px 0px #989898, 0 0 1px #54545400;
+	/* Add background and shadow effect */
+	background: rgb(136 136 136);
+	bbox-shadow: 1px -1px 0px #989898, 0 0 1px #54545400;
 }
 
 .stone-wnd-close.pressed {
@@ -313,7 +353,7 @@ stone-user-interface button:hover {
 
 .stone-inner {
 	bbox-shadow: 0px 0px 5px rgb(127 127 127), inset 0px 0px 10px rgb(127 127 127);
-	box-shadow: 0px 0px 9px rgb(127 127 127), inset 0px 0px 10px rgb(127 127 127);
+	bbox-shadow: 0px 0px 3px rgb(127 127 127), inset 0px 0px 3px rgb(127 127 127);
 	box-sizing: border-box;
 	ppadding: 10px !important;
 	background-color: transparent;

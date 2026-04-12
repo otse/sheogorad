@@ -62,7 +62,7 @@
 		--region-sheogorad-x: #c162bc;
 
 		--dark-text: #2e3132;
-		--text-blue: #6cacd5;
+		--text-blue: #cacaca;
 		--title-bar-gradient-color: rgb(123 124 125 / 50%);
 	}
 
@@ -100,13 +100,14 @@
 </style>
 
 <body>
+	<stone-elements>
 	<stone-wnds></stone-wnds>
 	<h0></h0>
 	<br />
 	<audio id="bg-music" loop>
 		<source src="mw-menu-vanilla/blessing-of-vivec.mp3" type="audio/mpeg">
 	</audio>
-	<stone-user-interface>
+	
 		<nav>
 			<div class="nav-buttons">
 				<button type="button" id="mute-btn" class="stone-big-button" title="Mute">Music</button>
@@ -194,7 +195,7 @@
 			<div class="stone-wnd" moveable resizeable closable minimizable title="Example">
 				<div class="stone-wnd-title">
 					<span>Wnd</span>
-					<div style="display: flex; position: absolute; right: 0; white-space: nowrap;">
+					<div style="">
 						<button type="button" class="stone-title-bar-button min" title="Min">
 							-<!-- ⤥ -->
 						</button>

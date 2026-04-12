@@ -39,11 +39,9 @@ function moveWithin(parent, el, x, y) {
 	const ew = el.offsetWidth;
 	const eh = el.offsetHeight;
 
-	const clampedX = Math.max(-pw, Math.min(x,( pw) - ew));
+	const clampedX = Math.max(-pw, Math.min(x, (pw) - ew));
 	const clampedY = Math.max(-ph, Math.min(y, (ph) - eh));
 
-	console.warn('Cunt', [clampedX, clampedY]);
-	
 	return [clampedX, clampedY];
 
 	el.style.transform = `translate(${clampedX}px, ${clampedY}px)`;
@@ -57,6 +55,8 @@ const RESIZE_HANDLES = ['n', 's', 'e', 'w', 'ne', 'nw', 'se', 'sw'];
 this would still remove them from the DOM, then an animation
 will pop them back up to where they ought to be*/
 
+let stoneWnds;
+
 // A Mw / Ds Wnd
 export default class Wnd {
 
@@ -65,11 +65,14 @@ export default class Wnd {
 	el = null;
 
 	isDestroyed = false;
-
 	isMinimized = false;
 
 	beforeMinSize = { width: 0, height: 0 };
 	beforeMinXY = { x: 0, y: 0 };
+
+	static init() {
+		stoneWnds = document.querySelector('stone-wnds');
+	}
 
 	warnWindowDestroyed() {
 		if (!this.el) {
@@ -93,19 +96,20 @@ export default class Wnd {
 			return;
 		}
 		// this.dsWnd.style.display = 'none';
-		this.el.setAttribute('data-minimized', 'true');
 		this.beforeMinSize.width = this.el.offsetWidth;
 		this.beforeMinSize.height = this.el.offsetHeight;
 		this.beforeMinXY.x = parseFloat(this.el.getAttribute('data-x')) || 0;
 		this.beforeMinXY.y = parseFloat(this.el.getAttribute('data-y')) || 0;
+		this.el.setAttribute('data-minimized', 'true');
 
 		console.warn('Min imize');
-		
+
 		this.moveWithinTranslateTerritory(
 			-window.innerWidth, -window.innerHeight);
 		this.el.style.transition = 'transform 0.3s ease';
 		//
 		Taskbar.admitOne(this);
+		this.el.setAttribute('data-minimized', 'true');
 		// Hide the content part, but keep the title bar visible for now
 		const contentContainer = this.el.querySelector('.stone-wnd-content');
 		contentContainer.style.display = 'none';
@@ -163,7 +167,7 @@ export default class Wnd {
 			this.warnWindowDestroyed();
 			return;
 		}
-		const clut = moveWithin(document.body, this.el, mx, my);
+		const clut = moveWithin(stoneWnds, this.el, mx, my);
 		this.moveTo(clut[0], clut[1]);
 		// this.moveTo(mx, my);
 	}
@@ -196,53 +200,59 @@ export default class Wnd {
 	constructor(title, content, options = {}) {
 		const darkstoneUI = document.querySelector('stone-user-interface');
 
-		const mwMenuTemplate = document.getElementById('stone-wnd-template');
-		const clone = mwMenuTemplate.content.cloneNode(true);
+		const wndTemplate = document.getElementById('stone-wnd-template');
+		const clone = wndTemplate.content.cloneNode(true);
 
-		const dsWnd = clone.querySelector('.stone-wnd');
-		this.el = dsWnd;
+		this.el = clone.querySelector('.stone-wnd');
 
-		dsWnd.style.width = (options.width || 200) + 'px';
-		dsWnd.style.height = (options.height || 200) + 'px';
+		// Attach Wnd user-data to el
+		this.el._wndInstance = this;
 
-		dsWnd.querySelector('.stone-wnd-title span').innerHTML = `${title}`;
+		const el = this.el;
 
-		const contentContainer = dsWnd.querySelector('.stone-wnd-content');
+		stoneWnds.appendChild(clone);
+
+		el.style.width = (options.width || 200) + 'px';
+		el.style.height = (options.height || 200) + 'px';
+
+		el.querySelector('.stone-wnd-title span').innerHTML = `${title}`;
+
+		const contentContainer = el.querySelector('.stone-wnd-content');
 
 		if (content)
-			contentContainer.innerHTML	 = content;
+			contentContainer.innerHTML = content;
 
-		darkstoneUI.appendChild(clone);
+		//darkstoneUI.appendChild(clone);
 
-		const interactable = interact(dsWnd);
+		const interactable = interact(el);
 		this.interactable = interactable;
 
-		const rect = dsWnd.getBoundingClientRect();
+		const rect = el.getBoundingClientRect();
 		//dsWnd.style.left = (window.innerWidth / 2 - rect.width / 2) + 'px';
 		//dsWnd.style.top = (window.innerHeight / 2 - rect.height / 2) + 'px';
 
-		dsWnd.style.transform = 'none';
+		el.style.transform = 'none';
 
 		const that = this;
 
 		// Set up interact let's
 
 		// Problem This is a quick and dirty z-index hack
-		dsWnd.addEventListener('mousedown', () => {
+		el.addEventListener('mousedown', () => {
 			document.querySelectorAll('.stone-wnd').forEach((box) => box.classList.remove('active'));
-			dsWnd.classList.add('active');
+			el.classList.add('active');
 		});
 
-		if (dsWnd.hasAttribute('minimizable')) {
-			const minBtn = dsWnd.querySelector('.stone-title-bar-button.min');
+		if (el.hasAttribute('minimizable')) {
+			const minBtn = el.querySelector('.stone-title-bar-button.min');
 			minBtn.addEventListener('click', (e) => {
 				e.stopPropagation();
 				Sheogorad.playClickSound();
 				this.toggleMin();
 			});
 		}
-		if (dsWnd.hasAttribute('closable')) {
-			const closeBtn = dsWnd.querySelector('.stone-title-bar-button.close');
+		if (el.hasAttribute('closable')) {
+			const closeBtn = el.querySelector('.stone-title-bar-button.close');
 			const removePressed = () => {
 				closeBtn.classList.remove('pressed');
 				document.removeEventListener('mouseup', removePressed);
@@ -260,7 +270,7 @@ export default class Wnd {
 				this.close();
 			});
 		}
-		if (dsWnd.hasAttribute('moveable')) {
+		if (el.hasAttribute('moveable')) {
 			interactable.draggable({
 				allowFrom: '.stone-wnd-title',
 				modifiers: [
@@ -291,10 +301,10 @@ export default class Wnd {
 		RESIZE_HANDLES.forEach((edge) => {
 			const handle = document.createElement('div');
 			handle.className = `stone-wnd-resize-handle stone-wnd-resize-${edge}`;
-			dsWnd.appendChild(handle);
+			el.appendChild(handle);
 		});
 
-		if (dsWnd.hasAttribute('resizeable')) {
+		if (el.hasAttribute('resizeable')) {
 			interactable.resizable({
 				allowFrom: '.stone-wnd-resize-handle',
 				edges: {
