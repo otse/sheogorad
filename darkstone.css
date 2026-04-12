@@ -97,7 +97,7 @@ darkstone-user-interface button:hover {
     box-sizing: border-box;
     margin: 2px 2px;
     border-radius: 2px;
-    box-shadow: inset 0 0 6px var(--title-bar-gradient-color);
+    box-shadow: inset 0 0 3px var(--title-bar-gradient-color);
     background: linear-gradient(to bottom, transparent, var(--title-bar-gradient-color));
     bbackground: url(img/RockRough0001_1_download600.jpg);
     bbackground-position: 10px -40px;
@@ -109,7 +109,7 @@ darkstone-user-interface button:hover {
 
 .darkstone-wnd-title span {
     display: inline-block;
-    ccolor: #bfcfd3;
+    color: #363839;
     /*padding: 0 2px;
     font-size: calc(1.8rem / 2);
     height: 100%;
