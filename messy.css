@@ -1,42 +1,42 @@
-.stone-stat-bar {
+.rune-stat-bar {
 	display: flex;
 	flex-wrap: wrap;
 	align-items: center;
 	gap: 8px;
 }
 
-.stone-stat-bar .stone-stat-label {
+.rune-stat-bar .rune-stat-label {
 	flex: 0 0 auto;
 	min-width: 4em;
 }
 
-.stone-stat-bar .stone-stat-value {
+.rune-stat-bar .rune-stat-value {
 	flex: 0 0 auto;
 	margin-left: auto;
 }
 
-.stone-stat-bar-track {
+.rune-stat-bar-track {
 	flex: 1 1 100%;
 	height: 8px;
 	background: rgba(0, 0, 0, 0.5);
 	border: 1px solid rgb(231 206 159 / 40%);
 }
 
-.stone-stat-bar-fill {
+.rune-stat-bar-fill {
 	height: 100%;
 	transition: width 0.2s ease;
 }
 
-.stone-stat-bar-health { background: #8b2020; }
-.stone-stat-bar-magicka { background: #2040a0; }
-.stone-stat-bar-fatigue { background: #208020; }
+.rune-stat-bar-health { background: #8b2020; }
+.rune-stat-bar-magicka { background: #2040a0; }
+.rune-stat-bar-fatigue { background: #208020; }
 
-.stone-stats-left {
+.rune-stats-left {
 	flex: 0 0 160px;
 	min-width: 0;
 }
 
-.stone-stats-list {
+.rune-stats-list {
 	display: flex;
 	flex-direction: column;
 	gap: 2px;
@@ -56,50 +56,50 @@
 	flex: 1;
 }
 
-.stone-stats-list {
+.rune-stats-list {
 	display: flex;
 	flex-direction: column;
 	gap: 2px;
 }
 
-.stone-stat-row {
+.rune-stat-row {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	padding: 2px 0;
 }
 
-.stone-stat-row .stone-stat-label {
+.rune-stat-row .rune-stat-label {
 	flex: 0 0 auto;
 }
 
-.stone-stat-row .stone-stat-value {
+.rune-stat-row .rune-stat-value {
 	flex: 0 0 auto;
 	margin-left: 8px;
 }
 
-.stone-stats-layout {
+.rune-stats-layout {
 	flex: 1;
 	min-height: 0;
 }
 
-.stone-stats-skills {
+.rune-stats-skills {
 	flex: 1;
 	min-width: 0;
 	color: #242424;
 	color: #bebbb0;
 }
 
-.stone-stats-skills > .stone-stat-row {
+.rune-stats-skills > .rune-stat-row {
 	padding-left: 9px;
 }
 
-.stone-stats-skill-header {
+.rune-stats-skill-header {
 	font-weight: bold;
 	margin: 4px 0 2px;
 	ccolor: #bfbbac;
 }
 
-.stone-stats-skill-header:first-child {
+.rune-stats-skill-header:first-child {
 	margin-top: 0;
 }

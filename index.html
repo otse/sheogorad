@@ -11,7 +11,7 @@
 	<script type="module" src="js/sheogorad.js"></script>
 
 	<link rel="stylesheet" href="messy.css">
-	<link rel="stylesheet" href="stone.css">
+	<link rel="stylesheet" href="rune.css">
 
 	<style>
 		@font-face {
@@ -87,8 +87,8 @@
 </style>
 
 <body>
-	<stone-elements>
-	<stone-wnds></stone-wnds>
+	<rune-elements>
+	<rune-wnds></rune-wnds>
 	<h0></h0>
 	<br />
 	<audio id="bg-music" loop>
@@ -97,126 +97,126 @@
 	
 		<nav>
 			<div class="nav-buttons">
-				<button type="button" id="mute-btn" class="stone-big-button" title="Mute">Music</button>
-				<button type="button" id="new-box-btn" class="stone-big-button" title="Open new window">Lore
+				<button type="button" id="mute-btn" class="rune-big-button" title="Mute">Music</button>
+				<button type="button" id="new-box-btn" class="rune-big-button" title="Open new window">Lore
 					Panel</button>
 			</div>
 		</nav>
 		<template id="npc-wnd-template">
-			<!--<div class="stone-inner stone-inner-scroll" style="width: 100%;">-->
-			<div class="stone-stats-layout row">
-				<div class="stone-stats-left column">
-					<div class="stone-inner" style="padding: 3px;">
-						<div class="stone-stat-bar"><span class="stone-stat-label">Health</span><span
-								class="stone-stat-value">61/78</span>
-							<div class="stone-stat-bar-track">
-								<div class="stone-stat-bar-fill stone-stat-bar-health" style="width: 78%"></div>
+			<!--<div class="rune-inner rune-inner-scroll" style="width: 100%;">-->
+			<div class="rune-stats-layout row">
+				<div class="rune-stats-left column">
+					<div class="rune-inner" style="padding: 3px;">
+						<div class="rune-stat-bar"><span class="rune-stat-label">Health</span><span
+								class="rune-stat-value">61/78</span>
+							<div class="rune-stat-bar-track">
+								<div class="rune-stat-bar-fill rune-stat-bar-health" style="width: 78%"></div>
 							</div>
 						</div>
-						<div class="stone-stat-bar"><span class="stone-stat-label">Magicka</span><span
-								class="stone-stat-value">206/206</span>
-							<div class="stone-stat-bar-track">
-								<div class="stone-stat-bar-fill stone-stat-bar-magicka" style="width: 100%">
+						<div class="rune-stat-bar"><span class="rune-stat-label">Magicka</span><span
+								class="rune-stat-value">206/206</span>
+							<div class="rune-stat-bar-track">
+								<div class="rune-stat-bar-fill rune-stat-bar-magicka" style="width: 100%">
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="stone-inner stone-stats-list" style="padding: 3px;">
-						<div class="stone-stat-row"><span class="stone-stat-label">Level</span><span
-								class="stone-stat-value">6</span></div>
-						<div class="stone-stat-row"><span class="stone-stat-label">Race</span><span
-								class="stone-stat-value">Dark Elf</span></div>
-						<div class="stone-stat-row"><span class="stone-stat-label">Class</span><span
-								class="stone-stat-value">Mage Warrior</span></div>
+					<div class="rune-inner rune-stats-list" style="padding: 3px;">
+						<div class="rune-stat-row"><span class="rune-stat-label">Level</span><span
+								class="rune-stat-value">6</span></div>
+						<div class="rune-stat-row"><span class="rune-stat-label">Race</span><span
+								class="rune-stat-value">Dark Elf</span></div>
+						<div class="rune-stat-row"><span class="rune-stat-label">Class</span><span
+								class="rune-stat-value">Mage Warrior</span></div>
 					</div>
-					<div class="stone-inner stone-stats-list" style="padding: 3px;">
-						<div class="stone-stat-row"><span class="stone-stat-label">Strength</span><span
-								class="stone-stat-value">57</span></div>
-						<div class="stone-stat-row"><span class="stone-stat-label">Intelligence</span><span
-								class="stone-stat-value">59</span></div>
-						<div class="stone-stat-row"><span class="stone-stat-label">Willpower</span><span
-								class="stone-stat-value">41</span></div>
-						<div class="stone-stat-row"><span class="stone-stat-label">Agility</span><span
-								class="stone-stat-value">50</span></div>
-						<div class="stone-stat-row"><span class="stone-stat-label">Speed</span><span
-								class="stone-stat-value">40</span></div>
-						<div class="stone-stat-row"><span class="stone-stat-label">Endurance</span><span
-								class="stone-stat-value">31</span></div>
-						<div class="stone-stat-row"><span class="stone-stat-label">Personality</span><span
-								class="stone-stat-value">50</span></div>
-						<div class="stone-stat-row"><span class="stone-stat-label">Luck</span><span
-								class="stone-stat-value">50</span></div>
+					<div class="rune-inner rune-stats-list" style="padding: 3px;">
+						<div class="rune-stat-row"><span class="rune-stat-label">Strength</span><span
+								class="rune-stat-value">57</span></div>
+						<div class="rune-stat-row"><span class="rune-stat-label">Intelligence</span><span
+								class="rune-stat-value">59</span></div>
+						<div class="rune-stat-row"><span class="rune-stat-label">Willpower</span><span
+								class="rune-stat-value">41</span></div>
+						<div class="rune-stat-row"><span class="rune-stat-label">Agility</span><span
+								class="rune-stat-value">50</span></div>
+						<div class="rune-stat-row"><span class="rune-stat-label">Speed</span><span
+								class="rune-stat-value">40</span></div>
+						<div class="rune-stat-row"><span class="rune-stat-label">Endurance</span><span
+								class="rune-stat-value">31</span></div>
+						<div class="rune-stat-row"><span class="rune-stat-label">Personality</span><span
+								class="rune-stat-value">50</span></div>
+						<div class="rune-stat-row"><span class="rune-stat-label">Luck</span><span
+								class="rune-stat-value">50</span></div>
 					</div>
 				</div>
 				<!--
-					<div class="stone-inner stone-stats-skills stone-inner-scroll" style="padding: 3px;">
-						<div class="stone-stats-skill-header">Major Skills:</div>
-						<div class="stone-stat-row"><span class="stone-stat-label">Medium Armor</span><span class="stone-stat-value">42</span></div>
-						<div class="stone-stat-row"><span class="stone-stat-label">Conjuration</span><span class="stone-stat-value">15</span></div>
-						<div class="stone-stat-row"><span class="stone-stat-label">Destruction</span><span class="stone-stat-value">25</span></div>
-						<div class="stone-stat-row"><span class="stone-stat-label">Alteration</span><span class="stone-stat-value">20</span></div>
-						<div class="stone-stat-row"><span class="stone-stat-label">Mysticism</span><span class="stone-stat-value">18</span></div>
-						<div class="stone-menu-divider stone-menu-divider-h"></div>
-						<div class="stone-stats-skill-header">Minor Skills:</div>
-						<div class="stone-stat-row"><span class="stone-stat-label">Heavy Armor</span><span class="stone-stat-value">15</span></div>
-						<div class="stone-stat-row"><span class="stone-stat-label">Enchant</span><span class="stone-stat-value">10</span></div>
-						<div class="stone-stat-row"><span class="stone-stat-label">Alchemy</span><span class="stone-stat-value">5</span></div>
-						<div class="stone-stat-row"><span class="stone-stat-label">Illusion</span><span class="stone-stat-value">10</span></div>
-						<div class="stone-stat-row"><span class="stone-stat-label">Restoration</span><span class="stone-stat-value">12</span></div>
-						<div class="stone-menu-divider stone-menu-divider-h"></div>
-						<div class="stone-stats-skill-header">Misc Skills:</div>
-						<div class="stone-stat-row"><span class="stone-stat-label">Block</span><span class="stone-stat-value">5</span></div>
-						<div class="stone-stat-row"><span class="stone-stat-label">Armorer</span><span class="stone-stat-value">5</span></div>
-						<div class="stone-stat-row"><span class="stone-stat-label">Athletics</span><span class="stone-stat-value">28</span></div>
-						<div class="stone-stat-row"><span class="stone-stat-label">Acrobatics</span><span class="stone-stat-value">15</span></div>
-						<div class="stone-stat-row"><span class="stone-stat-label">Light Armor</span><span class="stone-stat-value">10</span></div>
-						<div class="stone-stat-row"><span class="stone-stat-label">Sneak</span><span class="stone-stat-value">5</span></div>
-						<div class="stone-stat-row"><span class="stone-stat-label">Marksman</span><span class="stone-stat-value">5</span></div>
-						<div class="stone-stat-row"><span class="stone-stat-label">Mercantile</span><span class="stone-stat-value">10</span></div>
-						<div class="stone-stat-row"><span class="stone-stat-label">Speechcraft</span><span class="stone-stat-value">15</span></div>
+					<div class="rune-inner rune-stats-skills rune-inner-scroll" style="padding: 3px;">
+						<div class="rune-stats-skill-header">Major Skills:</div>
+						<div class="rune-stat-row"><span class="rune-stat-label">Medium Armor</span><span class="rune-stat-value">42</span></div>
+						<div class="rune-stat-row"><span class="rune-stat-label">Conjuration</span><span class="rune-stat-value">15</span></div>
+						<div class="rune-stat-row"><span class="rune-stat-label">Destruction</span><span class="rune-stat-value">25</span></div>
+						<div class="rune-stat-row"><span class="rune-stat-label">Alteration</span><span class="rune-stat-value">20</span></div>
+						<div class="rune-stat-row"><span class="rune-stat-label">Mysticism</span><span class="rune-stat-value">18</span></div>
+						<div class="rune-menu-divider rune-menu-divider-h"></div>
+						<div class="rune-stats-skill-header">Minor Skills:</div>
+						<div class="rune-stat-row"><span class="rune-stat-label">Heavy Armor</span><span class="rune-stat-value">15</span></div>
+						<div class="rune-stat-row"><span class="rune-stat-label">Enchant</span><span class="rune-stat-value">10</span></div>
+						<div class="rune-stat-row"><span class="rune-stat-label">Alchemy</span><span class="rune-stat-value">5</span></div>
+						<div class="rune-stat-row"><span class="rune-stat-label">Illusion</span><span class="rune-stat-value">10</span></div>
+						<div class="rune-stat-row"><span class="rune-stat-label">Restoration</span><span class="rune-stat-value">12</span></div>
+						<div class="rune-menu-divider rune-menu-divider-h"></div>
+						<div class="rune-stats-skill-header">Misc Skills:</div>
+						<div class="rune-stat-row"><span class="rune-stat-label">Block</span><span class="rune-stat-value">5</span></div>
+						<div class="rune-stat-row"><span class="rune-stat-label">Armorer</span><span class="rune-stat-value">5</span></div>
+						<div class="rune-stat-row"><span class="rune-stat-label">Athletics</span><span class="rune-stat-value">28</span></div>
+						<div class="rune-stat-row"><span class="rune-stat-label">Acrobatics</span><span class="rune-stat-value">15</span></div>
+						<div class="rune-stat-row"><span class="rune-stat-label">Light Armor</span><span class="rune-stat-value">10</span></div>
+						<div class="rune-stat-row"><span class="rune-stat-label">Sneak</span><span class="rune-stat-value">5</span></div>
+						<div class="rune-stat-row"><span class="rune-stat-label">Marksman</span><span class="rune-stat-value">5</span></div>
+						<div class="rune-stat-row"><span class="rune-stat-label">Mercantile</span><span class="rune-stat-value">10</span></div>
+						<div class="rune-stat-row"><span class="rune-stat-label">Speechcraft</span><span class="rune-stat-value">15</span></div>
 					</div>-->
 			</div>
 			<!--</div>-->
 		</template>
-		<template id="stone-wnd-template">
-			<div class="stone-wnd" moveable resizeable closable minimizable title="Example">
-				<div class="stone-wnd-title">
+		<template id="rune-wnd-template">
+			<div class="rune-wnd" moveable resizeable closable minimizable title="Example">
+				<div class="rune-wnd-title">
 					<span>Wnd</span>
 					<div style="">
-						<button type="button" class="stone-title-bar-button min" title="Min">
+						<button type="button" class="rune-title-bar-button min" title="Min">
 							-<!-- ⤥ -->
 						</button>
-						<button type="button" class="stone-title-bar-button close" title="Close">
+						<button type="button" class="rune-title-bar-button close" title="Close">
 							x
 						</button>
 					</div>
 				</div>
-				<div class="stone-wnd-content">
+				<div class="rune-wnd-content">
 					Default-Content
 				</div>
 			</div>
 		</template>
 
-		<template id="stone-npc-wnd-content-template">
+		<template id="rune-npc-wnd-content-template">
 
 		</template>
 
-		<!--<div class="stone-wnd stats" title="Sheogorad!" style="width: 200px; min-height: 100px;">
-			<button type="button" class="stone-wnd-close" title="Close">
+		<!--<div class="rune-wnd stats" title="Sheogorad!" style="width: 200px; min-height: 100px;">
+			<button type="button" class="rune-wnd-close" title="Close">
 				x
 			</button>
-			<div class="stone-wnd-title">
+			<div class="rune-wnd-title">
 				<span>The Dunmer</span>
 			</div>
-			<div class="stone-wnd-content">
+			<div class="rune-wnd-content">
 				Dark Elves
-				<div class="stone-inner stone-inner-scroll" style="hheight: 4em;">
+				<div class="rune-inner rune-inner-scroll" style="hheight: 4em;">
 					Dunmer distrust and are treated distrustfully by other races. They are often proud, clannish,
 					ruthless, and cruel, from an outsider's point of view, but greatly value loyalty and family.
 				</div>
 			</div>
 		</div>-->
-		<div id="generationDialog" stone-user-interface>
+		<div id="generationDialog" rune-user-interface>
 			<h2>Sheogorad Options</h2>
 			<label for="islandName">Name for this generation:</label>
 			<input type="text" id="islandName" placeholder="Slavewind" value="Slavewind">
@@ -238,11 +238,11 @@
 
 		<div id="mainView" style="display:none;">
 			<div style="display:flex; gap:20px;">
-				<div class="stone-smooth" style="flex:2;;">
-					<div class="stone-inner">
+				<div class="rune-smooth" style="flex:2;;">
+					<div class="rune-inner">
 						<div class="explanator">Tree View:</div>
-						<div class="stone-menu-divider"></div>
-						<div id="genericList" class="stone-inner-scroll" style="">
+						<div class="rune-menu-divider"></div>
+						<div id="genericList" class="rune-inner-scroll" style="">
 						</div>
 					</div>
 				</div>
@@ -251,7 +251,7 @@
 				</div>
 			</div>
 		</div>
-	</stone-user-interface>
+	</rune-elements>
 
 	<script>
 		function generateIsland() {

@@ -28,7 +28,7 @@ export default class LorePanel {
 		if (!this.wnd || this.wnd.isDestroyed) {
 		this.wnd = new Wnd(
 			`Lore Panel`,
-			`<div class="stone-inner stone-inner-scroll">${swathOfText}</div>`,
+			`<div class="rune-inner rune-inner-scroll">${swathOfText}</div>`,
 			{ width: 400, height: 200 });
 		}
 	}

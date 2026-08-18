@@ -71,7 +71,7 @@ export default class Wnd {
 	beforeMinXY = { x: 0, y: 0 };
 
 	static init() {
-		stoneWnds = document.querySelector('stone-wnds');
+		stoneWnds = document.querySelector('rune-wnds');
 	}
 
 	warnWindowDestroyed() {
@@ -111,7 +111,7 @@ export default class Wnd {
 		Taskbar.admitOne(this);
 		this.el.setAttribute('data-minimized', 'true');
 		// Hide the content part, but keep the title bar visible for now
-		const contentContainer = this.el.querySelector('.stone-wnd-content');
+		const contentContainer = this.el.querySelector('.rune-wnd-content');
 		contentContainer.style.display = 'none';
 		// Squish the height of the window to just the title bar
 		this.el.style.width = '0px';
@@ -128,7 +128,7 @@ export default class Wnd {
 		Taskbar.removeOne(this);
 		this.moveTo(this.beforeMinXY.x, this.beforeMinXY.y);
 		this.el.removeAttribute('data-minimized');
-		const contentContainer = this.el.querySelector('.stone-wnd-content');
+		const contentContainer = this.el.querySelector('.rune-wnd-content');
 		// Reset to default styles, which should be defined in CSS
 		contentContainer.style.display = '';
 		this.el.style.height = '';
@@ -187,7 +187,7 @@ export default class Wnd {
 			this.warnWindowDestroyed();
 			return;
 		}
-		const contentContainer = this.el.querySelector('.stone-wnd-content');
+		const contentContainer = this.el.querySelector('.rune-wnd-content');
 		contentContainer.innerHTML = '';
 		if (content instanceof Node) {
 			contentContainer.appendChild(content);
@@ -198,12 +198,12 @@ export default class Wnd {
 
 
 	constructor(title, content, options = {}) {
-		const darkstoneUI = document.querySelector('stone-user-interface');
+		const darkstoneUI = document.querySelector('rune-user-interface');
 
-		const wndTemplate = document.getElementById('stone-wnd-template');
+		const wndTemplate = document.getElementById('rune-wnd-template');
 		const clone = wndTemplate.content.cloneNode(true);
 
-		this.el = clone.querySelector('.stone-wnd');
+		this.el = clone.querySelector('.rune-wnd');
 
 		// Attach Wnd user-data to el
 		this.el._wndInstance = this;
@@ -215,9 +215,9 @@ export default class Wnd {
 		el.style.width = (options.width || 200) + 'px';
 		el.style.height = (options.height || 200) + 'px';
 
-		el.querySelector('.stone-wnd-title span').innerHTML = `${title}`;
+		el.querySelector('.rune-wnd-title span').innerHTML = `${title}`;
 
-		const contentContainer = el.querySelector('.stone-wnd-content');
+		const contentContainer = el.querySelector('.rune-wnd-content');
 
 		if (content)
 			contentContainer.innerHTML = content;
@@ -239,12 +239,12 @@ export default class Wnd {
 
 		// Problem This is a quick and dirty z-index hack
 		el.addEventListener('mousedown', () => {
-			document.querySelectorAll('.stone-wnd').forEach((box) => box.classList.remove('active'));
+			document.querySelectorAll('.rune-wnd').forEach((box) => box.classList.remove('active'));
 			el.classList.add('active');
 		});
 
 		if (el.hasAttribute('minimizable')) {
-			const minBtn = el.querySelector('.stone-title-bar-button.min');
+			const minBtn = el.querySelector('.rune-title-bar-button.min');
 			minBtn.addEventListener('click', (e) => {
 				e.stopPropagation();
 				Sheogorad.playClickSound();
@@ -252,7 +252,7 @@ export default class Wnd {
 			});
 		}
 		if (el.hasAttribute('closable')) {
-			const closeBtn = el.querySelector('.stone-title-bar-button.close');
+			const closeBtn = el.querySelector('.rune-title-bar-button.close');
 			const removePressed = () => {
 				closeBtn.classList.remove('pressed');
 				document.removeEventListener('mouseup', removePressed);
@@ -272,7 +272,7 @@ export default class Wnd {
 		}
 		if (el.hasAttribute('moveable')) {
 			interactable.draggable({
-				allowFrom: '.stone-wnd-title',
+				allowFrom: '.rune-wnd-title',
 				modifiers: [
 					interact.modifiers.restrictRect({
 						restriction: getGridRestriction,
@@ -300,18 +300,18 @@ export default class Wnd {
 
 		RESIZE_HANDLES.forEach((edge) => {
 			const handle = document.createElement('div');
-			handle.className = `stone-wnd-resize-handle stone-wnd-resize-${edge}`;
+			handle.className = `rune-wnd-resize-handle rune-wnd-resize-${edge}`;
 			el.appendChild(handle);
 		});
 
 		if (el.hasAttribute('resizeable')) {
 			interactable.resizable({
-				allowFrom: '.stone-wnd-resize-handle',
+				allowFrom: '.rune-wnd-resize-handle',
 				edges: {
-					top: '.stone-wnd-resize-n, .stone-wnd-resize-ne, .stone-wnd-resize-nw',
-					left: '.stone-wnd-resize-w, .stone-wnd-resize-nw, .stone-wnd-resize-sw',
-					bottom: '.stone-wnd-resize-s, .stone-wnd-resize-se, .stone-wnd-resize-sw',
-					right: '.stone-wnd-resize-e, .stone-wnd-resize-ne, .stone-wnd-resize-se',
+					top: '.rune-wnd-resize-n, .rune-wnd-resize-ne, .rune-wnd-resize-nw',
+					left: '.rune-wnd-resize-w, .rune-wnd-resize-nw, .rune-wnd-resize-sw',
+					bottom: '.rune-wnd-resize-s, .rune-wnd-resize-se, .rune-wnd-resize-sw',
+					right: '.rune-wnd-resize-e, .rune-wnd-resize-ne, .rune-wnd-resize-se',
 				},
 				modifiers: [
 					interact.modifiers.restrictSize({
