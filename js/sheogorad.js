@@ -50,6 +50,7 @@ export const Sheogorad = {
 		});
 
 		function startMusicWhenPossible() {
+			return;
 			bgMusic.play().catch(() => { });
 			// Sheogorad.musicPlayer = new MusicPlayer();
 		}
