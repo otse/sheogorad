@@ -4,7 +4,7 @@
 
 :root {
 	/* muted light tones for stone */
-	--title-bar-gradient-color: rgb(133 133 133 / 60%);
+	--title-bar-gradient-color: rgb(121 121 121);
 	--dark-text: #25292c;
 	--text-blue: #cacaca;
 }
@@ -178,8 +178,7 @@ rune-elements button:hover {
 .rune-wnd-title {
 	text-decoration: underline;
 	text-transform: lowercase;
-	line-height: calc(32px / 2);
-	color: var(--dark-text);
+	/* color: var(--dark-text); */
 	top: 0;
 	left: 0;
 	height: calc(32px / 2);
@@ -192,9 +191,10 @@ rune-elements button:hover {
 	margin: 2px 4px;
 	border-radius: 2px;
 	/* box-shadow: inset 0px 0px 10px var(--title-bar-gradient-color); */
-	background: linear-gradient(to bottom, transparent, var(--title-bar-gradient-color));
+	background: linear-gradient(to bottom, rgb(109 109 109 / 75%), rgb(149 149 149 / 50%));
 	x-background: url(img/RockRough0001_1_download600.jpg);
 	x-background-position: 10px -40px;
+	justify-content: center;
 }
 
 .rune-wnd-title span_x {
@@ -245,8 +245,7 @@ rune-elements button:hover {
 
 	/* Box shadows are not OSR */
 	box-shadow: 0px 0px 3px rgb(80 80 80);
-	bborder-radius: 3px;
-
+	border-radius: 3px;
 	position: fixed;
 	touch-action: none;
 	user-select: none;
@@ -254,7 +253,6 @@ rune-elements button:hover {
 	left: 50%;
 	transform: translate(-50%, -50%);
 	x-background: rgba(127, 127, 127, 0.5);
-
 	background-image: url(img/RockRough0001_1_download600.jpg);
 	padding: calc(42px / 2) calc(8px / 2) calc(8px / 2);
 	min-width: 200px;
@@ -307,11 +305,17 @@ rune-elements button:hover {
 .rune-title-bar-button.min,
 .rune-title-bar-button.close {}
 
+.rune-title-bar-button.close .gem-icon {
+	filter: hue-rotate(-90deg) saturate(0.3) brightness(1.1);
+	font-size: 80%;
+	text-shadow: 0 0 10px blue;
+}
+
 .rune-title-bar-button {
 	display: flex;
 	justify-content: center;
-	align-items: center;
-	margin-left: 2px;
+	line-height: calc(32px / 2);
+	/* margin-left: 2px; */
 	color: inherit;
 	color: #3d3d3d;
 	/* color: #453f32; */
@@ -320,13 +324,13 @@ rune-elements button:hover {
 	border: none;
 	overflow: hidden;
 	min-width: calc(33px / 2);
-	max-width: calc(42px / 2 - 4px);
+	/* width: calc(42px / 2 - 4px); */
 	height: calc(42px / 2 - 4px);
 	cursor: pointer;
 	z-index: 20;
-	border-radius: 4px;
+	border-radius: 5px;
 	/* border: 3px inset rgb(0 0 0 / 30%); */
-	/* box-shadow: inset 0 0 3px rgb(68 68 68), 0 0 0px rgb(75, 74, 71); */
+	box-shadow: inset 0 0 3px rgb(68 68 68), 0 0 0px rgb(75, 74, 71);
 	box-shadow: -1px 0px 0px rgb(0 0 0 / 20%);
 	background-image: url(rune/menu_button_frame_top_left_corner.png), url(rune/menu_button_frame_top_right_corner.png), url(rune/menu_button_frame_bottom_left_corner.png), url(rune/menu_button_frame_bottom_right_corner.png), url(rune/menu_button_frame_top.png), url(rune/menu_button_frame_bottom.png), url(rune/menu_button_frame_left.png), url(rune/menu_button_frame_right.png), url(img/RockRough0001_2_download600.jpg);
 	background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, repeat-x, repeat-x, repeat-y, repeat-y, repeat;
