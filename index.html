@@ -32,7 +32,7 @@
 		justify-content: center;
 		align-items: center;
 		background-color: #1e1e1e;
-		background: url(https://cdna.artstation.com/p/assets/images/images/022/972/972/large/dominik-zdenkovic-20191222-thu-bitter-coast3.jpg?1577548887);
+		x-background: url(https://cdna.artstation.com/p/assets/images/images/022/972/972/large/dominik-zdenkovic-20191222-thu-bitter-coast3.jpg?1577548887);
 		background-size: cover;
 		background-repeat: no-repeat;
 		background-attachment: fixed;
@@ -43,10 +43,10 @@
 		padding: 50px;
 	}
 
-	
+
 
 	h0 {}
-	
+
 	.nav-buttons {
 		display: flex;
 		gap: 8px;
@@ -73,17 +73,23 @@
 		flex-direction: row-reverse;
 		gap: 16px;
 	}
+
+	.rune-title-bar-button.close .gem-icon {
+		filter: hue-rotate(-90deg) saturate(0.5) brightness(1.1);
+		font-size: 80%;
+		text-shadow: 0 0 10px blue;
+	}
 </style>
 
 <body>
 	<rune-elements>
-	<rune-wnds></rune-wnds>
-	<h0></h0>
-	<br />
-	<audio id="bg-music" loop>
-		<source src="mw-menu-vanilla/blessing-of-vivec.mp3" type="audio/mpeg">
-	</audio>
-	
+		<rune-wnds></rune-wnds>
+		<h0></h0>
+		<br />
+		<audio id="bg-music" loop>
+			<source src="mw-menu-vanilla/blessing-of-vivec.mp3" type="audio/mpeg">
+		</audio>
+
 		<nav>
 			<div class="nav-buttons">
 				<button type="button" id="mute-btn" class="rune-big-button" title="Mute">Music</button>
@@ -176,6 +182,8 @@
 							-<!-- ⤥ -->
 						</button>
 						<button type="button" class="rune-title-bar-button close" title="Close">
+							<!--
+							<span class="gem-icon">💎</span>-->
 							x
 						</button>
 					</div>
