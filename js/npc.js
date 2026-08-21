@@ -19,7 +19,7 @@ export default class Npc {
 		const clone = mwMenuTemplate.content.cloneNode(true);
 
 		this.wnd = new Wnd(
-			`${this.icon} ${formatNpcName(this.name)}`,
+			`${this.icon}${formatNpcName(this.name)}`,
 			`Details about ${formatNpcName(this.name)}`,
 		{ width: 200, height: 300 });
 		this.wnd.setContent(clone);
