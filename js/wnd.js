@@ -52,8 +52,10 @@ function moveWithin(parent, el, x, y) {
 const RESIZE_HANDLES = ['n', 's', 'e', 'w', 'ne', 'nw', 'se', 'sw'];
 
 /* Windows should be able to minimize at some point,
-this would still remove them from the DOM, then an animation
-will pop them back up to where they ought to be*/
+   this would still remove them from the DOM, then an animation
+   will pop them back up to where they ought to be. */
+
+// the intended lifecycle is create → destroy → recreate, not create → hide → show.
 
 let stoneWnds;
 
@@ -140,6 +142,7 @@ export default class Wnd {
 		}, 300);
 	}
 
+	// Obscure method, completely hides our Wnd (not minimize)
 	toggle() {
 		if (!this.el) {
 			this.warnWindowDestroyed();
@@ -195,7 +198,6 @@ export default class Wnd {
 			contentContainer.textContent = content;
 		}
 	}
-
 
 	constructor(title, content, options = {}) {
 		const darkstoneUI = document.querySelector('rune-user-interface');

@@ -1,2 +1,3 @@
 mw-menu-vanilla/
 *.zip
+.well-known/appspecific/com.chrome.devtools.json

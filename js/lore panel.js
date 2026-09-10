@@ -24,7 +24,7 @@ export default class LorePanel {
 	wnd = null;
 	constructor() {
 	}
-	tryMake() {
+	ensureWnd() {
 		if (!this.wnd || this.wnd.isDestroyed) {
 		this.wnd = new Wnd(
 			`Lore Panel`,

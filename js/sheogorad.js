@@ -23,6 +23,8 @@ export const Sheogorad = {
 
 	npcs: [],
 
+	musicToggle: true,
+
 	async init() {
 		console.log('sheogorad initialized');
 
@@ -45,23 +47,22 @@ export const Sheogorad = {
 
 		lorePanelBtn.addEventListener('click', (e) => {
 			// this.lorePanel.close();
-			this.lorePanel.tryMake();
+			this.lorePanel.ensureWnd();
 			Sheogorad.playClickSound();
 		});
 
-		function startMusicWhenPossible() {
-			return;
+		function startMusicWhenPossible() {	
 			bgMusic.play().catch(() => { });
-			// Sheogorad.musicPlayer = new MusicPlayer();
 		}
 
 		// Problem Clicking the button doesnt start the music (not document)
 		document.addEventListener('click', startMusicWhenPossible, { once: true });
 		document.addEventListener('keydown', startMusicWhenPossible, { once: true });
 
+		
 		muteBtn.addEventListener('click', (e) => {
 			e.stopPropagation();
-			if (bgMusic.muted) {
+			/*if (bgMusic.muted) {
 				bgMusic.muted = false;
 				muteBtn.textContent = 'Music (On)';
 				muteBtn.classList.remove('muted');
@@ -71,8 +72,10 @@ export const Sheogorad = {
 				muteBtn.textContent = 'Music (Off)';
 				muteBtn.classList.add('muted');
 				muteBtn.title = 'Unmute';
-			}
+			}*/
 			Sheogorad.playClickSound();
+			Sheogorad.musicPlayer ??= new MusicPlayer();
+			Sheogorad.musicPlayer.toggle(this.musicToggle);
 		});
 
 
