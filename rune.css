@@ -13,7 +13,7 @@
 	font-family: 'Pelagiad';
 	font-size: 20px;
 	font-weight: 100;
-	text-transform: lowercase;
+	/* text-transform: lowercase; */
 	letter-spacing: 1px;
 	box-sizing: border-box;
 }
@@ -177,29 +177,33 @@ rune-elements button:hover {
 }
 
 .rune-wnd-title {
-	/* text-decoration: underline; */
-	/* text-transform: lowercase; */
-	color: #6a6753;
+	color: #312f2b;
 	top: 0;
 	left: 0;
 	height: calc(44px / 2);
 	width: calc(100% - 8px);
 	position: absolute;
 	display: flex;
-	align-items: center;
-	jjustify-content: center;
 	user-select: none;
 	margin: 0px 4px;
-	border-radius: 2px;
-	box-shadow: inset 0px 0px 10px var(--title-bar-gradient-color);
-	background: linear-gradient(to bottom, rgb(129 129 129 / 50%), rgb(137 137 137 / 50%));
-	x-background: url(img/RockRough0001_1_download600.jpg);
-	x-background-position: 10px -40px;
-	justify-content: center;
+	/* box-shadow: inset 0px 0px 10px var(--title-bar-gradient-color); */
+	/* justify-content: center; */
 }
 
-.rune-wnd-title span {
+.rune-wnd-title span:nth-of-type(1) {
+	background: linear-gradient(to bottom, rgb(129 129 129 / 25%), rgb(137 137 137 / 25%));
+	width: -webkit-fill-available;
+	height: -webkit-fill-available;
+	margin: 2px 0;
+	position: absolute;
+	/* z-index: 0; */
+	top: 0;
+	left: 0;
+}
+.rune-wnd-title span:nth-of-type(2) {
+	z-index: 1;
 	display: inline-flex;
+	border-radius: 6px;
 	padding: 0 12px;
 	height: inherit;
 	background-image: url(rune2/title-3-active.png);
@@ -243,8 +247,8 @@ rune-elements button:hover {
 
 	/* Box shadows are not OSR */
 	box-shadow: 0px 0px 3px rgb(80 80 80);
-	/* border-radius: 2px; */
-	/* border: 1px inset #ffffff; */
+	border-radius: 3px;
+	border: 1px inset #ffffff;
 	position: fixed;
 	touch-action: none;
 	/* user-select: none; */
@@ -259,8 +263,7 @@ rune-elements button:hover {
 	overflow: hidden;
 	display: flex;
 	flex-direction: column;
-	background-image:
-		url('rune2/top-left-active.png'),
+	background-image: url('rune2/top-left-active.png'),
 		url('rune2/top-right-active.png'),
 		url('rune2/bottom-left-active.png'),
 		url('rune2/bottom-right-active.png'),
@@ -289,9 +292,8 @@ rune-elements button:hover {
 		top,
 		bottom,
 		0 0;
-	background-size:
-		calc(30px / 2) calc(44px / 2),
-		calc(30px / 2) calc(44px / 2),
+	background-size: calc(30px / 2) calc(44px / 2),
+		calc(31px / 2) calc(44px / 2),
 		calc(8px / 2) calc(40px / 2),
 		calc(8px / 2) calc(40px / 2),
 		calc(8px / 2) calc(40px / 2),
@@ -319,7 +321,7 @@ rune-elements button:hover {
 	/* line-height: calc(28px / 2); */
 	/* margin: 2px; */
 	color: inherit;
-	color: #6c675c;
+	color: #583420;
 	/* font-weight: bold; */
 	text-shadow: inherit;
 	border: none;
@@ -336,6 +338,7 @@ rune-elements button:hover {
 	background: url(rune2/minimize-active.png) center / contain no-repeat;
 	background: transparent;
 	width: calc(34px / 2);
+	margin-right: 6px;
 }
 
 .rune-wnd-close.pressed {
@@ -359,14 +362,14 @@ rune-elements button:hover {
 	font-size: 1rem;
 	background-color: transparent;
 	background-image: url('rune2/menu_button_frame_top_left_corner.png'),
-  url('rune2/menu_button_frame_top_right_corner.png'),
-  url('rune2/menu_button_frame_bottom_left_corner.png'),
-  url('rune2/menu_button_frame_bottom_right_corner.png'),
-  url('rune2/menu_button_frame_top.png'),
-  url('rune2/menu_button_frame_bottom.png'),
-  url('rune2/menu_button_frame_left.png'),
-  url('rune2/menu_button_frame_right.png'),
-  url(img/RockRough0001_1_download600.jpg);
+		url('rune2/menu_button_frame_top_right_corner.png'),
+		url('rune2/menu_button_frame_bottom_left_corner.png'),
+		url('rune2/menu_button_frame_bottom_right_corner.png'),
+		url('rune2/menu_button_frame_top.png'),
+		url('rune2/menu_button_frame_bottom.png'),
+		url('rune2/menu_button_frame_left.png'),
+		url('rune2/menu_button_frame_right.png'),
+		url(img/RockRough0001_1_download600.jpg);
 	background-repeat:
 		no-repeat,
 		no-repeat,

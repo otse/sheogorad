@@ -217,7 +217,7 @@ export default class Wnd {
 		el.style.width = (options.width || 200) + 'px';
 		el.style.height = (options.height || 200) + 'px';
 
-		el.querySelector('.rune-wnd-title span').innerHTML = `${title}`;
+		el.querySelector('.rune-wnd-title span:nth-of-type(2)').innerHTML = `${title}`;
 
 		const contentContainer = el.querySelector('.rune-wnd-content');
 
