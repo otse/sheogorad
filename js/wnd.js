@@ -64,6 +64,8 @@ export default class Wnd {
 
 	static wnds = []; // Static
 
+	wndContent
+
 	el = null;
 
 	isDestroyed = false;
@@ -220,6 +222,8 @@ export default class Wnd {
 		el.querySelector('.rune-wnd-title span:nth-of-type(2)').innerHTML = `${title}`;
 
 		const contentContainer = el.querySelector('.rune-wnd-content');
+
+		this.wndContent = contentContainer;
 
 		if (content)
 			contentContainer.innerHTML = content;

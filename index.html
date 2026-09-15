@@ -87,8 +87,7 @@
 		<nav>
 			<div class="nav-buttons">
 				<button type="button" id="mute-btn" class="rune-big-button" title="Mute">Music Player</button>
-				<button type="button" id="new-box-btn" class="rune-big-button" title="Open new window">Lore
-					Panel</button>
+				<button type="button" id="new-box-btn" class="rune-big-button" title="Open new window">Lore</button>
 			</div>
 		</nav>
 		<template id="npc-wnd-template">
@@ -192,55 +191,8 @@
 
 		</template>
 
-		<!--<div class="rune-wnd stats" title="Sheogorad!" style="width: 200px; min-height: 100px;">
-			<button type="button" class="rune-wnd-close" title="Close">
-				x
-			</button>
-			<div class="rune-wnd-title">
-				<span>The Dunmer</span>
-			</div>
-			<div class="rune-wnd-content">
-				Dark Elves
-				<div class="rune-inner rune-inner-scroll" style="hheight: 4em;">
-					Dunmer distrust and are treated distrustfully by other races. They are often proud, clannish,
-					ruthless, and cruel, from an outsider's point of view, but greatly value loyalty and family.
-				</div>
-			</div>
-		</div>-->
-		<div id="generationDialog" rune-user-interface>
-			<h2>Sheogorad Options</h2>
-			<label for="islandName">Name for this generation:</label>
-			<input type="text" id="islandName" placeholder="Slavewind" value="Slavewind">
-
-			<label for="treeStyle">Tree Style:</label>
-			<select id="treeStyle">
-				<option value="oak">Oak</option>
-				<option value="pine">Pine</option>
-				<option value="palm">Palm</option>
-			</select>
-
-			<label>
-				<input type="checkbox" id="wildGrass">
-				Wild Grass
-			</label>
-
-			<button onclick="Sheogorad.generate()">Generate</button>
-		</div>
-
-		<div id="mainView" style="display:none;">
-			<div style="display:flex; gap:20px;">
-				<div class="rune-smooth" style="flex:2;;">
-					<div class="rune-inner">
-						<div class="explanator">Tree View:</div>
-						<div class="rune-menu-divider"></div>
-						<div id="genericList" class="rune-inner-scroll" style="">
-						</div>
-					</div>
-				</div>
-				<div id="mainViewArea" style="flex:2;">
-
-				</div>
-			</div>
+		<div id="mainDropOff">
+			You can place two windows here.
 		</div>
 	</rune-elements>
 
