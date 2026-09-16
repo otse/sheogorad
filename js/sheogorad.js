@@ -16,13 +16,17 @@ export const Sheogorad = {
 		debug: true
 	},
 
+	/** @type {LorePanel | null} */
 	lorePanel: null,
+	/** @type {AreaList | null} */
 	areaList: null,
+	/** @type {MusicPlayer | null} */
 	musicPlayer: null,
 
 	canonList: {},
 	iconList: {},
 
+	/** @type {Npc[]} */
 	npcs: [],
 
 	musicToggle: true,
@@ -38,27 +42,30 @@ export const Sheogorad = {
 
 		new Wnd('History', null, { width: 300, height: 150 });
 
-		
 		this.lorePanel = new LorePanel();
-		
+
 		this.areaList = new AreaList();
 		this.areaList.ensureWnd();
-		
+
 		Sheogorad.staaart(); // We're cheating! Skip GenDiag!
 
 		// this.musicPlayer = new MusicPlayer();
 
-		const bgMusic = document.getElementById('bg-music');
+		const bgMusic = /** @type {HTMLAudioElement | null} */ (document.getElementById('bg-music'));
 		const muteBtn = document.getElementById('mute-btn');
 		const lorePanelBtn = document.getElementById('new-box-btn');
 
-		lorePanelBtn.addEventListener('click', (e) => {
-			// this.lorePanel.close();
-			this.lorePanel.ensureWnd();
-			Sheogorad.playClickSound();
-		});
+		if (lorePanelBtn)
+			lorePanelBtn.addEventListener('click', (e) => {
+				// this.lorePanel.close();
+				if (this.lorePanel)
+					this.lorePanel.ensureWnd();
+				Sheogorad.playClickSound();
+			});
 
-		function startMusicWhenPossible() {	
+		function startMusicWhenPossible() {
+			if (!bgMusic)
+				return;
 			bgMusic.play().catch(() => { });
 		}
 
@@ -66,24 +73,24 @@ export const Sheogorad = {
 		document.addEventListener('click', startMusicWhenPossible, { once: true });
 		document.addEventListener('keydown', startMusicWhenPossible, { once: true });
 
-		
-		muteBtn.addEventListener('click', (e) => {
-			e.stopPropagation();
-			/*if (bgMusic.muted) {
-				bgMusic.muted = false;
-				muteBtn.textContent = 'Music (On)';
-				muteBtn.classList.remove('muted');
-				muteBtn.title = 'Mute';
-			} else {
-				bgMusic.muted = true;
-				muteBtn.textContent = 'Music (Off)';
-				muteBtn.classList.add('muted');
-				muteBtn.title = 'Unmute';
-			}*/
-			Sheogorad.playClickSound();
-			Sheogorad.musicPlayer ??= new MusicPlayer();
-			Sheogorad.musicPlayer.toggle(this.musicToggle);
-		});
+		if (muteBtn)
+			muteBtn.addEventListener('click', (e) => {
+				e.stopPropagation();
+				/*if (bgMusic.muted) {
+					bgMusic.muted = false;
+					muteBtn.textContent = 'Music (On)';
+					muteBtn.classList.remove('muted');
+					muteBtn.title = 'Mute';
+				} else {
+					bgMusic.muted = true;
+					muteBtn.textContent = 'Music (Off)';
+					muteBtn.classList.add('muted');
+					muteBtn.title = 'Unmute';
+				}*/
+				Sheogorad.playClickSound();
+				Sheogorad.musicPlayer ??= new MusicPlayer();
+				Sheogorad.musicPlayer.toggle(this.musicToggle);
+			});
 
 
 	},

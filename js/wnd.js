@@ -1,5 +1,6 @@
 // 🧙‍♀️ Code magic within
 
+import Sheogorad from './sheogorad.js';
 import Taskbar from './taskbar.js';
 
 function getGridRestriction() {
@@ -10,6 +11,7 @@ function getGridRestriction() {
 		bottom: window.innerHeight
 	};
 }
+/*
 function getTranslateAreaFor(rect) {
 	const centerX = window.innerWidth / 2;
 	const centerY = window.innerHeight / 2;
@@ -30,7 +32,7 @@ function getTranslateAreaFor(rect) {
 		right: maxRightOffset,
 		bottom: maxBottomOffset
 	};
-}
+}*/
 
 function moveWithin(parent, el, x, y) {
 	const pw = parent.clientWidth / 2;
@@ -64,8 +66,13 @@ export default class Wnd {
 
 	static wnds = []; // Static
 
-	wndContent
+	/** @type {HTMLElement} */
+	wndContent = document.createElement('div');
 
+	/**
+	 * @typedef {HTMLElement & { _wndInstance: Wnd }} WndElement
+	 */
+	/** @type {WndElement | null}  */
 	el = null;
 
 	isDestroyed = false;
@@ -102,8 +109,8 @@ export default class Wnd {
 		// this.dsWnd.style.display = 'none';
 		this.beforeMinSize.width = this.el.offsetWidth;
 		this.beforeMinSize.height = this.el.offsetHeight;
-		this.beforeMinXY.x = parseFloat(this.el.getAttribute('data-x')) || 0;
-		this.beforeMinXY.y = parseFloat(this.el.getAttribute('data-y')) || 0;
+		this.beforeMinXY.x = parseFloat(this.el.getAttribute('data-x') || '') || 0;
+		this.beforeMinXY.y = parseFloat(this.el.getAttribute('data-y') || '') || 0;
 		this.el.setAttribute('data-minimized', 'true');
 
 		console.warn('Min imize');
@@ -115,7 +122,10 @@ export default class Wnd {
 		Taskbar.admitOne(this);
 		this.el.setAttribute('data-minimized', 'true');
 		// Hide the content part, but keep the title bar visible for now
+		/** @type {HTMLElement | null} */
 		const contentContainer = this.el.querySelector('.rune-wnd-content');
+		if (!contentContainer)
+			return;
 		contentContainer.style.display = 'none';
 		// Squish the height of the window to just the title bar
 		this.el.style.width = '0px';
@@ -132,15 +142,19 @@ export default class Wnd {
 		Taskbar.removeOne(this);
 		this.moveTo(this.beforeMinXY.x, this.beforeMinXY.y);
 		this.el.removeAttribute('data-minimized');
+		/** @type {HTMLElement | null} */
 		const contentContainer = this.el.querySelector('.rune-wnd-content');
 		// Reset to default styles, which should be defined in CSS
+		if (!contentContainer)
+			return;
 		contentContainer.style.display = '';
 		this.el.style.height = '';
 		this.el.style.minHeight = '';
 		this.el.style.width = this.beforeMinSize.width + 'px';
 		this.el.style.height = this.beforeMinSize.height + 'px';
 		setTimeout(() => {
-			this.el.style.transition = '';
+			if (this.el)
+				this.el.style.transition = '';
 		}, 300);
 	}
 
@@ -193,6 +207,8 @@ export default class Wnd {
 			return;
 		}
 		const contentContainer = this.el.querySelector('.rune-wnd-content');
+		if (!contentContainer)
+			return;
 		contentContainer.innerHTML = '';
 		if (content instanceof Node) {
 			contentContainer.appendChild(content);
@@ -204,10 +220,14 @@ export default class Wnd {
 	constructor(title, content, options = {}) {
 		const darkstoneUI = document.querySelector('rune-user-interface');
 
-		const wndTemplate = document.getElementById('rune-wnd-template');
-		const clone = wndTemplate.content.cloneNode(true);
+		const wndTemplate = /** @type {HTMLTemplateElement} */ (document.getElementById('rune-wnd-template'));
+		
+		const clone = /** @type {DocumentFragment} */ (wndTemplate.content.cloneNode(true));
 
 		this.el = clone.querySelector('.rune-wnd');
+
+		if (!this.el)
+			throw new Error('Missing .rune-wnd element in #rune-wnd-template');
 
 		// Attach Wnd user-data to el
 		this.el._wndInstance = this;
@@ -219,9 +239,11 @@ export default class Wnd {
 		el.style.width = (options.width || 200) + 'px';
 		el.style.height = (options.height || 200) + 'px';
 
-		el.querySelector('.rune-wnd-title span:nth-of-type(2)').innerHTML = `${title}`;
+		// Fix this with a type assertion:
+		/** @type {HTMLElement} */
+		(el.querySelector('.rune-wnd-title span:nth-of-type(2)')).innerHTML = `${title}`;
 
-		const contentContainer = el.querySelector('.rune-wnd-content');
+		const contentContainer = /** @type {HTMLElement} */ (el.querySelector('.rune-wnd-content'));
 
 		this.wndContent = contentContainer;
 
@@ -251,6 +273,8 @@ export default class Wnd {
 
 		if (el.hasAttribute('minimizable')) {
 			const minBtn = el.querySelector('.rune-title-bar-button.min');
+			if (!minBtn)
+				return;
 			minBtn.addEventListener('click', (e) => {
 				e.stopPropagation();
 				Sheogorad.playClickSound();
@@ -259,6 +283,8 @@ export default class Wnd {
 		}
 		if (el.hasAttribute('closable')) {
 			const closeBtn = el.querySelector('.rune-title-bar-button.close');
+			if (!closeBtn)
+				return;
 			const removePressed = () => {
 				closeBtn.classList.remove('pressed');
 				document.removeEventListener('mouseup', removePressed);

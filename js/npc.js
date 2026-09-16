@@ -8,6 +8,7 @@ function formatNpcName(name) {
 }
 
 export default class Npc {
+	/** @type {Wnd | null} */
 	wnd = null;
 	icon = '';
 	constructor(name) {
@@ -15,13 +16,15 @@ export default class Npc {
 		this.icon = Sheogorad.iconList.npcIcons[name] || '';
 	}
 	makeWnd() {
-		const mwMenuTemplate = document.getElementById('npc-wnd-template');
+		const mwMenuTemplate = /** @type {HTMLTemplateElement} */
+			(document.getElementById('npc-wnd-template'));
+			
 		const clone = mwMenuTemplate.content.cloneNode(true);
 
 		this.wnd = new Wnd(
 			`${this.icon}${formatNpcName(this.name)}`,
 			`Details about ${formatNpcName(this.name)}`,
-		{ width: 200, height: 300 });
+			{ width: 200, height: 300 });
 		this.wnd.setContent(clone);
 	}
 }

@@ -21,6 +21,7 @@ In short, Vvardenfell is a dusty, hostile, strangely beautiful fever dream where
 `;
 
 export default class LorePanel {
+	/** @type {Wnd | null} */
 	wnd = null;
 	constructor() {
 	}

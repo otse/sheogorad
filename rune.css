@@ -463,7 +463,7 @@ rune-elements button:hover {
 	x-color: cyan;
 	overflow-y: auto;
 	overflow-x: hidden;
-	height: 200px;
+	/* height: 200px; */
 }
 
 #enemyList,

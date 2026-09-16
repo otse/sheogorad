@@ -15,6 +15,7 @@ const swathOfText = `
 `;
 
 export default class AreaList {
+	/** @type {Wnd | null} */
 	wnd = null;
 	constructor() {
 	}
@@ -34,7 +35,9 @@ export default class AreaList {
 		}
 	}
 	populate() {
-		const target = this.wnd.wndContent.querySelector('#genericList');
+		if (!this.wnd)
+			return;
+		const target = /** @type {HTMLElement} */ (this.wnd.wndContent.querySelector('#genericList'));
 
 		for (const region in Sheogorad.canonList) {
 			const tree = new Tree([], {
@@ -51,10 +54,10 @@ export default class AreaList {
 				const building_ids = settlement.buildings;
 
 				for (const building_id in building_ids) {
-					console.warn(' building_ids ', building_id);
+					//console.warn(' building_ids ', building_id);
 
 					for (const buildingObject of building_ids[building_id]) {
-						console.warn(' building ', buildingObject.instance.name);
+						// console.warn(' building ', buildingObject.instance.name);
 						const tree3 = new Tree([], {
 							name: buildingObject.instance.name,
 							labelClassName: 'tree-building'

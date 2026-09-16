@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "checkJs": true,
+    "lib": ["ES2022", "DOM"],
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "noEmit": true,
+    "noImplicitAny": false,
+    "strict": true,
+    "target": "ES2022",
+    "skipLibCheck": true
+  },
+  "include": ["js/**/*.js", "types/**/*.d.ts"],
+  "exclude": ["node_modules"]
+}
