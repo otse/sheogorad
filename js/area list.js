@@ -9,7 +9,7 @@ const swathOfText = `
 	<div class="rune-inner">
 		<div class="explanator">Stepped:</div>
 		<div class="rune-menu-divider"></div>
-		<div id="genericList" class="rune-inner-scroll" style="">
+		<div id="genericList" class="rune-scroll" style="">
 		</div>
 	</div>
 `;

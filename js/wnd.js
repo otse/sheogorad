@@ -2,6 +2,7 @@
 
 import Sheogorad from './sheogorad.js';
 import Taskbar from './taskbar.js';
+import LorePanel from './lore panel.js';
 
 function getGridRestriction() {
 	return {
@@ -89,6 +90,10 @@ export default class Wnd {
 		if (!this.el) {
 			console.warn('Attempted to interact with a destroyed wnd');
 		}
+	}
+
+	convertToWndcard() {
+		
 	}
 
 	toggleMin() {
@@ -213,15 +218,25 @@ export default class Wnd {
 		if (content instanceof Node) {
 			contentContainer.appendChild(content);
 		} else if (typeof content === 'string') {
-			contentContainer.textContent = content;
+			contentContainer.innerHTML = content;
 		}
+		this.bindRunes(contentContainer);
+	}
+
+	bindRunes(contentContainer) {
+		contentContainer.querySelectorAll('*').forEach((element) => {
+			if (!element.tagName.toLowerCase().startsWith('rune-') || element.dataset.loreBound)
+				return;
+			element.addEventListener('click', (event) => LorePanel.handleLink(event));
+			element.dataset.loreBound = 'true';
+		});
 	}
 
 	constructor(title, content, options = {}) {
 		const darkstoneUI = document.querySelector('rune-user-interface');
 
 		const wndTemplate = /** @type {HTMLTemplateElement} */ (document.getElementById('rune-wnd-template'));
-		
+
 		const clone = /** @type {DocumentFragment} */ (wndTemplate.content.cloneNode(true));
 
 		this.el = clone.querySelector('.rune-wnd');
@@ -233,6 +248,8 @@ export default class Wnd {
 		this.el._wndInstance = this;
 
 		const el = this.el;
+		if (options.wndcard)
+			el.classList.add('rune-wndcard');
 
 		stoneWnds.appendChild(clone);
 
@@ -249,6 +266,7 @@ export default class Wnd {
 
 		if (content)
 			contentContainer.innerHTML = content;
+		this.bindRunes(contentContainer);
 
 		//darkstoneUI.appendChild(clone);
 
@@ -265,11 +283,13 @@ export default class Wnd {
 
 		// Set up interact let's
 
-		// Problem This is a quick and dirty z-index hack
-		el.addEventListener('mousedown', () => {
+		const activate = () => {
 			document.querySelectorAll('.rune-wnd').forEach((box) => box.classList.remove('active'));
 			el.classList.add('active');
-		});
+		};
+
+		el.addEventListener('mousedown', activate);
+		activate();
 
 		if (el.hasAttribute('minimizable')) {
 			const minBtn = el.querySelector('.rune-title-bar-button.min');

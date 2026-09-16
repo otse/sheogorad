@@ -24,6 +24,7 @@ export const Sheogorad = {
 	musicPlayer: null,
 
 	canonList: {},
+	lore: {},
 	iconList: {},
 
 	/** @type {Npc[]} */
@@ -35,6 +36,7 @@ export const Sheogorad = {
 		console.log('sheogorad initialized');
 
 		await this.loadCanonList();
+		await this.loadLore();
 		await this.loadIconList();
 		this.setupEventListeners();
 
@@ -108,6 +110,10 @@ export const Sheogorad = {
 
 	async loadCanonList() {
 		this.canonList = await this.loadJson('json/canon list.json');
+	},
+
+	async loadLore() {
+		this.lore = await this.loadJson('json/lore.json');
 	},
 
 	async loadIconList() {

@@ -46,6 +46,12 @@ rune-wnds {
 	/* Make the container click-through */
 }
 
+rune-link {
+	color: #1e90ff;
+	text-decoration: underline;
+	cursor: pointer;
+}
+
 /*rune-elements button {
 	cursor: pointer;
 	background-color: #aa9a00;
@@ -187,6 +193,7 @@ rune-elements button:hover {
 	top: 0;
 	left: 0;
 }
+
 .rune-wnd-title span:nth-of-type(2) {
 	z-index: 1;
 	display: inline-flex;
@@ -288,6 +295,16 @@ rune-elements button:hover {
 		calc(60px / 2) calc(44px / 2),
 		calc(40px / 2) calc(8px / 2),
 		50%;
+}
+
+.rune-wndcard {
+	background-position: top left, top right, bottom left, bottom right, left 0, right 0, 0 -18px, bottom, 0 0;
+	padding: calc(8px / 2) calc(8px / 2) calc(8px / 2);
+	box-shadow: 0px 0px 12px #222;
+}
+
+.rune-wndcard .rune-wnd-title {
+	display: none;
 }
 
 .rune-title-bar-button.min,
@@ -572,29 +589,30 @@ ul li span {
 	background-size: 16px 1px;
 }
 
-.rune-inner-scroll {
+.rune-scroll {
 	overflow-y: auto;
+	overflow-x: hidden;
 	scrollbar-gutter: stable;
 	/* Inset: scrollbar offset from inner window (top and sides) */
 	padding: 5px;
 }
 
 /* Scrollbar styling with Morrowind textures */
-.rune-inner-scroll::-webkit-scrollbar {
+.rune-scroll::-webkit-scrollbar {
 	width: 22px;
 	/* 21 */
 }
 
 /* Hide duplicate scrollbar buttons (double-button mode) */
-.rune-inner-scroll::-webkit-scrollbar-button:vertical:start:increment,
-.rune-inner-scroll::-webkit-scrollbar-button:vertical:end:decrement,
-.rune-inner-scroll::-webkit-scrollbar-button:horizontal:start:increment,
-.rune-inner-scroll::-webkit-scrollbar-button:horizontal:end:decrement {
+.rune-scroll::-webkit-scrollbar-button:vertical:start:increment,
+.rune-scroll::-webkit-scrollbar-button:vertical:end:decrement,
+.rune-scroll::-webkit-scrollbar-button:horizontal:start:increment,
+.rune-scroll::-webkit-scrollbar-button:horizontal:end:decrement {
 	display: none;
 }
 
 /* Track: thin border frame + vertbar fill, inset 5px from edge */
-.rune-inner-scroll::-webkit-scrollbar-track {
+.rune-scroll::-webkit-scrollbar-track {
 	background:
 		url('rune2/menu_thin_border_top_left_corner.png') no-repeat top left / 1px 1px,
 		url('rune2/menu_thin_border_top_right_corner.png') no-repeat top right / 1px 1px,
@@ -612,7 +630,7 @@ ul li span {
 	border-bottom: 1px solid transparent;
 }
 
-.rune-inner-scroll::-webkit-scrollbar-thumb {
+.rune-scroll::-webkit-scrollbar-thumb {
 	background: #dddddd;
 	background-clip: content-box;
 	border: 3px solid transparent;
@@ -621,8 +639,8 @@ ul li span {
 	border-radius: 4px;
 }
 
-.rune-inner-scroll::-webkit-scrollbar-button:vertical:start,
-.rune-inner-scroll::-webkit-scrollbar-button:vertical:end {
+.rune-scroll::-webkit-scrollbar-button:vertical:start,
+.rune-scroll::-webkit-scrollbar-button:vertical:end {
 	height: 20px;
 	width: 20px;
 	border: 2px solid transparent;
@@ -630,7 +648,7 @@ ul li span {
 }
 
 /* Buttons: thin border frame + arrow icon (inline SVG for proper centering), inset 5px */
-.rune-inner-scroll::-webkit-scrollbar-button:vertical:start {
+.rune-scroll::-webkit-scrollbar-button:vertical:start {
 	color: #bbbbbb;
 	background:
 		url('rune2/menu_thin_border_top_left_corner.png') no-repeat top left / 1px 1px,
@@ -647,7 +665,7 @@ ul li span {
 	border-bottom-width: 0px;
 }
 
-.rune-inner-scroll::-webkit-scrollbar-button:vertical:end {
+.rune-scroll::-webkit-scrollbar-button:vertical:end {
 	background:
 		url('rune2/menu_thin_border_top_left_corner.png') no-repeat top left / 1px 1px,
 		url('rune2/menu_thin_border_top_right_corner.png') no-repeat top right / 1px 1px,
