@@ -6,10 +6,10 @@ import Tree from "./tree.js";
 import Wnd from "./wnd.js";
 
 const swathOfText = `
-	<div class="rune-inner">
+	<div class="rn-bordered">
 		<div class="explanator">Stepped:</div>
-		<div class="rune-menu-divider"></div>
-		<div id="genericList" class="rune-scroll" style="">
+		<div class="rn-menu-divider"></div>
+		<div id="genericList" class="rn-scroll" style="">
 		</div>
 	</div>
 `;
@@ -88,7 +88,7 @@ export default class AreaList {
 			target.appendChild(tree.getElement());
 
 			const divider = document.createElement('div');
-			divider.className = 'rune-menu-divider';
+			divider.className = 'rn-menu-divider';
 			// target.appendChild(divider);
 		}
 	}

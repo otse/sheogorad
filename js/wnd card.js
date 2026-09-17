@@ -17,6 +17,6 @@ export default class WndCard {
 
         this.wnd.el.removeAttribute('closable');
         this.wnd.el.removeAttribute('minimizable');
-        this.wnd.el.querySelectorAll('.rune-title-bar-button').forEach((button) => button.remove());
+        this.wnd.el.querySelectorAll('.rn-title-bar-button').forEach((button) => button.remove());
     }
 }

@@ -79,11 +79,16 @@ export default class Wnd {
 	isDestroyed = false;
 	isMinimized = false;
 
+	/** @type {Wnd | null} Wnd whose spawned link created this wnd, if any */
+	parent = null;
+	/** @type {Wnd[]} Wnds spawned from links inside this wnd */
+	children = [];
+
 	beforeMinSize = { width: 0, height: 0 };
 	beforeMinXY = { x: 0, y: 0 };
 
 	static init() {
-		stoneWnds = document.querySelector('rune-wnds');
+		stoneWnds = document.querySelector('rn-wnds');
 	}
 
 	warnWindowDestroyed() {
@@ -128,7 +133,7 @@ export default class Wnd {
 		this.el.setAttribute('data-minimized', 'true');
 		// Hide the content part, but keep the title bar visible for now
 		/** @type {HTMLElement | null} */
-		const contentContainer = this.el.querySelector('.rune-wnd-content');
+		const contentContainer = this.el.querySelector('.rn-wnd-content');
 		if (!contentContainer)
 			return;
 		contentContainer.style.display = 'none';
@@ -148,7 +153,7 @@ export default class Wnd {
 		this.moveTo(this.beforeMinXY.x, this.beforeMinXY.y);
 		this.el.removeAttribute('data-minimized');
 		/** @type {HTMLElement | null} */
-		const contentContainer = this.el.querySelector('.rune-wnd-content');
+		const contentContainer = this.el.querySelector('.rn-wnd-content');
 		// Reset to default styles, which should be defined in CSS
 		if (!contentContainer)
 			return;
@@ -181,9 +186,27 @@ export default class Wnd {
 			this.warnWindowDestroyed();
 			return;
 		}
+		this.closeChildren();
+		if (this.parent) {
+			const index = this.parent.children.indexOf(this);
+			if (index !== -1)
+				this.parent.children.splice(index, 1);
+			this.parent = null;
+		}
 		this.el.remove();
 		this.el = null;
 		this.isDestroyed = true;
+	}
+
+	// A wnd spawned this wnd by clicking a link within it
+	addChild(child) {
+		child.parent = this;
+		this.children.push(child);
+	}
+
+	// Cards spawned from this wnd are just spawns, so they die with a click
+	closeChildren() {
+		[...this.children].forEach((child) => child.close());
 	}
 
 	moveWithinTranslateTerritory(mx, my) {
@@ -211,7 +234,7 @@ export default class Wnd {
 			this.warnWindowDestroyed();
 			return;
 		}
-		const contentContainer = this.el.querySelector('.rune-wnd-content');
+		const contentContainer = this.el.querySelector('.rn-wnd-content');
 		if (!contentContainer)
 			return;
 		contentContainer.innerHTML = '';
@@ -225,7 +248,7 @@ export default class Wnd {
 
 	bindRunes(contentContainer) {
 		contentContainer.querySelectorAll('*').forEach((element) => {
-			if (!element.tagName.toLowerCase().startsWith('rune-') || element.dataset.loreBound)
+			if (!element.tagName.toLowerCase().startsWith('rn-') || element.dataset.loreBound)
 				return;
 			element.addEventListener('click', (event) => LorePanel.handleLink(event));
 			element.dataset.loreBound = 'true';
@@ -233,23 +256,23 @@ export default class Wnd {
 	}
 
 	constructor(title, content, options = {}) {
-		const darkstoneUI = document.querySelector('rune-user-interface');
+		const darkstoneUI = document.querySelector('rn-user-interface');
 
-		const wndTemplate = /** @type {HTMLTemplateElement} */ (document.getElementById('rune-wnd-template'));
+		const wndTemplate = /** @type {HTMLTemplateElement} */ (document.getElementById('rn-wnd-template'));
 
 		const clone = /** @type {DocumentFragment} */ (wndTemplate.content.cloneNode(true));
 
-		this.el = clone.querySelector('.rune-wnd');
+		this.el = clone.querySelector('.rn-wnd');
 
 		if (!this.el)
-			throw new Error('Missing .rune-wnd element in #rune-wnd-template');
+			throw new Error('Missing .rn-wnd element in #rn-wnd-template');
 
 		// Attach Wnd user-data to el
 		this.el._wndInstance = this;
 
 		const el = this.el;
 		if (options.wndcard)
-			el.classList.add('rune-wndcard');
+			el.classList.add('rn-wndcard');
 
 		stoneWnds.appendChild(clone);
 
@@ -258,9 +281,9 @@ export default class Wnd {
 
 		// Fix this with a type assertion:
 		/** @type {HTMLElement} */
-		(el.querySelector('.rune-wnd-title span:nth-of-type(2)')).innerHTML = `${title}`;
+		(el.querySelector('.rn-wnd-title span:nth-of-type(2)')).innerHTML = `${title}`;
 
-		const contentContainer = /** @type {HTMLElement} */ (el.querySelector('.rune-wnd-content'));
+		const contentContainer = /** @type {HTMLElement} */ (el.querySelector('.rn-wnd-content'));
 
 		this.wndContent = contentContainer;
 
@@ -284,15 +307,16 @@ export default class Wnd {
 		// Set up interact let's
 
 		const activate = () => {
-			document.querySelectorAll('.rune-wnd').forEach((box) => box.classList.remove('active'));
+			document.querySelectorAll('.rn-wnd').forEach((box) => box.classList.remove('active'));
 			el.classList.add('active');
+			that.closeChildren();
 		};
 
 		el.addEventListener('mousedown', activate);
 		activate();
 
 		if (el.hasAttribute('minimizable')) {
-			const minBtn = el.querySelector('.rune-title-bar-button.min');
+			const minBtn = el.querySelector('.rn-title-bar-button.min');
 			if (!minBtn)
 				return;
 			minBtn.addEventListener('click', (e) => {
@@ -302,7 +326,7 @@ export default class Wnd {
 			});
 		}
 		if (el.hasAttribute('closable')) {
-			const closeBtn = el.querySelector('.rune-title-bar-button.close');
+			const closeBtn = el.querySelector('.rn-title-bar-button.close');
 			if (!closeBtn)
 				return;
 			const removePressed = () => {
@@ -324,7 +348,8 @@ export default class Wnd {
 		}
 		if (el.hasAttribute('moveable')) {
 			interactable.draggable({
-				allowFrom: '.rune-wnd-title',
+				// Cards have no title bar, so drag from their content instead
+				allowFrom: options.wndcard ? '.rn-wnd-content' : '.rn-wnd-title',
 				modifiers: [
 					interact.modifiers.restrictRect({
 						restriction: getGridRestriction,
@@ -352,18 +377,18 @@ export default class Wnd {
 
 		RESIZE_HANDLES.forEach((edge) => {
 			const handle = document.createElement('div');
-			handle.className = `rune-wnd-resize-handle rune-wnd-resize-${edge}`;
+			handle.className = `rn-wnd-resize-handle rn-wnd-resize-${edge}`;
 			el.appendChild(handle);
 		});
 
 		if (el.hasAttribute('resizeable')) {
 			interactable.resizable({
-				allowFrom: '.rune-wnd-resize-handle',
+				allowFrom: '.rn-wnd-resize-handle',
 				edges: {
-					top: '.rune-wnd-resize-n, .rune-wnd-resize-ne, .rune-wnd-resize-nw',
-					left: '.rune-wnd-resize-w, .rune-wnd-resize-nw, .rune-wnd-resize-sw',
-					bottom: '.rune-wnd-resize-s, .rune-wnd-resize-se, .rune-wnd-resize-sw',
-					right: '.rune-wnd-resize-e, .rune-wnd-resize-ne, .rune-wnd-resize-se',
+					top: '.rn-wnd-resize-n, .rn-wnd-resize-ne, .rn-wnd-resize-nw',
+					left: '.rn-wnd-resize-w, .rn-wnd-resize-nw, .rn-wnd-resize-sw',
+					bottom: '.rn-wnd-resize-s, .rn-wnd-resize-se, .rn-wnd-resize-sw',
+					right: '.rn-wnd-resize-e, .rn-wnd-resize-ne, .rn-wnd-resize-se',
 				},
 				modifiers: [
 					interact.modifiers.restrictSize({

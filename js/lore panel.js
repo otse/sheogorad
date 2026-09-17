@@ -8,7 +8,7 @@ const swathOfText = `
 <img src="https://images.uesp.net/thumb/6/65/MW-place-Seyda_Neen.jpg/1600px-MW-place-Seyda_Neen.jpg" style="width: 100%; height: auto; margin-bottom: 10px;" alt="Seyda Neen, the port town you start in on Vvardenfell. It looks like a place where you would get scurvy.">
 Vvardenfell is what happens when a volcano decides it wants to run a country and everyone else just kind of… adapts.
 <p>
-At the center sits <rune-link>Red Mountain</rune-link>, eternally coughing up ash like it’s got a 4,000-year smoking habit. The sky is either “mildly apocalyptic beige” or “actively trying to sandblast your face off.” Locals call this weather. Visitors call it a mistake.
+At the center sits <rn-link>Red Mountain</rn-link>, eternally coughing up ash like it’s got a 4,000-year smoking habit. The sky is either “mildly apocalyptic beige” or “actively trying to sandblast your face off.” Locals call this weather. Visitors call it a mistake.
 <p>
 The architecture looks like it was designed by five different species who refused to share notes. You’ve got giant bug-shell houses, fungal skyscrapers grown like cursed vegetables, and Vivec City—a floating stack of concrete blocks that feels like brutalism had a religious awakening.
 <p>
@@ -44,10 +44,20 @@ export default class LorePanel {
 			? LorePanel.articleMarkup(article.value)
 			: `<p>No canon article found for <strong>${LorePanel.escapeHtml(query)}</strong>.</p>`;
 
-		new WndCard(title, `<div class="rune-scroll">${body}</div>`, {
+		const card = new WndCard(title, `<div class="rn-scroll">${body}</div>`, {
 			width: 360,
 			height: 240
 		});
+
+		if (card.wnd)
+			card.wnd.moveWithinTranslateTerritory(
+				event.clientX - window.innerWidth / 2,
+				event.clientY - window.innerHeight / 2);
+
+		const parentWndEl = /** @type {(HTMLElement & { _wndInstance?: Wnd }) | null} */ (rune.closest('.rn-wnd'));
+		const parentWnd = parentWndEl && parentWndEl._wndInstance;
+		if (parentWnd && card.wnd)
+			parentWnd.addChild(card.wnd);
 	}
 
 	/**
@@ -121,11 +131,11 @@ export default class LorePanel {
 			? `<p class="lore-entry-summary">${LorePanel.escapeHtml(value.summary)}</p>`
 			: '';
 		const region = value.region
-			? `<p class="lore-entry-region">Region: <rune-link>${LorePanel.escapeHtml(value.region)}</rune-link></p>`
+			? `<p class="lore-entry-region">Region: <rn-link>${LorePanel.escapeHtml(value.region)}</rn-link></p>`
 			: '';
 		const related = value.related?.length
 			? `<section><h2>Related</h2><div class="lore-entry-links">${value.related
-				.map((entry) => `<rune-link>${LorePanel.escapeHtml(entry)}</rune-link>`)
+				.map((entry) => `<rn-link>${LorePanel.escapeHtml(entry)}</rn-link>`)
 				.join('')}</div></section>`
 			: '';
 		const tags = value.tags?.length
@@ -150,7 +160,7 @@ export default class LorePanel {
 		if (!this.wnd || this.wnd.isDestroyed) {
 		this.wnd = new Wnd(
 			`Lore Panel`,
-			`<div class="rune-inner rune-scroll">${swathOfText}</div>`,
+			`<div class="rn-bordered rn-scroll">${swathOfText}</div>`,
 			{ width: 400, height: 600 });
 		}
 	}
@@ -160,7 +170,7 @@ export default class LorePanel {
 		}
 	}
 	setContent(content) {
-		const mate = `<div class="rune-inner rune-scroll">${swathOfText}</div>`;
+		const mate = `<div class="rn-bordered rn-scroll">${swathOfText}</div>`;
 	}
 	
 }

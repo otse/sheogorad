@@ -18,7 +18,7 @@
 	box-sizing: border-box;
 }
 
-rune-elements {
+rn-elements {
 	/* this means the element itself is not rendered, only its children are */
 	display: contents;
 	font-family: 'Pelagiad', serif;
@@ -26,7 +26,7 @@ rune-elements {
 	text-shadow: rgb(135 135 135) 0 1.5px 1px, rgb(0 0 0 / 100%) 0 -1.5px 1.5px;
 }
 
-rune-elements :is(input, select, button) {
+rn-elements :is(input, select, button) {
 	background-color: transparent;
 	font-family: inherit;
 	border: 2px outset #854026;
@@ -35,7 +35,7 @@ rune-elements :is(input, select, button) {
 	font-size: 17px;
 }
 
-rune-wnds {
+rn-wnds {
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -46,27 +46,27 @@ rune-wnds {
 	/* Make the container click-through */
 }
 
-rune-link {
+rn-link {
 	color: #1e90ff;
 	text-decoration: underline;
 	cursor: pointer;
 }
 
-/*rune-elements button {
+/*rn-elements button {
 	cursor: pointer;
 	background-color: #aa9a00;
 }
 
-rune-elements button:hover {
+rn-elements button:hover {
 	background-color: #0a5a62;
 }*/
 
-.rune-wnd-resize-handle {
+.rn-wnd-resize-handle {
 	position: absolute;
 	z-index: 10;
 }
 
-.rune-wnd-resize-n {
+.rn-wnd-resize-n {
 	top: 0;
 	left: 30px;
 	right: 30px;
@@ -74,7 +74,7 @@ rune-elements button:hover {
 	cursor: n-resize;
 }
 
-.rune-wnd-resize-s {
+.rn-wnd-resize-s {
 	bottom: 0;
 	left: 30px;
 	right: 30px;
@@ -82,7 +82,7 @@ rune-elements button:hover {
 	cursor: s-resize;
 }
 
-.rune-wnd-resize-e {
+.rn-wnd-resize-e {
 	top: 28px;
 	right: 0;
 	bottom: 28px;
@@ -90,7 +90,7 @@ rune-elements button:hover {
 	cursor: e-resize;
 }
 
-.rune-wnd-resize-w {
+.rn-wnd-resize-w {
 	top: 28px;
 	left: 0;
 	bottom: 28px;
@@ -98,7 +98,7 @@ rune-elements button:hover {
 	cursor: w-resize;
 }
 
-.rune-wnd-resize-ne {
+.rn-wnd-resize-ne {
 	top: 0;
 	right: 28px;
 	width: 10px;
@@ -106,7 +106,7 @@ rune-elements button:hover {
 	cursor: ne-resize;
 }
 
-.rune-wnd-resize-nw {
+.rn-wnd-resize-nw {
 	top: 0;
 	left: 0;
 	width: 10px;
@@ -114,7 +114,7 @@ rune-elements button:hover {
 	cursor: nw-resize;
 }
 
-.rune-wnd-resize-se {
+.rn-wnd-resize-se {
 	bottom: 0;
 	right: 0;
 	width: 10px;
@@ -122,7 +122,7 @@ rune-elements button:hover {
 	cursor: se-resize;
 }
 
-.rune-wnd-resize-sw {
+.rn-wnd-resize-sw {
 	bottom: 0;
 	left: 0;
 	width: 10px;
@@ -130,7 +130,7 @@ rune-elements button:hover {
 	cursor: sw-resize;
 }
 
-.rune-wnd:not([closeable]) .rune-wnd-resize-ne {
+.rn-wnd:not([closeable]) .rn-wnd-resize-ne {
 	right: 0;
 	width: 30px;
 }
@@ -148,8 +148,8 @@ rune-elements button:hover {
 	flex-direction: row;
 }
 
-.rune-wnd-content {
-	box-shadow: inset 0 0 0px rgb(127 127 127);
+.rn-wnd-content {
+	box-shadow: inset 0 0 12px rgb(110 110 110);
 	padding: 6px;
 	x-padding-top: calc(20px / 2);
 	gap: 10px;
@@ -160,7 +160,7 @@ rune-elements button:hover {
 	overflow: hidden;
 }
 
-.rune-wnd-title div {
+.rn-wnd-title div {
 	display: flex;
 	position: absolute;
 	top: 0px;
@@ -169,7 +169,7 @@ rune-elements button:hover {
 	x-white-space: nowrap;
 }
 
-.rune-wnd-title {
+.rn-wnd-title {
 	color: #312f2b;
 	top: 0;
 	left: 0;
@@ -183,7 +183,7 @@ rune-elements button:hover {
 	/* justify-content: center; */
 }
 
-.rune-wnd-title span:nth-of-type(1) {
+.rn-wnd-title span:nth-of-type(1) {
 	background: linear-gradient(to bottom, rgb(129 129 129 / 20%), rgb(137 137 137 / 20%));
 	width: -webkit-fill-available;
 	height: -webkit-fill-available;
@@ -194,7 +194,7 @@ rune-elements button:hover {
 	left: 0;
 }
 
-.rune-wnd-title span:nth-of-type(2) {
+.rn-wnd-title span:nth-of-type(2) {
 	z-index: 1;
 	display: inline-flex;
 	border-radius: 6px;
@@ -207,11 +207,11 @@ rune-elements button:hover {
 	align-items: center;
 }
 
-.rune-wnd.active {
+.rn-wnd.active {
 	z-index: 1;
 }
 
-.rune-wnd[data-minimized] {
+.rn-wnd[data-minimized] {
 	cursor: zoom-in !important;
 	background-position:
 		left top,
@@ -227,22 +227,22 @@ rune-elements button:hover {
 	height: calc(42px / 2) !important;
 }
 
-.rune-wnd[data-minimized] .rune-wnd-title div {
+.rn-wnd[data-minimized] .rn-wnd-title div {
 	display: none;
 }
 
-.rune-wnd[data-minimized] .rune-wnd-resize-handle {
+.rn-wnd[data-minimized] .rn-wnd-resize-handle {
 	display: none;
 }
 
-.rune-wnd {
+.rn-wnd {
 	pointer-events: auto;
 	/* Re-enable interactions on windows */
 
 	/* Box shadows are not OSR */
 	box-shadow: 0px 0px 3px rgb(80 80 80);
-	border-radius: 3px;
-	border: 1px inset #ffffff;
+	border-radius: 1px;
+	border: 1px solid #979797;
 	position: fixed;
 	touch-action: none;
 	/* user-select: none; */
@@ -297,39 +297,39 @@ rune-elements button:hover {
 		50%;
 }
 
-.rune-wndcard {
+.rn-wndcard {
 	background-position: top left, top right, bottom left, bottom right, left 0, right 0, top, bottom, 0 0;
 	padding: calc(8px / 2) calc(8px / 2) calc(8px / 2);
 	box-shadow: -12px 12px 24px #222;
 	background-size: calc(7px / 2) calc(44px / 2), calc(8px / 2) calc(44px / 2), calc(8px / 2) calc(40px / 2), calc(8px / 2) calc(40px / 2), calc(8px / 2) calc(40px / 2), calc(8px / 2) calc(40px / 2), calc(40px / 2) calc(8px / 2), calc(40px / 2) calc(8px / 2), 50%;
-	background-image: url(rune2/top-left-active.png), url(rune2/top-right-active.png), url(rune2/bottom-left-active.png), url(rune2/bottom-right-active.png), url(rune2/left-active.png), url(rune2/right-active.png), url(rune2/bottom-active.png), url(rune2/bottom-active.png), url(img/RockRough0001_1_download600.jpg);
+	background-image: url(rune2/top-left-active.png), url(rune2/top-right-active.png), url(rune2/bottom-left-active.png), url(rune2/bottom-right-active.png), url(rune2/left-active.png), url(rune2/right-active.png), url(rune2/bottom-active.png), url(rune2/bottom-active.png), url(img/RockRough0001_2_download600.jpg);
 	border: 0;
 }
 
-.rune-wndcard .rune-wnd-title {
+.rn-wndcard .rn-wnd-title {
 	display: none;
 }
 
-.rune-wndcard .rune-wnd-content {
-	box-shadow: inset 0 0 32px rgb(110 110 110);
+.rn-wndcard .rn-wnd-content {
+	/* box-shadow: inset 0 0 32px rgb(110 110 110); */
 	color: #2d2d2d;
 	padding: 0px;
 }
 
-.rune-title-bar-button.min,
-.rune-title-bar-button.close {}
+.rn-title-bar-button.min,
+.rn-title-bar-button.close {}
 
-.rune-title-bar-button.close .gem-icon {
+.rn-title-bar-button.close .gem-icon {
 	filter: hue-rotate(-90deg) saturate(0.5) brightness(1.5);
 	font-size: 80%;
 	text-shadow: 0 0 10px blue;
 }
 
-.rune-title-bar-button:active {
+.rn-title-bar-button:active {
 	box-shadow: inset 0 0 10px rgb(81 81 81);
 }
 
-.rune-title-bar-button {
+.rn-title-bar-button {
 	display: flex;
 	/* line-height: calc(28px / 2); */
 	/* margin: 2px; */
@@ -347,18 +347,18 @@ rune-elements button:hover {
 	align-items: center;
 }
 
-.rune-title-bar-button.min {
+.rn-title-bar-button.min {
 	background: url(rune2/minimize-active.png) center / contain no-repeat;
 	background: transparent;
 	width: calc(34px / 2);
 	margin-right: 6px;
 }
 
-.rune-wnd-close.pressed {
+.rn-wnd-close.pressed {
 	background-image: url('rune2/close-pressed.png');
 }
 
-.rune-big-button {
+.rn-big-button {
 	x-box-shadow: inset 0px 0px 6px #b5b58c;
 	text-shadow: inherit;
 	color: var(--dark-text);
@@ -410,7 +410,7 @@ rune-elements button:hover {
 		100%;
 }
 
-.rune-big-button:hover {
+.rn-big-button:hover {
 	background-image:
 		url('rune2/menu_button_frame_top_left_corner.png'),
 		url('rune2/menu_button_frame_top_right_corner.png'),
@@ -423,8 +423,8 @@ rune-elements button:hover {
 		url(img/RockRough0001_2_download600.jpg);
 }
 
-.rune-big-button.pressed,
-.rune-big-button:active {
+.rn-big-button.pressed,
+.rn-big-button:active {
 	background-image:
 		url('rune2/menu_rightbuttondown_top_left.png'),
 		url('rune2/menu_rightbuttondown_top_right.png'),
@@ -447,10 +447,12 @@ rune-elements button:hover {
 		50%;
 }
 
-.rune-inner {
+.rn-bordered {
 	display: flex;
-	padding: 3px;
+	padding: 6px;
 	width: 100%;
+	/* box-shadow: inset 0 0 10px #7d7d7d; */
+	border-radius: 3px;
 	background-image:
 		url(rune2/menu_thin_border_top_left_corner.png),
 		url(rune2/menu_thin_border_top_right_corner.png),
@@ -461,7 +463,7 @@ rune-elements button:hover {
 		url(rune2/menu_thin_border_left.png),
 		url(rune2/menu_thin_border_right.png);
 	background-size:
-		/* full hd */
+		
 		1px 1px,
 		1px 1px,
 		1px 1px,
@@ -470,16 +472,6 @@ rune-elements button:hover {
 		256px 1px,
 		1px 256px,
 		1px 256px;
-	x-background-size:
-		/* 4k version */
-		2px 2px,
-		2px 2px,
-		2px 2px,
-		2px 2px,
-		256px 2px,
-		256px 2px,
-		2px 256px,
-		2px 256px;
 	background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, repeat-x, repeat-x, repeat-y, repeat-y;
 	background-position: top left, top right, bottom left, bottom right, top, bottom, left, right;
 	flex-direction: column;
@@ -590,7 +582,7 @@ ul li span {
 	padding-bottom: 0;
 }
 
-.rune-menu-divider {
+.rn-menu-divider {
 	flex-shrink: 0;
 	width: 100%;
 	height: 2px;
@@ -598,7 +590,7 @@ ul li span {
 	background-size: 16px 1px;
 }
 
-.rune-scroll {
+.rn-scroll {
 	overflow-y: auto;
 	overflow-x: hidden;
 	scrollbar-gutter: stable;
@@ -607,21 +599,21 @@ ul li span {
 }
 
 /* Scrollbar styling with Morrowind textures */
-.rune-scroll::-webkit-scrollbar {
+.rn-scroll::-webkit-scrollbar {
 	width: 22px;
 	/* 21 */
 }
 
 /* Hide duplicate scrollbar buttons (double-button mode) */
-.rune-scroll::-webkit-scrollbar-button:vertical:start:increment,
-.rune-scroll::-webkit-scrollbar-button:vertical:end:decrement,
-.rune-scroll::-webkit-scrollbar-button:horizontal:start:increment,
-.rune-scroll::-webkit-scrollbar-button:horizontal:end:decrement {
+.rn-scroll::-webkit-scrollbar-button:vertical:start:increment,
+.rn-scroll::-webkit-scrollbar-button:vertical:end:decrement,
+.rn-scroll::-webkit-scrollbar-button:horizontal:start:increment,
+.rn-scroll::-webkit-scrollbar-button:horizontal:end:decrement {
 	display: none;
 }
 
 /* Track: thin border frame + vertbar fill, inset 5px from edge */
-.rune-scroll::-webkit-scrollbar-track {
+.rn-scroll::-webkit-scrollbar-track {
 	background:
 		url('rune2/menu_thin_border_top_left_corner.png') no-repeat top left / 1px 1px,
 		url('rune2/menu_thin_border_top_right_corner.png') no-repeat top right / 1px 1px,
@@ -639,7 +631,7 @@ ul li span {
 	border-bottom: 1px solid transparent;
 }
 
-.rune-scroll::-webkit-scrollbar-thumb {
+.rn-scroll::-webkit-scrollbar-thumb {
 	background: #dddddd;
 	background-clip: content-box;
 	border: 3px solid transparent;
@@ -648,8 +640,8 @@ ul li span {
 	border-radius: 4px;
 }
 
-.rune-wndcard .rune-scroll::-webkit-scrollbar-thumb {
-	background: #555;
+.rn-wndcard .rn-scroll::-webkit-scrollbar-thumb {
+	background: #333;
 	background-clip: content-box;
 	border: 3px solid transparent;
 	border-right: 4px solid transparent !important;
@@ -657,8 +649,8 @@ ul li span {
 	border-radius: 4px;
 }
 
-.rune-scroll::-webkit-scrollbar-button:vertical:start,
-.rune-scroll::-webkit-scrollbar-button:vertical:end {
+.rn-scroll::-webkit-scrollbar-button:vertical:start,
+.rn-scroll::-webkit-scrollbar-button:vertical:end {
 	height: 20px;
 	width: 20px;
 	border: 2px solid transparent;
@@ -666,7 +658,7 @@ ul li span {
 }
 
 /* Buttons: thin border frame + arrow icon (inline SVG for proper centering), inset 5px */
-.rune-scroll::-webkit-scrollbar-button:vertical:start {
+.rn-scroll::-webkit-scrollbar-button:vertical:start {
 	color: #bbbbbb;
 	background:
 		url('rune2/menu_thin_border_top_left_corner.png') no-repeat top left / 1px 1px,
@@ -683,7 +675,7 @@ ul li span {
 	border-bottom-width: 0px;
 }
 
-.rune-wndcard .rune-scroll::-webkit-scrollbar-button:vertical:start {
+.rn-wndcard .rn-scroll::-webkit-scrollbar-button:vertical:start {
 	color: #bbbbbb;
 	background:
 		url('rune2/menu_thin_border_top_left_corner.png') no-repeat top left / 1px 1px,
@@ -694,13 +686,13 @@ ul li span {
 		url('rune2/menu_thin_border_bottom.png') repeat-x bottom / 256px 1px,
 		url('rune2/menu_thin_border_left.png') repeat-y left / 1px 256px,
 		url('rune2/menu_thin_border_right.png') repeat-y right / 1px 256px,
-		url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M6 3L2 9h8z' fill='%23444'/%3E%3C/svg%3E") no-repeat center / 15px 15px;
+		url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M6 3L2 9h8z' fill='%23333'/%3E%3C/svg%3E") no-repeat center / 15px 15px;
 	bbackground-size: auto, auto, auto, auto, auto, auto, auto, auto, 15px 15px;
 	background-clip: content-box;
 	border-bottom-width: 0px;
 }
 
-.rune-scroll::-webkit-scrollbar-button:vertical:end {
+.rn-scroll::-webkit-scrollbar-button:vertical:end {
 	background:
 		url('rune2/menu_thin_border_top_left_corner.png') no-repeat top left / 1px 1px,
 		url('rune2/menu_thin_border_top_right_corner.png') no-repeat top right / 1px 1px,
@@ -716,7 +708,7 @@ ul li span {
 	border-top-width: 0px;
 }
 
-.rune-wndcard .rune-scroll::-webkit-scrollbar-button:vertical:end {
+.rn-wndcard .rn-scroll::-webkit-scrollbar-button:vertical:end {
 	background:
 		url('rune2/menu_thin_border_top_left_corner.png') no-repeat top left / 1px 1px,
 		url('rune2/menu_thin_border_top_right_corner.png') no-repeat top right / 1px 1px,
@@ -726,7 +718,7 @@ ul li span {
 		url('rune2/menu_thin_border_bottom.png') repeat-x bottom / 256px 1px,
 		url('rune2/menu_thin_border_left.png') repeat-y left / 1px 256px,
 		url('rune2/menu_thin_border_right.png') repeat-y right / 1px 256px,
-		url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M6 9l4-6H2z' fill='%23444'/%3E%3C/svg%3E") no-repeat center / 15px 15px;
+		url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M6 9l4-6H2z' fill='%23333'/%3E%3C/svg%3E") no-repeat center / 15px 15px;
 	bbackground-size: auto, auto, auto, auto, auto, auto, auto, auto, 15px 15px;
 	background-clip: content-box;
 	border-top-width: 0px;
