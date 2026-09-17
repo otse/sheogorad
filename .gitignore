@@ -2,3 +2,4 @@ mw-menu-vanilla/
 *.zip
 node_modules/
 .well-known/appspecific/com.chrome.devtools.json
+art/
