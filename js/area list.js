@@ -8,7 +8,7 @@ import Wnd from "./wnd.js";
 const swathOfText = `
 	<div class="rn-bordered">
 		<div class="explanator">Stepped:</div>
-		<div class="rn-menu-divider"></div>
+		<div class="rn-divider"></div>
 		<div id="genericList" class="rn-scroll" style="">
 		</div>
 	</div>
@@ -88,7 +88,7 @@ export default class AreaList {
 			target.appendChild(tree.getElement());
 
 			const divider = document.createElement('div');
-			divider.className = 'rn-menu-divider';
+			divider.className = 'rn-divider';
 			// target.appendChild(divider);
 		}
 	}

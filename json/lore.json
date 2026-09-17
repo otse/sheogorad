@@ -1,5 +1,11 @@
 {
   "lore": [
+     {
+      "name": "Stone Tablets",
+      "type": "card",
+      "summary": "Yes, the stone tablets. <p>Seyda Neen is a good starting place.</p>",
+      "related": []
+    },
     {
       "name": "Vvardenfell",
       "type": "region",

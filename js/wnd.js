@@ -2,7 +2,9 @@
 
 import Sheogorad from './sheogorad.js';
 import Taskbar from './taskbar.js';
-import LorePanel from './lore panel.js';
+// Dynamically imported in bindRunes() to avoid a circular import chain
+// (wnd.js -> lore panel.js -> wnd card.js -> wnd.js) that leaves Wnd
+// undefined when wnd card.js's class extends it.
 
 function getGridRestriction() {
 	return {
@@ -243,16 +245,6 @@ export default class Wnd {
 		} else if (typeof content === 'string') {
 			contentContainer.innerHTML = content;
 		}
-		this.bindRunes(contentContainer);
-	}
-
-	bindRunes(contentContainer) {
-		contentContainer.querySelectorAll('*').forEach((element) => {
-			if (!element.tagName.toLowerCase().startsWith('rn-') || element.dataset.loreBound)
-				return;
-			element.addEventListener('click', (event) => LorePanel.handleLink(event));
-			element.dataset.loreBound = 'true';
-		});
 	}
 
 	constructor(title, content, options = {}) {
@@ -289,7 +281,6 @@ export default class Wnd {
 
 		if (content)
 			contentContainer.innerHTML = content;
-		this.bindRunes(contentContainer);
 
 		//darkstoneUI.appendChild(clone);
 

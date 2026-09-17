@@ -4,19 +4,16 @@
 
 import Wnd from "./wnd.js";
 
-export default class WndCard {
-
-    /** @type {Wnd | null} */
-    wnd = null;
+export default class WndCard extends Wnd {
 
     constructor(title, content, options = {}) {
-        this.wnd = new Wnd(title, content, { ...options, wndcard: true });
+        super(title, content, { ...options, wndcard: true });
 
-        if (!this.wnd.el)
+        if (!this.el)
             return;
 
-        this.wnd.el.removeAttribute('closable');
-        this.wnd.el.removeAttribute('minimizable');
-        this.wnd.el.querySelectorAll('.rn-title-bar-button').forEach((button) => button.remove());
+        this.el.removeAttribute('closable');
+        this.el.removeAttribute('minimizable');
+        this.el.querySelectorAll('.rn-title-bar-button').forEach((button) => button.remove());
     }
 }

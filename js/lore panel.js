@@ -6,19 +6,7 @@ import WndCard from "./wnd card.js";
 
 const swathOfText = `
 <img src="https://images.uesp.net/thumb/6/65/MW-place-Seyda_Neen.jpg/1600px-MW-place-Seyda_Neen.jpg" style="width: 100%; height: auto; margin-bottom: 10px;" alt="Seyda Neen, the port town you start in on Vvardenfell. It looks like a place where you would get scurvy.">
-Vvardenfell is what happens when a volcano decides it wants to run a country and everyone else just kind of… adapts.
-<p>
-At the center sits <rn-link>Red Mountain</rn-link>, eternally coughing up ash like it’s got a 4,000-year smoking habit. The sky is either “mildly apocalyptic beige” or “actively trying to sandblast your face off.” Locals call this weather. Visitors call it a mistake.
-<p>
-The architecture looks like it was designed by five different species who refused to share notes. You’ve got giant bug-shell houses, fungal skyscrapers grown like cursed vegetables, and Vivec City—a floating stack of concrete blocks that feels like brutalism had a religious awakening.
-<p>
-Transportation? Giant fleas. Yes, the native taxi system is a screaming insect you climb into while questioning every life choice that led you there.
-<p>
-Wildlife ranges from “annoying crab with commitment issues” to “why is that dinosaur yelling at me?” Meanwhile, the locals—primarily the Dunmer—maintain a calm, judgmental vibe, as if you personally caused the ash storms.
-<p>
-Religion is intense, politics are messier than the terrain, and everyone seems involved in at least one prophecy whether they like it or not.
-<p>
-In short, Vvardenfell is a dusty, hostile, strangely beautiful fever dream where the bugs are big, the gods are bigger, and the weather absolutely hates you. And somehow… you’ll miss it when you leave.
+Browse through Vvardenfell using Stone Tablets.
 `;
 
 export default class LorePanel {
@@ -44,20 +32,32 @@ export default class LorePanel {
 			? LorePanel.articleMarkup(article.value)
 			: `<p>No canon article found for <strong>${LorePanel.escapeHtml(query)}</strong>.</p>`;
 
-		const card = new WndCard(title, `<div class="rn-scroll">${body}</div>`, {
-			width: 360,
-			height: 240
-		});
+		const card = new WndCard(
+			title,
+			`<div style="display: flex; flex-direction: column;">
+			${title}
+			<div class="rn-divider"></div>
+			<div class="rn-scroll">${body}</div>
+			</div>`,
+			{
+				width: 360,
+				height: 240
+			});
 
-		if (card.wnd)
-			card.wnd.moveWithinTranslateTerritory(
+		if (card)
+			card.moveWithinTranslateTerritory(
 				event.clientX - window.innerWidth / 2,
 				event.clientY - window.innerHeight / 2);
 
+		if (card) {
+			LorePanel.linkifyArticles(card.wndContent, title);
+			LorePanel.bindRunes(card.wndContent);
+		}
+
 		const parentWndEl = /** @type {(HTMLElement & { _wndInstance?: Wnd }) | null} */ (rune.closest('.rn-wnd'));
 		const parentWnd = parentWndEl && parentWndEl._wndInstance;
-		if (parentWnd && card.wnd)
-			parentWnd.addChild(card.wnd);
+		if (parentWnd && card)
+			parentWnd.addChild(card);
 	}
 
 	/**
@@ -78,7 +78,7 @@ export default class LorePanel {
 	 */
 	static findBestArticle(query) {
 		const normalizedQuery = query.toLowerCase().trim();
-		
+
 		/** @type {Article | null} */
 		let best = null;
 		let bestScore = 0;
@@ -122,46 +122,126 @@ export default class LorePanel {
 		return best;
 	}
 
-	static articleMarkup(value) {
-		const title = value.name ? `<h1>${LorePanel.escapeHtml(value.name)}</h1>` : '';
-		const type = value.type
-			? `<div class="lore-entry-type">${LorePanel.escapeHtml(value.type)}</div>`
-			: '';
-		const summary = value.summary
-			? `<p class="lore-entry-summary">${LorePanel.escapeHtml(value.summary)}</p>`
-			: '';
-		const region = value.region
-			? `<p class="lore-entry-region">Region: <rn-link>${LorePanel.escapeHtml(value.region)}</rn-link></p>`
-			: '';
-		const related = value.related?.length
-			? `<section><h2>Related</h2><div class="lore-entry-links">${value.related
-				.map((entry) => `<rn-link>${LorePanel.escapeHtml(entry)}</rn-link>`)
-				.join('')}</div></section>`
-			: '';
-		const tags = value.tags?.length
-			? `<section><h2>Tags</h2><div class="lore-entry-tags">${value.tags
-				.map((tag) => `<span>${LorePanel.escapeHtml(tag)}</span>`)
-				.join('')}</div></section>`
-			: '';
+	/**
+	 * Collects every lore article name, longest first so greedy matching prefers full names.
+	 * @returns {string[]}
+	 */
+	static collectArticleNames() {
+		const names = new Set();
 
-		return `<article class="lore-entry">${title}${type}${summary}${region}${related}${tags}</article>`;
+		function visit(value) {
+			if (Array.isArray(value)) {
+				value.forEach((item) => visit(item));
+				return;
+			}
+			if (!value || typeof value !== 'object')
+				return;
+
+			if (typeof value.name === 'string')
+				names.add(value.name);
+
+			Object.entries(value).forEach(([key, child]) => {
+				if (key !== 'name')
+					visit(child);
+			});
+		}
+
+		visit(Sheogorad.lore);
+		return [...names].sort((a, b) => b.length - a.length);
+	}
+
+	/**
+	 * Walks the text nodes of a rendered container and wraps any word/phrase matching a
+	 * known lore article name in an <rn-link> tag, so it becomes a clickable lore link.
+	 * @param {HTMLElement} container
+	 * @param {string} [excludeName] Article name to skip, e.g. the article currently being viewed.
+	 */
+	static linkifyArticles(container, excludeName) {
+		const names = LorePanel.collectArticleNames()
+			.filter((name) => !excludeName || name.toLowerCase() !== excludeName.toLowerCase());
+		if (!names.length)
+			return;
+
+		const pattern = new RegExp(
+			`\\b(${names.map((name) => name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')})\\b`,
+			'gi');
+
+		const walker = document.createTreeWalker(container, NodeFilter.SHOW_TEXT, {
+			acceptNode(node) {
+				const parentTag = node.parentElement && node.parentElement.tagName.toLowerCase();
+				if (parentTag && parentTag.startsWith('rn-'))
+					return NodeFilter.FILTER_REJECT;
+				return (node.textContent || '').trim() ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
+			}
+		});
+
+		/** @type {Text[]} */
+		const textNodes = [];
+		let current;
+		while ((current = walker.nextNode()))
+			textNodes.push(/** @type {Text} */ (current));
+
+		textNodes.forEach((textNode) => {
+			const text = textNode.textContent;
+			pattern.lastIndex = 0;
+			if (!pattern.test(text))
+				return;
+			pattern.lastIndex = 0;
+
+			const fragment = document.createDocumentFragment();
+			let lastIndex = 0;
+			let match;
+			while ((match = pattern.exec(text))) {
+				if (match.index > lastIndex)
+					fragment.appendChild(document.createTextNode(text.slice(lastIndex, match.index)));
+
+				const link = document.createElement('rn-link');
+				link.textContent = match[0];
+				fragment.appendChild(link);
+
+				lastIndex = match.index + match[0].length;
+			}
+			if (lastIndex < text.length)
+				fragment.appendChild(document.createTextNode(text.slice(lastIndex)));
+
+			textNode.replaceWith(fragment);
+		});
+	}
+
+	static articleMarkup(value) {
+		const summary = value.summary
+			? `<span class="lore-entry-summary">${LorePanel.escapeHtml(value.summary)}</span>`
+			: '';
+		return `<article class="lore-entry">${summary}</article>`;
 	}
 
 	static escapeHtml(value) {
-		return value.replace(/[&<>'"]/g, (character) => ({
+		return value.replace(/[&'"]/g, (character) => ({
 			'&': '&amp;',
-			'<': '&lt;',
-			'>': '&gt;',
+			//'<': '&lt;',
+			//'>': '&gt;',
 			"'": '&#39;',
 			'"': '&quot;'
 		}[character]));
 	}
+	// Makes <rn-*> elements inside lore panel content clickable lore links
+	static bindRunes(contentContainer) {
+		contentContainer.querySelectorAll('*').forEach((element) => {
+			if (!element.tagName.toLowerCase().startsWith('rn-') || element.dataset.loreBound)
+				return;
+			element.addEventListener('click', (event) => LorePanel.handleLink(event));
+			element.dataset.loreBound = 'true';
+		});
+	}
 	ensureWnd() {
 		if (!this.wnd || this.wnd.isDestroyed) {
-		this.wnd = new Wnd(
-			`Lore Panel`,
-			`<div class="rn-bordered rn-scroll">${swathOfText}</div>`,
-			{ width: 400, height: 600 });
+			this.wnd = new WndCard(
+				`Tome of Info`,
+				`<div class="rn-bordered rn-scroll">${swathOfText}</div>`,
+				{ width: 400, height: 250 });
+				this.wnd.moveTo(0, -250);
+				LorePanel.linkifyArticles(this.wnd.wndContent);
+				LorePanel.bindRunes(this.wnd.wndContent);
 		}
 	}
 	close() {
@@ -172,5 +252,5 @@ export default class LorePanel {
 	setContent(content) {
 		const mate = `<div class="rn-bordered rn-scroll">${swathOfText}</div>`;
 	}
-	
+
 }
