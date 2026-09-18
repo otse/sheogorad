@@ -201,9 +201,9 @@ rn-elements button:hover {
 	border-radius: 6px;
 	padding: 0 12px;
 	height: inherit;
-	background-image: url(rune2/title-3-active.png);
+	/* background-image: url(rune2/title-3-active.png); */
 	background-repeat: repeat-x;
-	background-position: center;
+	/* background-position: center; */
 	background-size: calc(60px / 2) calc(44px / 2);
 	align-items: center;
 }
@@ -578,6 +578,7 @@ ul li span {
 
 .explanator {
 	color: var(--text-blue);
+	color: #2d2d2d;
 	x-font-weight: bold;
 	padding: 5px;
 	padding-bottom: 0;
