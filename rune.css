@@ -140,13 +140,18 @@ rn-elements button:hover {
 	display: flex;
 	/* background: url(img/RockRough0001_2_download600.jpg); */
 	background-size: 50%;
-	width: 700px;
-	height: 100%;
-	padding: 6px;
-	box-shadow: 0px 0px 9px rgb(127, 127, 127);
-	border-radius: 9px;
-	overflow: hidden;
-	flex-direction: row;
+	width: 800px;
+	height: calc(40vh);
+	border: 3px inset #ffffff38;
+	border-radius: 3px;
+}
+
+#mainDropOff #dropOffLeft,
+#mainDropOff #dropOffRight {
+	flex: 1 1 0;
+	border: 2px dashed rgb(127, 127, 127);
+	margin: 4px;
+	border-radius: 4px;
 }
 
 .rn-wnd-content {
@@ -185,7 +190,7 @@ rn-elements button:hover {
 }
 
 .rn-wnd-title span:nth-of-type(1) {
-	background: linear-gradient(to bottom, rgb(129 129 129 / 20%), rgb(137 137 137 / 20%));
+	background: linear-gradient(to bottom, rgb(255 255 255 / 10%), rgb(255 255 255 / 20%));
 	width: -webkit-fill-available;
 	height: -webkit-fill-available;
 	margin: 2px 0;
@@ -210,6 +215,26 @@ rn-elements button:hover {
 
 .rn-wnd.active {
 	z-index: 1;
+}
+
+.rn-dock-zone {
+	outline: 2px dashed transparent;
+	outline-offset: -2px;
+	transition: outline-color 0.15s ease, background-color 0.15s ease;
+}
+
+.rn-dock-zone-hover {
+	outline-color: rgb(231 206 159 / 80%);
+	background-color: rgb(231 206 159 / 15%);
+}
+
+.rn-wnd-docked {
+	/* outline: 4px solid rgb(255 255 255 / 33%); */
+	/* outline-offset: -2px; */
+}
+
+.rn-wnd-docked span[gradient] {
+	display: none;
 }
 
 .rn-wnd[data-minimized] {
@@ -578,7 +603,7 @@ ul li span {
 
 .explanator {
 	color: var(--text-blue);
-	color: #2d2d2d;
+	/* color: #2d2d2d; */
 	x-font-weight: bold;
 	padding: 5px;
 	padding-bottom: 0;

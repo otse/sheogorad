@@ -155,6 +155,10 @@ export const Sheogorad = {
 			//wulf.wnd.moveTo(30, 40);
 			// Problem wnd.wnd makes no sense
 		}
+
+		// Define some dock zones
+		Wnd.defineDockZone('#dropOffLeft');
+		Wnd.defineDockZone('#dropOffRight');
 	},
 
 	populate() {

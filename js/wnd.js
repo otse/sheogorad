@@ -69,6 +69,48 @@ export default class Wnd {
 
 	static wnds = []; // Static
 
+	/** @type {Map<HTMLElement, object>} Dockable areas registered via Wnd.defineDockZone() */
+	static dockZones = new Map();
+
+	/**
+	 * Marks an element as a dock target. Windows dragged over it will
+	 * highlight it, and dropping there docks the window to its position.
+	 * @param {HTMLElement | string} element Element or CSS selector
+	 * @param {{ resize?: boolean }} [options]
+	 */
+	static defineDockZone(element, options = {}) {
+		if (typeof element === 'string')
+			element = /** @type {HTMLElement} */ (document.querySelector(element));
+		if (!element) {
+			console.warn('Wnd.defineDockZone: element not found');
+			return;
+		}
+		element.classList.add('rn-dock-zone');
+		Wnd.dockZones.set(element, options);
+
+		interact(element).dropzone({
+			accept: '.rn-wnd',
+			overlap: 'pointer',
+			ondragenter(event) {
+				event.target.classList.add('rn-dock-zone-hover');
+			},
+			ondragleave(event) {
+				event.target.classList.remove('rn-dock-zone-hover');
+			},
+			ondrop(event) {
+				event.target.classList.remove('rn-dock-zone-hover');
+				const wnd = event.relatedTarget && event.relatedTarget._wndInstance;
+				if (wnd)
+					wnd.dock(event.target, options);
+			},
+			ondropdeactivate(event) {
+				event.target.classList.remove('rn-dock-zone-hover');
+			},
+		});
+
+		return element;
+	}
+
 	/** @type {HTMLElement} */
 	wndContent = document.createElement('div');
 
@@ -85,6 +127,9 @@ export default class Wnd {
 	parent = null;
 	/** @type {Wnd[]} Wnds spawned from links inside this wnd */
 	children = [];
+
+	/** @type {HTMLElement | null} Dock zone this wnd is currently snapped to, if any */
+	dockedZone = null;
 
 	beforeMinSize = { width: 0, height: 0 };
 	beforeMinXY = { x: 0, y: 0 };
@@ -231,6 +276,44 @@ export default class Wnd {
 		this.el.setAttribute('data-y', y);
 	}
 
+	/**
+	 * Snaps this wnd into a dock zone registered via Wnd.defineDockZone().
+	 * @param {HTMLElement} zoneEl
+	 * @param {{ resize?: boolean }} [options]
+	 */
+	dock(zoneEl, options = {}) {
+		if (!this.el) {
+			this.warnWindowDestroyed();
+			return;
+		}
+		const zoneRect = zoneEl.getBoundingClientRect();
+		const elRect = this.el.getBoundingClientRect();
+		const curX = parseFloat(this.el.getAttribute('data-x') || '') || 0;
+		const curY = parseFloat(this.el.getAttribute('data-y') || '') || 0;
+
+		this.moveTo(curX + (zoneRect.left - elRect.left), curY + (zoneRect.top - elRect.top));
+
+		if (options.resize !== false) {
+			this.el.style.width = zoneRect.width + 'px';
+			this.el.style.height = zoneRect.height + 'px';
+		}
+
+		this.dockedZone = zoneEl;
+		this.el.setAttribute('data-docked', 'true');
+		this.el.classList.add('rn-wnd-docked');
+	}
+
+	/** Clears the docked state set by dock(), if any. */
+	undock() {
+		if (!this.el) {
+			this.warnWindowDestroyed();
+			return;
+		}
+		this.dockedZone = null;
+		this.el.removeAttribute('data-docked');
+		this.el.classList.remove('rn-wnd-docked');
+	}
+
 	setContent(content) {
 		if (!this.el) {
 			this.warnWindowDestroyed();
@@ -353,6 +436,10 @@ export default class Wnd {
 					}),
 				],
 				listeners: {
+					start() {
+						if (that.dockedZone)
+							that.undock();
+					},
 					move(event) {
 						const target = event.target;
 						// console.log('event target', target);
