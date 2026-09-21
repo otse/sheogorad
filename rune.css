@@ -206,7 +206,7 @@ rn-elements button:hover {
 	display: inline-flex;
 	position: relative;
 	padding: 0 12px;
-	/* font-size: 80%; */
+	font-size: 90%;
 	font-weight: bold;
 	height: inherit;
 	background-image: url(rune2/title-3-active.png);
@@ -380,7 +380,7 @@ rn-elements button:hover {
 	align-items: center;
 	justify-content: center;
 	pointer-events: none;
-	background-image: linear-gradient(to bottom, #54290f, #6e4f3b);
+	background-image: linear-gradient(to bottom, #54290f, #666666);
 	-webkit-background-clip: text;
 	background-clip: text;
 	color: transparent;
@@ -409,7 +409,7 @@ rn-elements button:hover {
 	text-shadow: inherit;
 	border: none;
 	overflow: hidden;
-	max-width: calc(46px / 2);
+	width: calc(46px / 2);
 	height: calc(50px / 2);
 	cursor: pointer;
 	z-index: 20;
