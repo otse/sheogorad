@@ -355,8 +355,9 @@ export default class Wnd {
 		el.style.height = (options.height || 200) + 'px';
 
 		// Fix this with a type assertion:
-		/** @type {HTMLElement} */
-		(el.querySelector('.rn-wnd-title span:nth-of-type(2)')).innerHTML = `${title}`;
+		const titleSpan = /** @type {HTMLElement} */ (el.querySelector('.rn-wnd-title>span:nth-of-type(2)'));
+		titleSpan.innerHTML = `${title}`;
+		titleSpan.setAttribute('data-title', title);
 
 		const contentContainer = /** @type {HTMLElement} */ (el.querySelector('.rn-wnd-content'));
 

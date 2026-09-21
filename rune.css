@@ -5,8 +5,8 @@
 :root {
 	/* muted light tones for stone */
 	--title-bar-gradient-color: rgb(121 121 121);
-	--dark-text: #25292c;
-	--text-blue: #cacaca;
+	--dark-text: rgb(45 44 42);
+	--text-blue: rgb(202 202 202);
 }
 
 * {
@@ -14,7 +14,7 @@
 	font-size: 20px;
 	font-weight: 100;
 	/* text-transform: lowercase; */
-	letter-spacing: 1px;
+	letter-spacing: 2px;
 	box-sizing: border-box;
 }
 
@@ -22,7 +22,7 @@ rn-elements {
 	/* this means the element itself is not rendered, only its children are */
 	display: contents;
 	font-family: 'Pelagiad', serif;
-	color: #d8d7d3;
+	color: #dcdcdc;
 	text-shadow: rgb(135 135 135) 0 1.5px 1px, rgb(0 0 0 / 100%) 0 -1.5px 1.5px;
 }
 
@@ -155,7 +155,7 @@ rn-elements button:hover {
 }
 
 .rn-wnd-content {
-	box-shadow: inset 0 0 12px rgb(110 110 110);
+	/* box-shadow: inset 0 0 12px rgb(110 110 110); */
 	padding: 6px;
 	x-padding-top: calc(20px / 2);
 	gap: 10px;
@@ -176,21 +176,21 @@ rn-elements button:hover {
 }
 
 .rn-wnd-title {
-	color: #312f2b;
+	color: var(--dark-text);
 	top: 0;
 	left: 0;
-	height: calc(44px / 2);
+	height: calc(50px / 2);
 	width: calc(100% - 8px);
 	position: absolute;
 	display: flex;
 	user-select: none;
 	margin: 0px 4px;
 	/* box-shadow: inset 0px 0px 10px var(--title-bar-gradient-color); */
-	/* justify-content: center; */
+	justify-content: center;
 }
 
-.rn-wnd-title span:nth-of-type(1) {
-	background: linear-gradient(to bottom, rgb(255 255 255 / 10%), rgb(255 255 255 / 20%));
+.rn-wnd-title>span:nth-of-type(1) {
+	/* background: linear-gradient(to bottom, rgb(255 255 255 / 0%), rgb(151 151 151 / 33%)); */
 	width: -webkit-fill-available;
 	height: -webkit-fill-available;
 	margin: 2px 0;
@@ -200,17 +200,35 @@ rn-elements button:hover {
 	left: 0;
 }
 
-.rn-wnd-title span:nth-of-type(2) {
-	z-index: 1;
+.rn-wnd-title>span:nth-of-type(2) {
+	content: attr(data-title);
+	/* z-index: 1; */
 	display: inline-flex;
-	border-radius: 6px;
+	position: relative;
 	padding: 0 12px;
+	/* font-size: 80%; */
+	font-weight: bold;
 	height: inherit;
-	/* background-image: url(rune2/title-3-active.png); */
+	background-image: url(rune2/title-3-active.png);
+	/* border-radius: 9px; */
 	background-repeat: repeat-x;
-	/* background-position: center; */
-	background-size: calc(60px / 2) calc(44px / 2);
+	background-position: center;
+	background-size: calc(60px / 2) calc(50px / 2);
 	align-items: center;
+}
+
+/* gradient-clipped duplicate of the title text, laid over the shadowed original */
+.rn-wnd-title>span:nth-of-type(2)::after {
+	content: attr(data-title);
+	position: absolute;
+	/* inset: 0; */
+	display: flex;
+	background-image: linear-gradient(to top, var(--dark-text), rgb(99 99 99));
+	-webkit-background-clip: text;
+	/* background-clip: text; */
+	color: transparent;
+	-webkit-text-fill-color: transparent;
+	text-shadow: none;
 }
 
 .rn-wnd.active {
@@ -234,7 +252,7 @@ rn-elements button:hover {
 }
 
 .rn-wnd-docked span[gradient] {
-	display: none;
+	/* display: none; */
 }
 
 .rn-wnd[data-minimized] {
@@ -266,9 +284,9 @@ rn-elements button:hover {
 	/* Re-enable interactions on windows */
 
 	/* Box shadows are not OSR */
-	box-shadow: 0px 0px 3px rgb(80 80 80);
-	border-radius: 1px;
-	border: 1px solid #979797;
+	box-shadow: 0px 0px 9px rgba(0, 0, 0, 0.5);
+	border-radius: 3px;
+	border: 1px outset #6e6e6e;
 	position: fixed;
 	touch-action: none;
 	/* user-select: none; */
@@ -277,7 +295,7 @@ rn-elements button:hover {
 	transform: translate(-50%, -50%);
 	x-background: rgba(127, 127, 127, 0.5);
 	background-image: url(img/RockRough0001_1_download600.jpg);
-	padding: calc(44px / 2) calc(8px / 2) calc(8px / 2);
+	padding: calc(50px / 2) calc(8px / 2) calc(8px / 2);
 	min-width: 200px;
 	min-height: 100px;
 	overflow: hidden;
@@ -312,13 +330,13 @@ rn-elements button:hover {
 		top,
 		bottom,
 		0 0;
-	background-size: calc(30px / 2) calc(44px / 2),
-		calc(31px / 2) calc(44px / 2),
+	background-size: calc(30px / 2) calc(50px / 2),
+		calc(31px / 2) calc(50px / 2),
 		calc(8px / 2) calc(40px / 2),
 		calc(8px / 2) calc(40px / 2),
 		calc(8px / 2) calc(40px / 2),
 		calc(8px / 2) calc(40px / 2),
-		calc(60px / 2) calc(44px / 2),
+		calc(60px / 2) calc(50px / 2),
 		calc(40px / 2) calc(8px / 2),
 		50%;
 }
@@ -345,10 +363,37 @@ rn-elements button:hover {
 .rn-title-bar-button.min,
 .rn-title-bar-button.close {}
 
+.rn-title-bar-button.close {
+	position: relative;
+}
+
+.rn-title-bar-button.close span {
+	font-size: inherit;
+}
+
+/* gradient-clipped duplicate of the 'x' glyph, laid over the shadowed original */
+.rn-title-bar-button.close span::after {
+	content: "x";
+	position: absolute;
+	inset: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	pointer-events: none;
+	background-image: linear-gradient(to bottom, #54290f, #6e4f3b);
+	-webkit-background-clip: text;
+	background-clip: text;
+	color: transparent;
+	-webkit-text-fill-color: transparent;
+	text-shadow: none;
+}
+
 .rn-title-bar-button.close .gem-icon {
 	filter: hue-rotate(-90deg) saturate(0.5) brightness(1.5);
-	font-size: 80%;
-	text-shadow: 0 0 10px blue;
+	font-size: 70%;
+	/* text-shadow: 0 0 10px blue; */
+	width: inherit;
+	height: inherit;
 }
 
 .rn-title-bar-button:active {
@@ -357,20 +402,23 @@ rn-elements button:hover {
 
 .rn-title-bar-button {
 	display: flex;
-	/* line-height: calc(28px / 2); */
-	/* margin: 2px; */
-	color: inherit;
-	color: #583420;
-	/* font-weight: bold; */
+	/* color: #54290f; */
+	font-weight: normal;
+	font-style: italic;
+	font-size: 100%;
 	text-shadow: inherit;
 	border: none;
 	overflow: hidden;
-	width: calc(40px / 2);
-	height: calc(44px / 2);
+	max-width: calc(46px / 2);
+	height: calc(50px / 2);
 	cursor: pointer;
 	z-index: 20;
 	background: url(rune2/close-active.png) center / contain no-repeat;
+	background-size: calc(46px / 2) calc(50px / 2);
+	background-position: center right;
 	align-items: center;
+	justify-content: center;
+	align-content: center;
 }
 
 .rn-title-bar-button.min {
@@ -378,6 +426,7 @@ rn-elements button:hover {
 	background: transparent;
 	width: calc(34px / 2);
 	margin-right: 6px;
+	color: var(--dark-text);
 }
 
 .rn-wnd-close.pressed {

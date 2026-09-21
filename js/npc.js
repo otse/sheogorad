@@ -45,8 +45,9 @@ export default class Npc {
 			magicka: { text: `${magicka.current}/${magicka.max}`, percent: `${(magicka.current / magicka.max) * 100}%` },
 		});
 
+		// ${this.icon}
 		this.wnd = new Wnd(
-			`${this.icon}${formatNpcName(this.name)}`,
+			`${formatNpcName(this.name)}`,
 			`Details about ${formatNpcName(this.name)}`,
 			{ width: 200, height: 300 });
 		this.wnd.setContent(clone);
