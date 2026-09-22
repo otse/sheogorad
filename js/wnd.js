@@ -49,9 +49,9 @@ function moveWithin(parent, el, x, y) {
 
 	return [clampedX, clampedY];
 
-	el.style.transform = `translate(${clampedX}px, ${clampedY}px)`;
+	/*el.style.transform = `translate(${clampedX}px, ${clampedY}px)`;
 	el.dataset.x = clampedX;
-	el.dataset.y = clampedY;
+	el.dataset.y = clampedY;*/
 }
 
 const RESIZE_HANDLES = ['n', 's', 'e', 'w', 'ne', 'nw', 'se', 'sw'];
@@ -89,7 +89,7 @@ export default class Wnd {
 		Wnd.dockZones.set(element, options);
 
 		interact(element).dropzone({
-			accept: '.rn-wnd',
+			accept: '.rn-wnd-position',
 			overlap: 'pointer',
 			ondragenter(event) {
 				event.target.classList.add('rn-dock-zone-hover');
@@ -120,6 +120,9 @@ export default class Wnd {
 	/** @type {WndElement | null}  */
 	el = null;
 
+	/** @type {WndElement | null} .rn-wnd-position wrapper; owns interact.js's position/size updates */
+	posEl = null;
+
 	isDestroyed = false;
 	isMinimized = false;
 
@@ -145,7 +148,7 @@ export default class Wnd {
 	}
 
 	convertToWndcard() {
-		
+
 	}
 
 	toggleMin() {
@@ -159,22 +162,22 @@ export default class Wnd {
 	}
 
 	minimize() {
-		if (!this.el) {
+		if (!this.el || !this.posEl) {
 			this.warnWindowDestroyed();
 			return;
 		}
 		// this.dsWnd.style.display = 'none';
-		this.beforeMinSize.width = this.el.offsetWidth;
-		this.beforeMinSize.height = this.el.offsetHeight;
-		this.beforeMinXY.x = parseFloat(this.el.getAttribute('data-x') || '') || 0;
-		this.beforeMinXY.y = parseFloat(this.el.getAttribute('data-y') || '') || 0;
+		this.beforeMinSize.width = this.posEl.offsetWidth;
+		this.beforeMinSize.height = this.posEl.offsetHeight;
+		this.beforeMinXY.x = parseFloat(this.posEl.getAttribute('data-x') || '') || 0;
+		this.beforeMinXY.y = parseFloat(this.posEl.getAttribute('data-y') || '') || 0;
 		this.el.setAttribute('data-minimized', 'true');
 
 		console.warn('Min imize');
 
 		this.moveWithinTranslateTerritory(
 			-window.innerWidth, -window.innerHeight);
-		this.el.style.transition = 'transform 0.3s ease';
+		this.posEl.style.transition = 'transform 0.3s ease';
 		//
 		Taskbar.admitOne(this);
 		this.el.setAttribute('data-minimized', 'true');
@@ -191,7 +194,7 @@ export default class Wnd {
 	}
 
 	maximize() {
-		if (!this.el) {
+		if (!this.el || !this.posEl) {
 			this.warnWindowDestroyed();
 			return;
 		}
@@ -210,26 +213,26 @@ export default class Wnd {
 		this.el.style.width = this.beforeMinSize.width + 'px';
 		this.el.style.height = this.beforeMinSize.height + 'px';
 		setTimeout(() => {
-			if (this.el)
-				this.el.style.transition = '';
+			if (this.posEl)
+				this.posEl.style.transition = '';
 		}, 300);
 	}
 
 	// Obscure method, completely hides our Wnd (not minimize)
 	toggle() {
-		if (!this.el) {
+		if (!this.el || !this.posEl) {
 			this.warnWindowDestroyed();
 			return;
 		}
-		if (this.el.style.display === 'none') {
-			this.el.style.display = 'block';
+		if (this.posEl.style.display === 'none') {
+			this.posEl.style.display = 'block';
 		} else {
-			this.el.style.display = 'none';
+			this.posEl.style.display = 'none';
 		}
 	}
 
 	close() {
-		if (!this.el) {
+		if (!this.el || !this.posEl) {
 			this.warnWindowDestroyed();
 			return;
 		}
@@ -240,8 +243,9 @@ export default class Wnd {
 				this.parent.children.splice(index, 1);
 			this.parent = null;
 		}
-		this.el.remove();
+		this.posEl.remove();
 		this.el = null;
+		this.posEl = null;
 		this.isDestroyed = true;
 	}
 
@@ -257,23 +261,23 @@ export default class Wnd {
 	}
 
 	moveWithinTranslateTerritory(mx, my) {
-		if (!this.el) {
+		if (!this.el || !this.posEl) {
 			this.warnWindowDestroyed();
 			return;
 		}
-		const clut = moveWithin(stoneWnds, this.el, mx, my);
+		const clut = moveWithin(stoneWnds, this.posEl, mx, my);
 		this.moveTo(clut[0], clut[1]);
 		// this.moveTo(mx, my);
 	}
 
 	moveTo(x, y) {
-		if (!this.el) {
+		if (!this.el || !this.posEl) {
 			this.warnWindowDestroyed();
 			return;
 		}
-		this.el.style.transform = `translate(${x}px, ${y}px)`;
-		this.el.setAttribute('data-x', x);
-		this.el.setAttribute('data-y', y);
+		this.posEl.style.transform = `translate(${x}px, ${y}px)`;
+		this.posEl.setAttribute('data-x', x);
+		this.posEl.setAttribute('data-y', y);
 	}
 
 	/**
@@ -282,14 +286,14 @@ export default class Wnd {
 	 * @param {{ resize?: boolean }} [options]
 	 */
 	dock(zoneEl, options = {}) {
-		if (!this.el) {
+		if (!this.el || !this.posEl) {
 			this.warnWindowDestroyed();
 			return;
 		}
 		const zoneRect = zoneEl.getBoundingClientRect();
-		const elRect = this.el.getBoundingClientRect();
-		const curX = parseFloat(this.el.getAttribute('data-x') || '') || 0;
-		const curY = parseFloat(this.el.getAttribute('data-y') || '') || 0;
+		const elRect = this.posEl.getBoundingClientRect();
+		const curX = parseFloat(this.posEl.getAttribute('data-x') || '') || 0;
+		const curY = parseFloat(this.posEl.getAttribute('data-y') || '') || 0;
 
 		this.moveTo(curX + (zoneRect.left - elRect.left), curY + (zoneRect.top - elRect.top));
 
@@ -299,18 +303,18 @@ export default class Wnd {
 		}
 
 		this.dockedZone = zoneEl;
-		this.el.setAttribute('data-docked', 'true');
+		this.posEl.setAttribute('data-docked', 'true');
 		this.el.classList.add('rn-wnd-docked');
 	}
 
 	/** Clears the docked state set by dock(), if any. */
 	undock() {
-		if (!this.el) {
+		if (!this.el || !this.posEl) {
 			this.warnWindowDestroyed();
 			return;
 		}
 		this.dockedZone = null;
-		this.el.removeAttribute('data-docked');
+		this.posEl.removeAttribute('data-docked');
 		this.el.classList.remove('rn-wnd-docked');
 	}
 
@@ -331,21 +335,29 @@ export default class Wnd {
 	}
 
 	constructor(title, content, options = {}) {
-		const darkstoneUI = document.querySelector('rn-user-interface');
+		const rnWndTemplate = /** @type {HTMLTemplateElement} */
+			(document.getElementById('rn-wnd-template'));
 
-		const wndTemplate = /** @type {HTMLTemplateElement} */ (document.getElementById('rn-wnd-template'));
-
-		const clone = /** @type {DocumentFragment} */ (wndTemplate.content.cloneNode(true));
+		const clone = /** @type {DocumentFragment} */
+			(rnWndTemplate.content.cloneNode(true));
 
 		this.el = clone.querySelector('.rn-wnd');
 
 		if (!this.el)
 			throw new Error('Missing .rn-wnd element in #rn-wnd-template');
 
-		// Attach Wnd user-data to el
+		this.posEl = clone.querySelector('.rn-wnd-position');
+
+		if (!this.posEl)
+			throw new Error('Missing .rn-wnd-position element in #rn-wnd-template');
+
+		// Attach Wnd user-data to el and posEl (interact.js dropzone events report posEl as the dragged target)
 		this.el._wndInstance = this;
+		this.posEl._wndInstance = this;
 
 		const el = this.el;
+		const posEl = this.posEl;
+
 		if (options.wndcard)
 			el.classList.add('rn-wndcard');
 
@@ -355,35 +367,43 @@ export default class Wnd {
 		el.style.height = (options.height || 200) + 'px';
 
 		// Fix this with a type assertion:
-		const titleSpan = /** @type {HTMLElement} */ (el.querySelector('.rn-wnd-title>span:nth-of-type(2)'));
+		const titleSpan = /** @type {HTMLElement} */
+			(el.querySelector('.rn-wnd-title>span:nth-of-type(2)>span'));
 		titleSpan.innerHTML = `${title}`;
-		titleSpan.setAttribute('data-title', title);
+		titleSpan.setAttribute('data-text', title);
 
-		const contentContainer = /** @type {HTMLElement} */ (el.querySelector('.rn-wnd-content'));
+		const contentContainer = /** @type {HTMLElement} */
+			(el.querySelector('.rn-wnd-content'));
 
 		this.wndContent = contentContainer;
 
-		if (content)
+		// if content is a string
+		if (typeof content === 'string')
 			contentContainer.innerHTML = content;
+		else {
+			// Set this as the only child of the content container:
+			contentContainer.innerHTML = '';
+			contentContainer.appendChild(content);
+		}
 
 		//darkstoneUI.appendChild(clone);
 
-		const interactable = interact(el);
+		const interactable = interact(posEl);
 		this.interactable = interactable;
 
-		const rect = el.getBoundingClientRect();
+		const rect = posEl.getBoundingClientRect();
 		//dsWnd.style.left = (window.innerWidth / 2 - rect.width / 2) + 'px';
 		//dsWnd.style.top = (window.innerHeight / 2 - rect.height / 2) + 'px';
 
-		el.style.transform = 'none';
+		posEl.style.transform = 'none';
 
 		const that = this;
 
 		// Set up interact let's
 
 		const activate = () => {
-			document.querySelectorAll('.rn-wnd').forEach((box) => box.classList.remove('active'));
-			el.classList.add('active');
+			document.querySelectorAll('.rn-wnd-position').forEach((box) => box.classList.remove('active'));
+			posEl.classList.add('active');
 			that.closeChildren();
 		};
 
@@ -485,19 +505,23 @@ export default class Wnd {
 				invert: 'reposition',
 				listeners: {
 					move(event) {
-						const target = event.target;
-						let x = parseFloat(target.getAttribute('data-x')) || 0;
-						let y = parseFloat(target.getAttribute('data-y')) || 0;
+						// Target the el not posEl:
+
+						const posEl = event.target;
+						const el = event.target.children[0];
+
+						let x = parseFloat(posEl.getAttribute('data-x')) || 0;
+						let y = parseFloat(posEl.getAttribute('data-y')) || 0;
 
 						x += event.deltaRect.left;
 						y += event.deltaRect.top;
 
-						target.style.width = event.rect.width + 'px';
-						target.style.height = event.rect.height + 'px';
-						target.style.transform = `translate(${x}px, ${y}px)`;
+						el.style.width = event.rect.width + 'px';
+						el.style.height = event.rect.height + 'px';
+						posEl.style.transform = `translate(${x}px, ${y}px)`;
 
-						target.setAttribute('data-x', x);
-						target.setAttribute('data-y', y);
+						posEl.setAttribute('data-x', x);
+						posEl.setAttribute('data-y', y);
 					},
 				},
 			});
