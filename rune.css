@@ -223,7 +223,7 @@ rn-elements button:hover {
 	position: absolute;
 	/* inset: 0; */
 	display: flex;
-	background-image: linear-gradient(to top, var(--dark-text), rgb(99 99 99));
+	background-image: linear-gradient(to top, var(--dark-text), rgb(79 79 79));
 	-webkit-background-clip: text;
 	/* background-clip: text; */
 	color: transparent;
