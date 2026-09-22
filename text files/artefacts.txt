@@ -1,9 +1,0 @@
-artefacts are unique items that do something really cool
-
-artefacts can influence llm outcome
-
-artefacts are important story generators
-
-for example,
-a unique pendant that glows when you approach ancient places
-a dagger that only has a shadow

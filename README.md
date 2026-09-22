@@ -1,20 +1,25 @@
-# Sheogorad
+# Sheogorad Server Branch
 
 Sheogorad is a simulation of mostly canon morrowind. It has elements of roguelikes and story generators, while being absolutely neither.
 
 - **Mood:** fallout shelter, folder dungeon, neverending legacy
 
-[(Read the GDD.md?)](md%20files/gdd.md)
+## Server / REST API
 
-## Non canon abominationworlds
+`server/` is a small Node/Express app that loads the `json/` data files, runs
+a live NPC simulation (ticks every few seconds: stats drift, status changes,
+NPCs relocate between buildings), and exposes it over HTTP:
 
-Experimental chaos simulations are supported:
+```
+cd server
+npm install
+npm start   # http://localhost:3001
+```
 
-* Hostile Silt Strider World-1
-* Red Year
+Endpoints (see `GET /api` for the full list): `/api/world`, `/api/regions`,
+`/api/regions/:region`, `/api/areas`, `/api/areas/:name`,
+`/api/areas/:name/buildings/:buildingId`, `/api/npcs` (filter with
+`?region=&settlement=&buildingId=&name=`), `/api/npcs/:name`, `/api/lore`.
 
-## Pretty .md files
-
-[Provided Here (Docs).](md%20files/write-up.md)
-
-If you are okay with banter try /text files.
+The server also serves the game client itself as static files, so
+`http://localhost:3001` runs the whole thing from one origin.
