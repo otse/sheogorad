@@ -232,29 +232,19 @@ rn-elements button:hover {
 @keyframes rn-wnd-enter {
 	0% {
 		opacity: 0;
-		transform: perspective(1200px) translateY(28px) scale(0.8) rotateX(12deg);
-		filter: blur(3px);
-	}
-
-	55% {
-		opacity: 1;
-		transform: perspective(1200px) translateY(-5px) scale(1.035) rotateX(-3deg);
-		filter: blur(0px);
-	}
-
-	80% {
-		transform: perspective(1200px) translateY(1px) scale(0.99) rotateX(1deg);
+		transform: perspective(800px) translateY(20px) scale(0.9) rotateX(20deg);
+		filter: blur(5px);
 	}
 
 	100% {
 		opacity: 1;
-		transform: perspective(1200px) translateY(0) scale(1) rotateX(0deg);
+		transform: perspective(800px) translateY(0) scale(1) rotateX(0deg);
 		filter: blur(0px);
 	}
 }
 
-.rn-wnd-inner.rn-wnd-enter {
-	animation: rn-wnd-enter 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+.rn-wnd.rn-wnd-enter {
+	animation: rn-wnd-enter 0.6s cubic-bezier(0.25, 0.1, 0.25, 1) both;
 	transform-origin: center top;
 	will-change: transform, opacity, filter;
 }

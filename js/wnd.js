@@ -361,6 +361,10 @@ export default class Wnd {
 		if (options.wndcard)
 			el.classList.add('rn-wndcard');
 
+		// Entrance animation lives on el, not posEl, so it doesn't clash with interact.js's drag/resize transform
+		el.classList.add('rn-wnd-enter');
+		el.addEventListener('animationend', () => el.classList.remove('rn-wnd-enter'), { once: true });
+
 		stoneWnds.appendChild(clone);
 
 		el.style.width = (options.width || 200) + 'px';
