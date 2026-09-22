@@ -6,6 +6,7 @@ import Npc from './npc.js';
 import Wnd from './wnd.js';
 import MusicPlayer from './music player.js';
 import LorePanel from './lore panel.js';
+import ThingsToDo from './things to do.js';
 import AreaList from './area list.js';
 
 export const Sheogorad = {
@@ -16,6 +17,8 @@ export const Sheogorad = {
 		debug: true
 	},
 
+	/** @type {ThingsToDo | null} */
+	thingsToDo: null,
 	/** @type {LorePanel | null} */
 	lorePanel: null,
 	/** @type {AreaList | null} */
@@ -42,9 +45,12 @@ export const Sheogorad = {
 
 		Wnd.init();
 
-		new Wnd('History', null, { width: 300, height: 150 });
+		// new Wnd('History', null, { width: 300, height: 150 });
 
 		this.lorePanel = new LorePanel();
+
+		this.thingsToDo = new ThingsToDo();
+		this.thingsToDo.ensureWnd();
 
 		this.areaList = new AreaList();
 		this.areaList.ensureWnd();

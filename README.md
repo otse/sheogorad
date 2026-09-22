@@ -4,7 +4,7 @@ Sheogorad is a simulation of mostly canon morrowind. It has elements of roguelik
 
 - **Mood:** fallout shelter, folder dungeon, neverending legacy
 
-[(Read the 1000+ line GDD.md.)](md%20files/gdd.md)
+[(Read the GDD.md?)](md%20files/gdd.md)
 
 ## Non canon abominationworlds
 

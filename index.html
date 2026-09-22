@@ -12,6 +12,7 @@
 
 	<link rel="stylesheet" href="messy.css">
 	<link rel="stylesheet" href="rune.css">
+	<link rel="stylesheet" href="runetricks.css">
 
 	<style>
 		@font-face {
@@ -92,6 +93,20 @@
 				<button type="button" id="new-box-btn" class="rn-big-button" title="Open new window">Lore</button>
 			</div>
 		</nav>
+
+		<template id="things-to-do-wnd-template">
+			<div style="flex-direction: column; display: flex;">
+				Things to do in Sheogorad:<br />
+				<ul>
+					<li>Explore the settlements</li>
+					<li>Meet the NPCs</li>
+					<li>Complete quests</li>
+					<li>Trade items</li>
+					<li>Discover hidden locations</li>
+				</ul>
+			</div>
+		</template>
+
 		<template id="npc-wnd-template">
 			<!--<div class="rn-bordered rn-scroll" style="width: 100%;">-->
 			<div class="rn-stats-layout row">
@@ -139,21 +154,23 @@
 			</div>
 		</template>
 		<template id="rn-wnd-template">
-			<div class="rn-wnd" moveable resizeable closable minimizable title="Example">
-				<div class="rn-wnd-title">
-					<span gradient></span>
-					<span><span>Wnd</span></span>
-					<div style="">
-						<button type="button" class="rn-title-bar-button min" title="Min">
-							<span>-</span> <!-- ⤥ -->
-						</button>
-						<button type="button" class="rn-title-bar-button close" title="Close">
-							<span>x</span> <!-- <span class="gem-icon">💎</span> -->
-						</button>
+			<div class="rn-wnd-position">
+				<div class="rn-wnd" moveable resizeable closable minimizable title="Example">
+					<div class="rn-wnd-title">
+						<span gradient></span>
+						<span><span class="text-gradient-gray" data-text="Wnd">Wnd</span></span>
+						<div style="">
+							<button type="button" class="rn-title-bar-button min" title="Min">
+								<span>-</span> <!-- ⤥ -->
+							</button>
+							<button type="button" class="rn-title-bar-button close" title="Close">
+								<span>x</span> <!-- <span class="gem-icon">💎</span> -->
+							</button>
+						</div>
 					</div>
-				</div>
-				<div class="rn-wnd-content">
-					Default-Content
+					<div class="rn-wnd-content">
+						Default-Content
+					</div>
 				</div>
 			</div>
 		</template>
