@@ -48,7 +48,7 @@ a simple economy would probably work best. i never set my eyes on an uncomplicat
 
 if i could get a basic economy to work for sheogorad it would already be big for the project. it would move the world. the npcs. more explanation to come! the economy is a good idea but it may bloat the simulation or kill the vibe, which is opposite of what i want to achieve, which is a fun place that people can observe and interact with.
 
-red year
+\red year
 
 the problem i now have is that sheogorad with its runic style is too creepy for og morrowind. so red year is a candidate, or the events following red year. it's a more free setting. i can get rid of npcs i hate, and i can respect canon while still transforming it. red year isn't the end. it's only 11 years after morrowind. a lot of the same npcs can still live there. so everyone can still recognize the game, it's just not the game, it's my game. vvardenfell was peaceful during morrowind, vvardenfell will be rougher during sheogorad.
 
@@ -57,3 +57,27 @@ what red year unlocks for sheogorad is wonderful. i can lean more toward the dem
 red year is potentially grim dark. i can kind of cover everything in ash so to speak, which i did with messiah and dark. and it serves the homeland of the dunmer well. the volcano isn't just a source of depression for them, it gives them ebony, glass, saltrice, and other ashland resources. the dunmner live long, living in communities in carapace buildings gives them meaning, because it's the way of the dark elf, with their fire resistance. but for example, wood elves don't live in ald ruhn, maar gan, molag mar, they would live in seyda neen or maybe around the grazelands. different races go different places, not everybody lives on dark soil in giant crab structure. i'm saying this because morrowind was always dark. but now it just got a bit more grim lately.
 
 i will pull as much canon from sources as possible, but will do some stuff freely where i am allowed to speculate. with the rune interface already looking crpg or diablo or ashy this is a good way to show that the world isn't dandy flower but dark. and it fits my post morrowind deppression and morro-gen, in which i admit i don't think morrowind is a good place for a crazy text-based game, because everyone already knows how peaceful it is. instead i need an arena where bad stuff can happen, where war is more frequent, and where uncertainty is more rampant. so for that, red year is the candidate, or slightly after red year. sheogorad is therefore also no longer sheogorad, but more like...redyearorad.
+
+\esroniet
+
+i was thinking of involvement from esroniet. maybe a home base. this is a big dumb idea.
+
+\game design
+
+philosophy aside here are the technicals for sheogorad.
+
+things to do:
+- vote on politics, prophecies
+- make a character, score other characters
+- retire a character
+- earn runes and prestige points
+- read area summaries, read a catch up report
+- track people, track items
+
+things to watch:
+- see which artifact gets found
+- see which artifact gets bartered from an unknowing tradehouse vendor
+- see how karma punishes characters with poor disposition
+- see heroes and generic npcs perish
+- see economies toil or prosper
+- see dramatic events change regions or areas
