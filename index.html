@@ -55,7 +55,7 @@
 	}
 
 	.nav-buttons button {
-		background-color: rgba(0, 0, 0, 0.6);
+		/* background-color: rgba(0, 0, 0, 0.6); */
 	}
 
 	.nav-buttons .mw-menu-button.muted {
@@ -67,12 +67,14 @@
 		top: 0;
 		width: 100%;
 		padding: 12px;
-		margin-bottom: 10px;
+		/* margin-bottom: 10px; */
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
 		flex-direction: row-reverse;
 		gap: 16px;
+		/* background-image: url(img/RockRough0001_2_download600.jpg); */
+		background-size: 25%;
 	}
 </style>
 
@@ -105,12 +107,46 @@
 			</div>
 		</template>
 
+		<template id="music-player-wnd-template">
+			<div style="flex-direction: column; display: flex;">
+				Music Player:<br />
+				<ul>
+					<li>Play background music</li>
+					<li>Pause music</li>
+					<li>Adjust volume</li>
+					<li>Skip tracks</li>
+					<li>Manage playlist</li>
+				</ul>
+			</div>
+		</template>
+
+		<template id="area-list-wnd-template">
+				Island of Vvardenfell:<br />
+				<div class="rn-bordered">
+					<!--<div class="explanator">Stepped:</div>
+					<div class="rn-divider"></div>-->
+					<div id="genericList" class="rn-scroll" style="">
+					</div>
+				</div>
+		</template>
+
+		<template id="area-viewer-wnd-template">
+				Area Viewer:<br />
+				<div class="rn-bordered">
+					<!--<div class="explanator">Stepped:</div>
+					<div class="rn-divider"></div>-->
+					<div id="genericList" class="rn-scroll" style="">
+					</div>
+				</div>
+		</template>
+
 		<template id="npc-wnd-template">
 			<!--<div class="rn-bordered rn-scroll" style="width: 100%;">-->
 			<div class="rn-stats-layout row">
 				<div class="rn-stats-left column">
 					<div class="rn-npc-title" data-bind="title">
-						<span data-bind="name"></span>, <span data-bind="race"></span> <span data-bind="class"></span> of <span data-bind="hometown"></span>
+						<span data-bind="name"></span>, <span data-bind="race"></span> <span data-bind="class"></span>
+						of <span data-bind="hometown"></span>
 					</div>
 					<div class="rn-bordered">
 						<div class="rn-stat-bar">

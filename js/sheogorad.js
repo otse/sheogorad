@@ -1,13 +1,13 @@
 // 🧙‍♀️ Code magic within
 
 import Tree from './tree.js';
-import Map from './map.js';
-import Npc from './npc.js';
+import Npc from './wnds/npc.js';
 import Wnd from './wnd.js';
-import MusicPlayer from './music player.js';
-import LorePanel from './lore panel.js';
-import ThingsToDo from './things to do.js';
-import AreaList from './area list.js';
+import MusicPlayer from './wnds/music player.js';
+import LorePanel from './wnds/lore.js';
+import ThingsToDo from './wnds/things to do.js';
+import RegionViewer from './wnds/region.js';
+import AreaViewer from './wnds/area.js';
 
 export const Sheogorad = {
 
@@ -17,12 +17,18 @@ export const Sheogorad = {
 		debug: true
 	},
 
+	global: {
+
+	},
+
 	/** @type {ThingsToDo | null} */
 	thingsToDo: null,
 	/** @type {LorePanel | null} */
 	lorePanel: null,
-	/** @type {AreaList | null} */
+	/** @type {RegionViewer | null} */
 	areaList: null,
+	/** @type {AreaViewer | null} */
+	areaViewer: null,
 	/** @type {MusicPlayer | null} */
 	musicPlayer: null,
 
@@ -50,10 +56,13 @@ export const Sheogorad = {
 		this.lorePanel = new LorePanel();
 
 		this.thingsToDo = new ThingsToDo();
-		this.thingsToDo.ensureWnd();
+		this.thingsToDo.make();
 
-		this.areaList = new AreaList();
-		this.areaList.ensureWnd();
+		this.areaList = new RegionViewer();
+		this.areaList.make();
+
+		this.areaViewer = new AreaViewer();
+		this.areaViewer.make();
 
 		Sheogorad.staaart(); // We're cheating! Skip GenDiag!
 
@@ -67,7 +76,7 @@ export const Sheogorad = {
 			lorePanelBtn.addEventListener('click', (e) => {
 				// this.lorePanel.close();
 				if (this.lorePanel)
-					this.lorePanel.ensureWnd();
+					this.lorePanel.make();
 				Sheogorad.playClickSound();
 			});
 

@@ -1,24 +1,21 @@
 // 🧙‍♀️ Code magic within
 
-import Sheogorad from "./sheogorad.js";
-import Wnd from "./wnd.js";
-import WndCard from "./wnd card.js";
+import Sheogorad from "../sheogorad.js";
+import Wnd from "../wnd.js";
+import WndCard from "../wnd card.js";
+import Wndd from "../wndd.js";
 
 const swathOfText = `
 <img src="art/638b44a70bc44ac4ad982110203105d5-74ec7314ca1a4b69.png" style="width: 100%; height: auto; margin-bottom: 10px;" alt="Seyda Neen, the port town you start in on Vvardenfell. It looks like a place where you would get scurvy.">
 Browse through Vvardenfell using Stone Tablets.
 `;
 
-export default class LorePanel {
-	/** @type {Wnd | null} */
-	wnd = null;
-
+export default class LorePanel extends Wndd {
 	static handleLink(event) {
 		event.preventDefault();
 		event.stopPropagation();
 
-		const rune = /** @type {HTMLElement} */
-			(event.currentTarget || event.target);
+		const rune = /** @type {HTMLElement} */ (event.currentTarget || event.target);
 		const query = rune.textContent.trim();
 		if (!query)
 			return;
@@ -46,8 +43,7 @@ export default class LorePanel {
 		LorePanel.linkifyArticles(card.wndContent, article.title);
 		LorePanel.bindRunes(card.wndContent);
 
-		const parentWndEl = /** @type {(HTMLElement & { _wndInstance?: Wnd }) | null} */
-			(rune.closest('.rn-wnd'));
+		const parentWndEl = /** @type {(HTMLElement & { _wndInstance?: Wnd }) | null} */ (rune.closest('.rn-wnd'));
 		const parentWnd = parentWndEl && parentWndEl._wndInstance;
 		if (parentWnd)
 			parentWnd.addChild(card);
@@ -150,7 +146,7 @@ export default class LorePanel {
 		const textNodes = [];
 		let current;
 		while ((current = walker.nextNode()))
-			textNodes.push(/** @type {Text} */(current));
+			textNodes.push(/** @type {Text} */ (current));
 
 		textNodes.forEach((textNode) => {
 			const text = textNode.textContent;
@@ -202,20 +198,14 @@ export default class LorePanel {
 			element.dataset.loreBound = 'true';
 		});
 	}
-	ensureWnd() {
-		if (!this.wnd || this.wnd.isDestroyed) {
-			this.wnd = new WndCard(
-				`Tome of Info`,
-				`<div class="rn-bordered rn-scroll">${swathOfText}</div>`,
-				{ width: 400, height: 310 });
-			this.wnd.moveTo(0, -250);
-			LorePanel.linkifyArticles(this.wnd.wndContent);
-			LorePanel.bindRunes(this.wnd.wndContent);
-		}
-	}
-	close() {
-		if (this.wnd) {
-			this.wnd.close();
-		}
+	_create() {
+		const wnd = new WndCard(
+			`Tome of Info`,
+			`<div class="rn-bordered rn-scroll">${swathOfText}</div>`,
+			{ width: 400, height: 310 });
+		wnd.moveTo(0, -250);
+		LorePanel.linkifyArticles(wnd.wndContent);
+		LorePanel.bindRunes(wnd.wndContent);
+		return wnd;
 	}
 }

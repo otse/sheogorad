@@ -1,9 +1,11 @@
 // 🧙‍♀️ Code magic within
 
 import Npc from "./npc.js";
-import Sheogorad from "./sheogorad.js";
-import Tree from "./tree.js";
-import Wnd from "./wnd.js";
+
+import Sheogorad from "../sheogorad.js";
+import Tree from "../tree.js";
+import Wnd from "../wnd.js";
+import Wndd from "../wndd.js";
 
 const swathOfText = `
 	<div class="rn-bordered">
@@ -14,25 +16,19 @@ const swathOfText = `
 	</div>
 `;
 
-export default class AreaList {
-	/** @type {Wnd | null} */
-	wnd = null;
-	constructor() {
-	}
-	ensureWnd() {
-		if (!this.wnd || this.wnd.isDestroyed) {
-			this.wnd = new Wnd(
-				`Areas`,
-				`${swathOfText}`,
-				{ width: 400, height: 200 });
-			this.wnd.moveTo(-400, 100);
-			this.populate();
-		}
-	}
-	close() {
-		if (this.wnd) {
-			this.wnd.close();
-		}
+export default class RegionViewer extends Wndd {
+	_create() {
+		const template = /** @type {HTMLTemplateElement} */ (document.getElementById('area-list-wnd-template'));
+		const clone = /** @type {DocumentFragment} */ (template.content.cloneNode(true));
+
+		const wnd = new Wnd(
+			`Region Map`,
+			clone,
+			{ width: 400, height: 250, minWidth: 380, minHeight: 250 });
+		wnd.moveTo(-400, 100);
+		this.wnd = wnd;
+		this.populate();
+		return wnd;
 	}
 	populate() {
 		if (!this.wnd)

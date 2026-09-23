@@ -1,9 +1,9 @@
 // 🧙‍♀️ Code magic within
 
-import { bindTemplate } from "./bind.js";
+import { bindTemplate } from "../bind.js";
 
-import Sheogorad from "./sheogorad.js";
-import Wnd from "./wnd.js";
+import Sheogorad from "../sheogorad.js";
+import Wnd from "../wnd.js";
 
 function formatNpcName(name) {
 	return name.replace(/_/g, ' ').replace(/\b\w/g, char => char.toUpperCase());
@@ -49,9 +49,7 @@ export default class Npc {
 		this.stats = { ...DEFAULT_STATS, ...random_stats(), ...stats };
 	}
 	makeWnd() {
-		const mwMenuTemplate = /** @type {HTMLTemplateElement} */
-			(document.getElementById('npc-wnd-template'));
-
+		const mwMenuTemplate = /** @type {HTMLTemplateElement} */ (document.getElementById('npc-wnd-template'));
 		const clone = /** @type {DocumentFragment} */ (mwMenuTemplate.content.cloneNode(true));
 
 		const { life, magicka } = this.stats;
@@ -65,7 +63,7 @@ export default class Npc {
 		this.wnd = new Wnd(
 			`${formatNpcName(this.name)}`,
 			`Details about ${formatNpcName(this.name)}`,
-			{ width: 200, height: 300 });
+			{ width: 200, height: 300, minWidth: 220, minHeight: 200 });
 		this.wnd.setContent(clone);
 	}
 }

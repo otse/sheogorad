@@ -335,11 +335,8 @@ export default class Wnd {
 	}
 
 	constructor(title, content, options = {}) {
-		const rnWndTemplate = /** @type {HTMLTemplateElement} */
-			(document.getElementById('rn-wnd-template'));
-
-		const clone = /** @type {DocumentFragment} */
-			(rnWndTemplate.content.cloneNode(true));
+		const rnWndTemplate = /** @type {HTMLTemplateElement} */ (document.getElementById('rn-wnd-template'));
+		const clone = /** @type {DocumentFragment} */ (rnWndTemplate.content.cloneNode(true));
 
 		this.el = clone.querySelector('.rn-wnd');
 
@@ -369,15 +366,14 @@ export default class Wnd {
 
 		el.style.width = (options.width || 200) + 'px';
 		el.style.height = (options.height || 200) + 'px';
+		el.style.minWidth = (options.minWidth || 100) + 'px';
+		el.style.minHeight = (options.minHeight || 100) + 'px';
 
-		// Fix this with a type assertion:
-		const titleSpan = /** @type {HTMLElement} */
-			(el.querySelector('.rn-wnd-title>span:nth-of-type(2)>span'));
+		const titleSpan = /** @type {HTMLElement} */ (el.querySelector('.rn-wnd-title>span:nth-of-type(2)>span'));
 		titleSpan.innerHTML = `${title}`;
 		titleSpan.setAttribute('data-text', title);
 
-		const contentContainer = /** @type {HTMLElement} */
-			(el.querySelector('.rn-wnd-content'));
+		const contentContainer = /** @type {HTMLElement} */ (el.querySelector('.rn-wnd-content'));
 
 		this.wndContent = contentContainer;
 
@@ -495,7 +491,7 @@ export default class Wnd {
 				},
 				modifiers: [
 					interact.modifiers.restrictSize({
-						min: { width: options.minWidth || 100, height: 100 },
+						min: { width: options.minWidth || 100, height: options.minHeight || 100 },
 						// max: { width: options.maxWidth || 500, height: 100 },
 					}),
 					interact.modifiers.restrictEdges({

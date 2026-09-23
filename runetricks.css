@@ -29,5 +29,5 @@
 
 .text-gradient-gray,
 [data-text-gradient="gray"] {
-	--text-gradient-image: linear-gradient(to top, var(--dark-text), rgb(70 70 70));
+	--text-gradient-image: linear-gradient(to top, var(--dark-text), rgb(68 68 68));
 }
