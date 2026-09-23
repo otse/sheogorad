@@ -9,7 +9,7 @@
 [class^="text-gradient-"],
 [class*=" text-gradient-"] {
 	position: relative;
-	display: inline-block;
+	/* display: contents; */
 }
 
 [data-text-gradient]::after,
@@ -30,4 +30,14 @@
 .text-gradient-gray,
 [data-text-gradient="gray"] {
 	--text-gradient-image: linear-gradient(to top, var(--dark-text), rgb(68 68 68));
+}
+
+.text-gradient-gold,
+[data-text-gradient="gold"] {
+	--text-gradient-image: linear-gradient(to top, rgb(87 60 0), rgb(127 93 0));
+}
+
+.text-gradient-title,
+[data-text-gradient="title"] {
+	--text-gradient-image: linear-gradient(to bottom, rgb(71 71 71), rgb(84 71 51));
 }

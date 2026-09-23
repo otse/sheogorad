@@ -9,6 +9,8 @@ import ThingsToDo from './wnds/things to do.js';
 import RegionViewer from './wnds/region.js';
 import AreaViewer from './wnds/area.js';
 
+import randomData from './global.js';
+
 export const Sheogorad = {
 
 	config: {
@@ -17,9 +19,7 @@ export const Sheogorad = {
 		debug: true
 	},
 
-	global: {
-
-	},
+	global: randomData,
 
 	/** @type {ThingsToDo | null} */
 	thingsToDo: null,
@@ -172,8 +172,8 @@ export const Sheogorad = {
 		}
 
 		// Define some dock zones
-		Wnd.defineDockZone('#dropOffLeft');
-		Wnd.defineDockZone('#dropOffRight');
+		Wnd.defineDockZone('#dockingZoneLeft');
+		Wnd.defineDockZone('#dockingZoneRight');
 	},
 
 	populate() {

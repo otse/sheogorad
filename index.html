@@ -89,8 +89,12 @@
 
 		<nav>
 			<div class="nav-buttons">
-				<button type="button" id="mute-btn" class="rn-big-button" title="Mute">Music Player</button>
-				<button type="button" id="new-box-btn" class="rn-big-button" title="Open new window">Lore</button>
+				<button type="button" id="mute-btn"  class="rn-big-button" title="Mute">
+					<span data-text="Music Player" class="text-gradient-gold">Music Player</span>
+				</button>
+				<button type="button" id="new-box-btn"class="rn-big-button" title="Open new window">
+					<span data-text="Lore" class="text-gradient-gold">Lore</span>
+				</button>
 			</div>
 		</nav>
 
@@ -121,17 +125,16 @@
 		</template>
 
 		<template id="area-list-wnd-template">
-				Island of Vvardenfell:<br />
-				<div class="rn-bordered">
-					<!--<div class="explanator">Stepped:</div>
-					<div class="rn-divider"></div>-->
-					<div id="genericList" class="rn-scroll" style="">
-					</div>
-				</div>
+			<!--<div class="explanator">Stepped:</div>
+			<div class="rn-divider"></div>-->
+			<div id="regionList" class="rn-scroll" style="">
+			</div>
+			<div id="areaList" class="rn-scroll" style="">
+				Stuff inside the area.
+			</div>
 		</template>
 
 		<template id="area-viewer-wnd-template">
-				Area Viewer:<br />
 				<div class="rn-bordered">
 					<!--<div class="explanator">Stepped:</div>
 					<div class="rn-divider"></div>-->
@@ -148,7 +151,7 @@
 						<span data-bind="name"></span>, <span data-bind="race"></span> <span data-bind="class"></span>
 						of <span data-bind="hometown"></span>
 					</div>
-					<div class="rn-bordered">
+					<div class="rn-bordered" style="flex-direction: column;">
 						<div class="rn-stat-bar">
 							<span class="">Life</span><span class="" data-bind="life.text">61/78</span>
 							<div class="rn-stat-bar-track">
@@ -192,7 +195,7 @@
 				<div class="rn-wnd" moveable resizeable closable minimizable title="Example">
 					<div class="rn-wnd-title">
 						<span gradient></span>
-						<span><span class="text-gradient-gray" data-text="Wnd">Wnd</span></span>
+						<span><span class="text-gradient-title" data-text="Wnd">Wnd</span></span>
 						<div style="">
 							<button type="button" class="rn-title-bar-button min" title="Min">
 								<span>-</span> <!-- ⤥ -->
@@ -213,9 +216,9 @@
 
 		</template>
 
-		<div id="mainDropOff">
-			<div id="dropOffLeft"></div>
-			<div id="dropOffRight"></div>
+		<div id="mainDockingZones">
+			<div id="dockingZoneLeft"></div>
+			<div id="dockingZoneRight"></div>
 		</div>
 	</rn-elements>
 

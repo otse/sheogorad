@@ -7,15 +7,6 @@ import Tree from "../tree.js";
 import Wnd from "../wnd.js";
 import Wndd from "../wndd.js";
 
-const swathOfText = `
-	<div class="rn-bordered">
-		<div class="explanator">Stepped:</div>
-		<div class="rn-divider"></div>
-		<div id="genericList" class="rn-scroll" style="">
-		</div>
-	</div>
-`;
-
 export default class RegionViewer extends Wndd {
 	_create() {
 		const template = /** @type {HTMLTemplateElement} */ (document.getElementById('area-list-wnd-template'));
@@ -33,7 +24,7 @@ export default class RegionViewer extends Wndd {
 	populate() {
 		if (!this.wnd)
 			return;
-		const target = /** @type {HTMLElement} */ (this.wnd.wndContent.querySelector('#genericList'));
+		const target = /** @type {HTMLElement} */ (this.wnd.wndContent.querySelector('#regionList'));
 
 		for (const region in Sheogorad.canonList) {
 			const tree = new Tree([], {
@@ -56,9 +47,8 @@ export default class RegionViewer extends Wndd {
 						// console.warn(' building ', buildingObject.instance.name);
 						const tree3 = new Tree([], {
 							name: buildingObject.instance.name,
-							labelClassName: 'tree-building'
+							labelClassName: 'tree-building',
 						});
-
 
 						tree2.addItem(tree3);
 						const allNpcs = [

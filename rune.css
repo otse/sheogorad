@@ -138,7 +138,7 @@ rn-elements button:hover {
 	width: 30px;
 }
 
-#mainDropOff {
+#mainDockingZones {
 	display: flex;
 	/* background: url(img/RockRough0001_2_download600.jpg); */
 	background-size: 50%;
@@ -148,8 +148,8 @@ rn-elements button:hover {
 	border-radius: 3px;
 }
 
-#mainDropOff #dropOffLeft,
-#mainDropOff #dropOffRight {
+#mainDockingZones #dockingZoneLeft,
+#mainDockingZones #dockingZoneRight {
 	flex: 1 1 0;
 	border: 2px dashed rgb(127, 127, 127);
 	margin: 4px;
@@ -166,11 +166,11 @@ rn-elements button:hover {
 }
 
 .rn-wnd-content {
-	/* box-shadow: inset 0 0 12px rgb(110 110 110); */
-	padding: 3px;
-	gap: 10px;
+	/* box-shadow: inset 0 0 24px rgb(110 110 110); */
+	padding: 9px;
+	/* gap: 10px; */
 	display: flex;
-	min-height: 0;
+	height: -webkit-fill-available;
 	overflow: hidden;
 }
 
@@ -198,7 +198,7 @@ rn-elements button:hover {
 }
 
 .rn-wnd-title>span:nth-of-type(1) {
-	/* background: linear-gradient(to bottom, rgb(255 255 255 / 0%), rgb(151 151 151 / 33%)); */
+	/* background: linear-gradient(to bottom, rgb(255 255 255 / 0%), rgb(151 151 151 / 20%)); */
 	width: -webkit-fill-available;
 	height: -webkit-fill-available;
 	margin: 2px 0;
@@ -461,7 +461,11 @@ rn-elements button:hover {
 	background-image: url('rune2/close-pressed.png');
 }
 
+.rn-big-button.gold {
+	color: gold;
+}
 .rn-big-button {
+	display: flex;
 	box-shadow: 0px 0px 3px #2b2b2b;
 	text-shadow: inherit;
 	color: var(--dark-text);
@@ -554,9 +558,10 @@ rn-elements button:hover {
 .rn-bordered {
 	display: flex;
 	padding: 6px;
-	width: 100%;
+	/* max-width: -webkit-fill-available; */
+	/* width: -webkit-fill-available; */
 	/* box-shadow: inset 0 0 10px #7d7d7d; */
-	border-radius: 3px;
+	/* border-radius: 3px; */
 	background-image:
 		url(rune2/menu_thin_border_top_left_corner.png),
 		url(rune2/menu_thin_border_top_right_corner.png),
@@ -578,13 +583,12 @@ rn-elements button:hover {
 		1px 256px;
 	background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, repeat-x, repeat-x, repeat-y, repeat-y;
 	background-position: top left, top right, bottom left, bottom right, top, bottom, left, right;
-	flex-direction: column;
 }
 
 #genericList {
 	x-color: cyan;
-	overflow-y: auto;
-	overflow-x: hidden;
+	/* overflow-y: auto; */
+	/* overflow-x: hidden; */
 	/* height: 200px; */
 }
 
@@ -705,7 +709,7 @@ ul li span {
 
 /* Scrollbar styling with Morrowind textures */
 .rn-scroll::-webkit-scrollbar {
-	width: 22px;
+	width: 27px;
 	/* 21 */
 }
 
@@ -719,17 +723,20 @@ ul li span {
 
 /* Track: thin border frame + vertbar fill, inset 5px from edge */
 .rn-scroll::-webkit-scrollbar-track {
-	background:
-		url('rune2/menu_thin_border_top_left_corner.png') no-repeat top left / 1px 1px,
-		url('rune2/menu_thin_border_top_right_corner.png') no-repeat top right / 1px 1px,
-		url('rune2/menu_thin_border_bottom_left_corner.png') no-repeat bottom left / 1px 1px,
-		url('rune2/menu_thin_border_bottom_right_corner.png') no-repeat bottom right / 1px 1px,
-		url('rune2/menu_thin_border_top.png') repeat-x top / 256px 1px,
-		url('rune2/menu_thin_border_bottom.png') repeat-x bottom / 256px 1px,
-		url('rune2/menu_thin_border_left.png') repeat-y left / 1px 256px,
-		url('rune2/menu_thin_border_right.png') repeat-y right / 1px 256px,
-		url('rune2/menu_scroll_vertbar_top.png') no-repeat top center / 1px 1px,
-		url('rune2/menu_scroll_vertbar_bottom.png') no-repeat bottom center / 1px 1px;
+	background-image:
+		url('rune2/menu_thin_border_top_left_corner.png'),
+		url('rune2/menu_thin_border_top_right_corner.png'),
+		url('rune2/menu_thin_border_bottom_left_corner.png'),
+		url('rune2/menu_thin_border_bottom_right_corner.png'),
+		url('rune2/menu_thin_border_top.png'),
+		url('rune2/menu_thin_border_bottom.png'),
+		url('rune2/menu_thin_border_left.png'),
+		url('rune2/menu_thin_border_right.png'),
+		url('rune2/menu_scroll_vertbar_top.png'),
+		url('rune2/menu_scroll_vertbar_bottom.png');
+	background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, repeat-x, repeat-x, repeat-y, repeat-y, no-repeat, no-repeat;
+	background-position: top left, top right, bottom left, bottom right, top, bottom, left, right, top center, bottom center;
+	xx-background-size: 1px 1px, 1px 1px, 1px 1px, 1px 1px, 256px 1px, 256px 1px, 1px 256px, 1px 256px, 1px 1px, 1px 1px;
 	background-clip: content-box;
 	border: 2px solid transparent;
 	border-top: 1px solid transparent;
@@ -737,16 +744,7 @@ ul li span {
 }
 
 .rn-scroll::-webkit-scrollbar-thumb {
-	background: #dddddd;
-	background-clip: content-box;
-	border: 3px solid transparent;
-	border-right: 4px solid transparent !important;
-	border-left: 4px solid transparent !important;
-	border-radius: 4px;
-}
-
-.rn-wndcard .rn-scroll::-webkit-scrollbar-thumb {
-	background: #333;
+	background: #444;
 	background-clip: content-box;
 	border: 3px solid transparent;
 	border-right: 4px solid transparent !important;
@@ -765,66 +763,37 @@ ul li span {
 /* Buttons: thin border frame + arrow icon (inline SVG for proper centering), inset 5px */
 .rn-scroll::-webkit-scrollbar-button:vertical:start {
 	color: #bbbbbb;
-	background:
-		url('rune2/menu_thin_border_top_left_corner.png') no-repeat top left / 1px 1px,
-		url('rune2/menu_thin_border_top_right_corner.png') no-repeat top right / 1px 1px,
-		url('rune2/menu_thin_border_bottom_left_corner.png') no-repeat bottom left / 1px 1px,
-		url('rune2/menu_thin_border_bottom_right_corner.png') no-repeat bottom right / 1px 1px,
-		url('rune2/menu_thin_border_top.png') repeat-x top / 256px 1px,
-		url('rune2/menu_thin_border_bottom.png') repeat-x bottom / 256px 1px,
-		url('rune2/menu_thin_border_left.png') repeat-y left / 1px 256px,
-		url('rune2/menu_thin_border_right.png') repeat-y right / 1px 256px,
-		url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M6 3L2 9h8z' fill='%23dddddd'/%3E%3C/svg%3E") no-repeat center / 15px 15px;
-	bbackground-size: auto, auto, auto, auto, auto, auto, auto, auto, 15px 15px;
-	background-clip: content-box;
-	border-bottom-width: 0px;
-}
-
-.rn-wndcard .rn-scroll::-webkit-scrollbar-button:vertical:start {
-	color: #bbbbbb;
-	background:
-		url('rune2/menu_thin_border_top_left_corner.png') no-repeat top left / 1px 1px,
-		url('rune2/menu_thin_border_top_right_corner.png') no-repeat top right / 1px 1px,
-		url('rune2/menu_thin_border_bottom_left_corner.png') no-repeat bottom left / 1px 1px,
-		url('rune2/menu_thin_border_bottom_right_corner.png') no-repeat bottom right / 1px 1px,
-		url('rune2/menu_thin_border_top.png') repeat-x top / 256px 1px,
-		url('rune2/menu_thin_border_bottom.png') repeat-x bottom / 256px 1px,
-		url('rune2/menu_thin_border_left.png') repeat-y left / 1px 256px,
-		url('rune2/menu_thin_border_right.png') repeat-y right / 1px 256px,
-		url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M6 3L2 9h8z' fill='%23333'/%3E%3C/svg%3E") no-repeat center / 15px 15px;
-	bbackground-size: auto, auto, auto, auto, auto, auto, auto, auto, 15px 15px;
+	background-image:
+		url('rune2/menu_thin_border_top_left_corner.png'),
+		url('rune2/menu_thin_border_top_right_corner.png'),
+		url('rune2/menu_thin_border_bottom_left_corner.png'),
+		url('rune2/menu_thin_border_bottom_right_corner.png'),
+		url('rune2/menu_thin_border_top.png'),
+		url('rune2/menu_thin_border_bottom.png'),
+		url('rune2/menu_thin_border_left.png'),
+		url('rune2/menu_thin_border_right.png'),
+		url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M6 3L2 9h8z' fill='%23444'/%3E%3C/svg%3E");
+	background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, repeat-x, repeat-x, repeat-y, repeat-y, no-repeat;
+	background-position: top left, top right, bottom left, bottom right, top, bottom, left, right, center;
+	xx-background-size: 1px 1px, 1px 1px, 1px 1px, 1px 1px, 256px 1px, 256px 1px, 1px 256px, 1px 256px, 15px 15px;
 	background-clip: content-box;
 	border-bottom-width: 0px;
 }
 
 .rn-scroll::-webkit-scrollbar-button:vertical:end {
-	background:
-		url('rune2/menu_thin_border_top_left_corner.png') no-repeat top left / 1px 1px,
-		url('rune2/menu_thin_border_top_right_corner.png') no-repeat top right / 1px 1px,
-		url('rune2/menu_thin_border_bottom_left_corner.png') no-repeat bottom left / 1px 1px,
-		url('rune2/menu_thin_border_bottom_right_corner.png') no-repeat bottom right / 1px 1px,
-		url('rune2/menu_thin_border_top.png') repeat-x top / 256px 1px,
-		url('rune2/menu_thin_border_bottom.png') repeat-x bottom / 256px 1px,
-		url('rune2/menu_thin_border_left.png') repeat-y left / 1px 256px,
-		url('rune2/menu_thin_border_right.png') repeat-y right / 1px 256px,
-		url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M6 9l4-6H2z' fill='%23dddddd'/%3E%3C/svg%3E") no-repeat center / 15px 15px;
-	bbackground-size: auto, auto, auto, auto, auto, auto, auto, auto, 15px 15px;
-	background-clip: content-box;
-	border-top-width: 0px;
-}
-
-.rn-wndcard .rn-scroll::-webkit-scrollbar-button:vertical:end {
-	background:
-		url('rune2/menu_thin_border_top_left_corner.png') no-repeat top left / 1px 1px,
-		url('rune2/menu_thin_border_top_right_corner.png') no-repeat top right / 1px 1px,
-		url('rune2/menu_thin_border_bottom_left_corner.png') no-repeat bottom left / 1px 1px,
-		url('rune2/menu_thin_border_bottom_right_corner.png') no-repeat bottom right / 1px 1px,
-		url('rune2/menu_thin_border_top.png') repeat-x top / 256px 1px,
-		url('rune2/menu_thin_border_bottom.png') repeat-x bottom / 256px 1px,
-		url('rune2/menu_thin_border_left.png') repeat-y left / 1px 256px,
-		url('rune2/menu_thin_border_right.png') repeat-y right / 1px 256px,
-		url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M6 9l4-6H2z' fill='%23333'/%3E%3C/svg%3E") no-repeat center / 15px 15px;
-	bbackground-size: auto, auto, auto, auto, auto, auto, auto, auto, 15px 15px;
+	background-image:
+		url('rune2/menu_thin_border_top_left_corner.png'),
+		url('rune2/menu_thin_border_top_right_corner.png'),
+		url('rune2/menu_thin_border_bottom_left_corner.png'),
+		url('rune2/menu_thin_border_bottom_right_corner.png'),
+		url('rune2/menu_thin_border_top.png'),
+		url('rune2/menu_thin_border_bottom.png'),
+		url('rune2/menu_thin_border_left.png'),
+		url('rune2/menu_thin_border_right.png'),
+		url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M6 9l4-6H2z' fill='%23444'/%3E%3C/svg%3E");
+	background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, repeat-x, repeat-x, repeat-y, repeat-y, no-repeat;
+	background-position: top left, top right, bottom left, bottom right, top, bottom, left, right, center;
+	xx-background-size: 1px 1px, 1px 1px, 1px 1px, 1px 1px, 256px 1px, 256px 1px, 1px 256px, 1px 256px, 15px 15px;
 	background-clip: content-box;
 	border-top-width: 0px;
 }

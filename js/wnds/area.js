@@ -17,7 +17,7 @@ const swathOfText = `
 
 export default class AreaViewer extends Wndd {
     /** @type {AreaViewer | null} */
-    static generalInstance = null;
+    static instance = null;
 
     data = {};
     /**
@@ -35,11 +35,11 @@ export default class AreaViewer extends Wndd {
             `Area`,
             clone,
             { width: 400, height: 250, minWidth: 380, minHeight: 250 });
-        wnd.moveTo(-400, 100);
+        wnd.moveTo(0, 100);
         return wnd;
     }
     render() {
-        this.fillWithData();
+        this._render();
     }
     /**
      * Feed new data into an existing (or not-yet-created) window and re-render it.
@@ -51,16 +51,17 @@ export default class AreaViewer extends Wndd {
         this.data = merge ? { ...this.data, ...data } : { ...data };
         this.make();
     }
-    fillWithData() {
+    _render() {
         if (!this.wnd)
             return;
+        return;
         const target = /** @type {HTMLElement} */ (this.wnd.wndContent.querySelector('#genericList'));
+        
         target.innerHTML = '';
 
-        if (!this.data.settlement || !this.data.building_id)
-            return;
-
-        const building_ids = this.data.settlement.buildings;
+        const region_id = Sheogorad.global.region_id;
+        const settlement_id = Sheogorad.global.settlement_id;
+        const building_id = Sheogorad.global.building_id;
 
         const tree = new Tree([], {
             name: 'Stuff',
@@ -69,7 +70,9 @@ export default class AreaViewer extends Wndd {
 
         //console.warn(' building_ids ', building_id);
 
-        for (const buildingObject of building_ids[this.data.building_id]) {
+        const dataInBuilding = Sheogorad.canonList[region_id][settlement_id].buildings[building_id];
+
+        for (const buildingObject of dataInBuilding) {
             // console.warn(' building ', buildingObject.instance.name);
             const tree3 = new Tree([], {
                 name: buildingObject.instance.name,
