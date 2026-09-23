@@ -10,6 +10,8 @@ function formatNpcName(name) {
 }
 
 const DEFAULT_STATS = {
+	name: 'Arrille',
+	hometown: 'Seyda Neen',
 	life: { current: 61, max: 78 },
 	magicka: { current: 200, max: 206 },
 	level: 6,
@@ -23,6 +25,20 @@ const DEFAULT_STATS = {
 	},
 };
 
+const random_stats = () => ({
+	life: { current: Math.floor(Math.random() * 78), max: 78 },
+	magicka: { current: Math.floor(Math.random() * 206), max: 206 },
+	level: Math.floor(Math.random() * 10) + 1,
+	race: ['Dark Elf', 'High Elf', 'Wood Elf', 'Orc', 'Nord'][Math.floor(Math.random() * 5)],
+	class: ['Mage Warrior', 'Sorcerer', 'Thief', 'Ranger'][Math.floor(Math.random() * 4)],
+	pillars: {
+		might: Math.floor(Math.random() * 100),
+		will: Math.floor(Math.random() * 100),
+		wits: Math.floor(Math.random() * 100),
+		charm: Math.floor(Math.random() * 100),
+	},
+});
+
 export default class Npc {
 	/** @type {Wnd | null} */
 	wnd = null;
@@ -30,7 +46,7 @@ export default class Npc {
 	constructor(name, stats = {}) {
 		this.name = name;
 		this.icon = Sheogorad.iconList.npcIcons[name] || '';
-		this.stats = { ...DEFAULT_STATS, ...stats };
+		this.stats = { ...DEFAULT_STATS, ...random_stats(), ...stats };
 	}
 	makeWnd() {
 		const mwMenuTemplate = /** @type {HTMLTemplateElement} */

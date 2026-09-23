@@ -71,7 +71,9 @@ export default class AreaList {
 						];
 
 						for (const npcName of allNpcs) {
-							const npc = new Npc(npcName);
+							const npc = new Npc(npcName, {
+								name: Sheogorad.formatNpcName(npcName)
+							});
 							Sheogorad.npcs.push(npc);
 							const icon = Sheogorad.iconList.npcIcons[npcName] || '';
 							tree3.addItem({
