@@ -1,0 +1,27 @@
+/* this is rune layout stuff, and it's pretty specific
+ *
+ * if it's not generic it's layout specific put it in here
+*/
+.rnl-region-wnd-list {
+    min-width: 220px;
+    max-width: 400px;
+}
+
+.rnl-region-wnd-area {
+    min-width: 200px;
+    width: -webkit-fill-available;
+    height: -webkit-fill-available;
+    background: transparent;
+}
+
+.rnl-region-wnd-docking-zone {
+    position: relative;
+    flex: 1 1 auto;
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
+    box-sizing: border-box;
+    background: #ffff001a;
+    /* width: inherit; */
+    height: -webkit-fill-available;
+}

@@ -133,6 +133,8 @@ export default class Wnd {
 
 	/** @type {HTMLElement | null} Dock zone this wnd is currently snapped to, if any */
 	dockedZone = null;
+	/** @type {{ host: HTMLElement, nextSibling: ChildNode | null, posStyle: string, elStyle: string } | null} */
+	hardDockState = null;
 
 	beforeMinSize = { width: 0, height: 0 };
 	beforeMinXY = { x: 0, y: 0 };
@@ -318,6 +320,91 @@ export default class Wnd {
 		this.el.classList.remove('rn-wnd-docked');
 	}
 
+	/**
+	 * Embeds this wnd in a zone so it is clipped and hidden with that zone's
+	 * window. Unlike dock(), this changes the DOM parent and uses local layout.
+	 * @param {HTMLElement} zoneEl
+	 */
+	hardDock(zoneEl) {
+		if (!this.el || !this.posEl) {
+			this.warnWindowDestroyed();
+			return;
+		}
+		if (!(zoneEl instanceof HTMLElement))
+			throw new TypeError('Wnd.hardDock requires an HTMLElement zone');
+
+		if (this.hardDockState)
+			this.hardUndock();
+
+		const host = this.posEl.parentElement;
+		if (!host)
+			return;
+
+		this.hardDockState = {
+			host,
+			nextSibling: this.posEl.nextSibling,
+			posStyle: this.posEl.style.cssText,
+			elStyle: this.el.style.cssText
+		};
+
+		this.posEl.removeAttribute('data-docked');
+		this.el.classList.remove('rn-wnd-docked');
+		zoneEl.appendChild(this.posEl);
+		this.posEl.style.position = 'absolute';
+		this.posEl.style.inset = '0';
+		this.posEl.style.width = '100%';
+		this.posEl.style.height = '100%';
+		this.posEl.style.minWidth = '0';
+		this.posEl.style.minHeight = '0';
+		this.posEl.style.transform = 'none';
+		this.el.style.width = '100%';
+		this.el.style.height = '100%';
+		this.el.style.minWidth = '0';
+		this.el.style.minHeight = '0';
+
+		this.interactable.draggable(false);
+		this.interactable.resizable(false);
+		this.dockedZone = zoneEl;
+		this.posEl.setAttribute('data-hard-docked', 'true');
+		this.el.classList.add('rn-wnd-hard-docked');
+	}
+
+	/** Restores a hard-docked wnd to the global window layer. */
+	hardUndock() {
+		if (!this.el || !this.posEl || !this.hardDockState)
+			return;
+
+		const { host, nextSibling, posStyle, elStyle } = this.hardDockState;
+		if (nextSibling && nextSibling.parentNode === host)
+			host.insertBefore(this.posEl, nextSibling);
+		else
+			host.appendChild(this.posEl);
+
+		this.posEl.style.cssText = posStyle;
+		this.el.style.cssText = elStyle;
+		this.posEl.removeAttribute('data-hard-docked');
+		this.el.classList.remove('rn-wnd-hard-docked');
+		this.dockedZone = null;
+		this.hardDockState = null;
+
+		if (this.el.hasAttribute('moveable'))
+			this.interactable.draggable(true);
+		if (this.el.hasAttribute('resizeable'))
+			this.interactable.resizable(true);
+	}
+
+	setWndTitle(title) {
+		if (!this.el) {
+			this.warnWindowDestroyed();
+			return;
+		}
+		const titleSpan = /** @type {HTMLElement | null} */ (this.el.querySelector('.rn-wnd-title-bar>div>span>span'));
+		if (!titleSpan)
+			return;
+		titleSpan.innerHTML = `${title}`;
+		titleSpan.setAttribute('data-text', title);
+	}
+
 	setContent(content) {
 		if (!this.el) {
 			this.warnWindowDestroyed();
@@ -369,9 +456,7 @@ export default class Wnd {
 		el.style.minWidth = (options.minWidth || 100) + 'px';
 		el.style.minHeight = (options.minHeight || 100) + 'px';
 
-		const titleSpan = /** @type {HTMLElement} */ (el.querySelector('.rn-wnd-title-bar>div>span>span'));
-		titleSpan.innerHTML = `${title}`;
-		titleSpan.setAttribute('data-text', title);
+		this.setWndTitle(title);
 
 		const contentContainer = /** @type {HTMLElement} */ (el.querySelector('.rn-wnd-content'));
 

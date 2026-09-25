@@ -63,6 +63,11 @@ export const Sheogorad = {
 
 		this.areaViewer = new AreaViewer();
 		this.areaViewer.make();
+		if (this.areaList.wnd && this.areaViewer.wnd) {
+			const areaDockZone = this.areaList.wnd.wndContent.querySelector('.rnl-region-wnd-docking-zone');
+			if (areaDockZone instanceof HTMLElement)
+				this.areaViewer.wnd.hardDock(areaDockZone);
+		}
 
 		Sheogorad.staaart(); // We're cheating! Skip GenDiag!
 

@@ -3,11 +3,16 @@
 import Npc from "./npc.js";
 
 import Sheogorad from "../sheogorad.js";
+import AreaViewer from "./area.js";
+
 import Tree from "../tree.js";
 import Wnd from "../wnd.js";
 import Wndd from "../wndd.js";
 
 export default class RegionViewer extends Wndd {
+	/** @type {AreaViewer | null} */
+	dockedArea = null;
+
 	_create() {
 		const template = /** @type {HTMLTemplateElement} */ (document.getElementById('area-list-wnd-template'));
 		const clone = /** @type {DocumentFragment} */ (template.content.cloneNode(true));
@@ -17,14 +22,31 @@ export default class RegionViewer extends Wndd {
 			clone,
 			{ width: 400, height: 250, minWidth: 380, minHeight: 250 });
 		wnd.moveTo(-400, 100);
-		this.wnd = wnd;
-		this.populate();
 		return wnd;
+	}
+	render() {
+		this.populate();
+		if (!this.wnd)
+			return;
+
+		const dockingElement = /** @type {HTMLElement} */
+			(this.wnd.wndContent.querySelector('.rnl-region-wnd-docking-zone'));
+
+		Wnd.defineDockZone(dockingElement);
+
+		this.areaViewer = new AreaViewer();
+		this.areaViewer.make();
+
+		if (this.wnd && this.areaViewer.wnd) {
+			this.areaViewer.wnd.hardDock(dockingElement);
+		}
 	}
 	populate() {
 		if (!this.wnd)
 			return;
-		const target = /** @type {HTMLElement} */ (this.wnd.wndContent.querySelector('#regionList'));
+		const target = /** @type {HTMLElement} */
+			(this.wnd.wndContent.querySelector('.rnl-region-wnd-list'));
+		target.innerHTML = '';
 
 		for (const region in Sheogorad.canonList) {
 			const tree = new Tree([], {

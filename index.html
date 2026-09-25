@@ -13,6 +13,7 @@
 	<link rel="stylesheet" href="messy.css">
 	<link rel="stylesheet" href="rune.css">
 	<link rel="stylesheet" href="runetricks.css">
+	<link rel="stylesheet" href="rnl.css"> <!-- layout -->
 
 	<style>
 		@font-face {
@@ -127,15 +128,17 @@
 		<template id="area-list-wnd-template">
 			<!--<div class="explanator">Stepped:</div>
 			<div class="rn-divider"></div>-->
-			<div id="regionList" class="rn-scroll" style="">
+			<div class="rn-scroll rnl-region-wnd-list">
 			</div>
-			<div id="areaList" class="rn-scroll" style="">
-				Stuff inside the area.
+			<div class="rn-scroll rnl-region-wnd-area" style="">
+				<div class="rnl-region-wnd-docking-zone">
+				</div>
 			</div>
 		</template>
 
 		<template id="area-viewer-wnd-template">
 				<div class="rn-bordered">
+					Stuff inside the area.
 					<!--<div class="explanator">Stepped:</div>
 					<div class="rn-divider"></div>-->
 					<div id="genericList" class="rn-scroll" style="">

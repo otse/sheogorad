@@ -78,6 +78,8 @@
 }
 
 .rn-stats-layout {
+	display: flex;
+	width: -webkit-fill-available;
 	flex: 1;
 	min-height: 0;
 }

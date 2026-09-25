@@ -41,6 +41,7 @@ export default class AreaViewer extends Wndd {
     render() {
         this._render();
     }
+    
     /**
      * Feed new data into an existing (or not-yet-created) window and re-render it.
      * This lets one AreaViewer instance/window be reused to display different areas.
@@ -50,14 +51,19 @@ export default class AreaViewer extends Wndd {
     setData(data, { merge = false } = {}) {
         this.data = merge ? { ...this.data, ...data } : { ...data };
         this.make();
+        this.wnd?.setWndTitle(`Area x! ${this.data.building_id || ''}`);
     }
     _render() {
         if (!this.wnd)
             return;
-        return;
-        const target = /** @type {HTMLElement} */ (this.wnd.wndContent.querySelector('#genericList'));
+        
+        const target = /** @type {HTMLElement} */ (this.wnd.wndContent);
         
         target.innerHTML = '';
+
+        const textStuff = `${this.data.settlement || 'The region hasn\'t attached settlement as data.'}`;//this.data.settlement;
+        target.innerHTML = textStuff;
+        return;
 
         const region_id = Sheogorad.global.region_id;
         const settlement_id = Sheogorad.global.settlement_id;
