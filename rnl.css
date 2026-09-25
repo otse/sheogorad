@@ -4,12 +4,14 @@
 */
 .rnl-region-wnd-list {
     min-width: 220px;
-    max-width: 400px;
+    max-width: 500px;
+    width: 50%;
 }
 
 .rnl-region-wnd-area {
+    width: 50%;
     min-width: 200px;
-    width: -webkit-fill-available;
+    /* width: -webkit-fill-available; */
     height: -webkit-fill-available;
     background: transparent;
 }
@@ -24,4 +26,10 @@
     background: #ffff001a;
     /* width: inherit; */
     height: -webkit-fill-available;
+}
+
+.rnl-building-wnd-div {
+    display: flex;
+    flex-direction: column;
+    width: -webkit-fill-available;
 }

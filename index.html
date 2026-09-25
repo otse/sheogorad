@@ -90,10 +90,10 @@
 
 		<nav>
 			<div class="nav-buttons">
-				<button type="button" id="mute-btn"  class="rn-big-button" title="Mute">
+				<button type="button" id="mute-btn" class="rn-big-button" title="Mute">
 					<span data-text="Music Player" class="text-gradient-gold">Music Player</span>
 				</button>
-				<button type="button" id="new-box-btn"class="rn-big-button" title="Open new window">
+				<button type="button" id="new-box-btn" class="rn-big-button" title="Open new window">
 					<span data-text="Lore" class="text-gradient-gold">Lore</span>
 				</button>
 			</div>
@@ -130,20 +130,15 @@
 			<div class="rn-divider"></div>-->
 			<div class="rn-scroll rnl-region-wnd-list">
 			</div>
-			<div class="rn-scroll rnl-region-wnd-area" style="">
+			<div class="rnl-region-wnd-area" style="">
 				<div class="rnl-region-wnd-docking-zone">
 				</div>
 			</div>
 		</template>
 
-		<template id="area-viewer-wnd-template">
-				<div class="rn-bordered">
-					Stuff inside the area.
-					<!--<div class="explanator">Stepped:</div>
-					<div class="rn-divider"></div>-->
-					<div id="genericList" class="rn-scroll" style="">
-					</div>
-				</div>
+		<template id="building-viewer-wnd-template">
+			<div class="rnl-building-wnd-div"></div>
+			</div>
 		</template>
 
 		<template id="npc-wnd-template">
@@ -208,7 +203,8 @@
 								<span class="text-gradient-button" data-text="-">-</span> <!-- ⤥ -->
 							</button>
 							<button type="button" class="rn-title-bar-button close" title="Close">
-								<span class="text-gradient-button" data-text="x">x</span> <!-- <span class="gem-icon">💎</span> -->
+								<span class="text-gradient-button" data-text="x">x</span>
+								<!-- <span class="gem-icon">💎</span> -->
 							</button>
 						</div>
 					</div>

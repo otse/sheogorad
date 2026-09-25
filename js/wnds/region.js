@@ -3,19 +3,22 @@
 import Npc from "./npc.js";
 
 import Sheogorad from "../sheogorad.js";
-import AreaViewer from "./area.js";
+import BuildingViewer from "./building.js";
 
 import Tree from "../tree.js";
 import Wnd from "../wnd.js";
 import Wndd from "../wndd.js";
 
 export default class RegionViewer extends Wndd {
-	/** @type {AreaViewer | null} */
-	dockedArea = null;
+	/** @type {BuildingViewer | null} */
+	dockedBuildingViewer = null;
 
 	_create() {
-		const template = /** @type {HTMLTemplateElement} */ (document.getElementById('area-list-wnd-template'));
-		const clone = /** @type {DocumentFragment} */ (template.content.cloneNode(true));
+		const template = /** @type {HTMLTemplateElement} */
+			(document.getElementById('area-list-wnd-template'));
+			
+		const clone = /** @type {DocumentFragment} */
+			(template.content.cloneNode(true));
 
 		const wnd = new Wnd(
 			`Region Map`,
@@ -34,16 +37,18 @@ export default class RegionViewer extends Wndd {
 
 		Wnd.defineDockZone(dockingElement);
 
-		this.areaViewer = new AreaViewer();
-		this.areaViewer.make();
+		this.dockedBuildingViewer = new BuildingViewer();
+		this.dockedBuildingViewer.make();
 
-		if (this.wnd && this.areaViewer.wnd) {
-			this.areaViewer.wnd.hardDock(dockingElement);
+		if (this.wnd && this.dockedBuildingViewer.wnd) {
+			this.dockedBuildingViewer.wnd.hardDock(dockingElement);
 		}
 	}
 	populate() {
 		if (!this.wnd)
 			return;
+		const that = this;
+
 		const target = /** @type {HTMLElement} */
 			(this.wnd.wndContent.querySelector('.rnl-region-wnd-list'));
 		target.innerHTML = '';
@@ -58,7 +63,10 @@ export default class RegionViewer extends Wndd {
 				// tree.addItem(settlement.name);
 				const tree2 = new Tree([], {
 					name: settlement.name,
-					className: 'tree'
+					className: 'tree',
+					//onClick: () => {
+					//	that.dockedBuildingViewer?.setData({ settlement });
+					//}
 				});
 				const building_ids = settlement.buildings;
 
@@ -70,6 +78,11 @@ export default class RegionViewer extends Wndd {
 						const tree3 = new Tree([], {
 							name: buildingObject.instance.name,
 							labelClassName: 'tree-building',
+							onClick: () => {
+								console.warn('Building clicked:', buildingObject.instance.name);
+
+								that.dockedBuildingViewer?.setData({ settlement, building_id, buildingObject }, { merge: true });
+							}
 						});
 
 						tree2.addItem(tree3);

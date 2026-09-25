@@ -7,7 +7,8 @@ import MusicPlayer from './wnds/music player.js';
 import LorePanel from './wnds/lore.js';
 import ThingsToDo from './wnds/things to do.js';
 import RegionViewer from './wnds/region.js';
-import AreaViewer from './wnds/area.js';
+import BuildingViewer from './wnds/building.js';
+import ServerClient from './server-client.js';
 
 import randomData from './global.js';
 
@@ -20,6 +21,9 @@ export const Sheogorad = {
 	},
 
 	global: randomData,
+	serverClient: new ServerClient(),
+	/** @type {{ world: any, regions: any, areas: any, npcs: any, lore: any } | null} */
+	serverData: null,
 
 	/** @type {ThingsToDo | null} */
 	thingsToDo: null,
@@ -27,8 +31,8 @@ export const Sheogorad = {
 	lorePanel: null,
 	/** @type {RegionViewer | null} */
 	areaList: null,
-	/** @type {AreaViewer | null} */
-	areaViewer: null,
+	/** @type {BuildingViewer | null} */
+	buildingViewer: null,
 	/** @type {MusicPlayer | null} */
 	musicPlayer: null,
 
@@ -61,13 +65,10 @@ export const Sheogorad = {
 		this.areaList = new RegionViewer();
 		this.areaList.make();
 
-		this.areaViewer = new AreaViewer();
-		this.areaViewer.make();
-		if (this.areaList.wnd && this.areaViewer.wnd) {
-			const areaDockZone = this.areaList.wnd.wndContent.querySelector('.rnl-region-wnd-docking-zone');
-			if (areaDockZone instanceof HTMLElement)
-				this.areaViewer.wnd.hardDock(areaDockZone);
-		}
+		// RegionViewer.render() already creates and hard-docks its own BuildingViewer
+		// into the same docking zone; reuse it instead of hard-docking a second
+		// instance on top of it (which would silently swallow tree click updates).
+		this.buildingViewer = this.areaList.dockedBuildingViewer;
 
 		Sheogorad.staaart(); // We're cheating! Skip GenDiag!
 
@@ -126,6 +127,11 @@ export const Sheogorad = {
 			console.error(`Error loading ${filePath}:`, error);
 			throw error;
 		}
+	},
+
+	async downloadServerData() {
+		this.serverData = await this.serverClient.downloadAll();
+		return this.serverData;
 	},
 
 	async loadCanonList() {

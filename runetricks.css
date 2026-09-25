@@ -39,7 +39,7 @@
 
 .text-gradient-title,
 [data-text-gradient="title"] {
-	--text-gradient-image: linear-gradient(to bottom, rgb(49 49 49), rgb(73 55 32));
+	--text-gradient-image: linear-gradient(to bottom, rgb(44 44 44), rgb(74 74 74));
 }
 .text-gradient-title::after {
 	text-decoration: underline ! important;

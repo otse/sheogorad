@@ -30,6 +30,9 @@ export default class Tree {
 				this.ul.style.display = shouldShow ? 'block' : 'none';
 				label.classList.toggle(expandedClass, shouldShow);
 				caret.textContent = shouldShow ? ' ↴' : ''; // ☇
+				if (options.onClick) {
+					options.onClick();
+				}
 			});
 
 			wrapper.appendChild(label);

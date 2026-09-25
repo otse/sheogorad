@@ -170,6 +170,7 @@ rn-elements button:hover {
 	padding: 0px;
 	/* gap: 10px; */
 	display: flex;
+	flex: 0 0 1;
 	height: -webkit-fill-available;
 	overflow: hidden;
 }
@@ -229,7 +230,7 @@ rn-elements button:hover {
 }
 
 .rn-wnd-title-bar>div:nth-of-type(1)>span>span {
-	/* letter-spacing: 2px; */
+	/* letter-spacing: 3px; */
 	font-size: 90%;
 	text-decoration: underline;
 }
@@ -330,7 +331,7 @@ rn-elements button:hover {
 
 	/* Box shadows are not OSR */
 	box-shadow: 0px 0px 27px rgba(0, 0, 0, 0.5);
-	border-radius: 0px;
+	border-radius: 2px;
 	/* border: 1px outset #3a3a3a; */
 	x-background: rgba(127, 127, 127, 0.5);
 	background-image: url(img/RockRough0001_1_download600.jpg);
