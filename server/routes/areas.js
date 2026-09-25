@@ -1,67 +1,37 @@
-// 🧙‍♀️ Code magic within
-
 import { Router } from 'express';
+import { sendVersioned } from '../lib/change-tracking.js';
 
-function findSettlement(worldData, rawName) {
-	const name = decodeURIComponent(rawName).toLowerCase();
-	for (const settlement of worldData.settlements.values()) {
-		if (settlement.name.toLowerCase() === name) return settlement;
-	}
-	return null;
-}
-
-export function createAreasRouter({ worldData, simulation }) {
+export function createAreasRouter({ simulation }) {
 	const router = Router();
 
-	// Area summaries: enough info for an overview list/map view.
 	router.get('/', (req, res) => {
-		const summaries = [...worldData.settlements.values()].map(settlement => ({
-			name: settlement.name,
-			region: settlement.region,
-			type: settlement.type,
-			alignment: settlement.alignment,
-			buildingCount: settlement.buildings.length,
-			npcCount: simulation.countInSettlement(settlement.name),
-		}));
-		res.json(summaries);
+		res.json(simulation.listAreas());
 	});
 
 	router.get('/:name', (req, res) => {
-		const settlement = findSettlement(worldData, req.params.name);
-		if (!settlement) return res.status(404).json({ error: 'Area not found' });
-
-		res.json({
-			name: settlement.name,
-			region: settlement.region,
-			type: settlement.type,
-			alignment: settlement.alignment,
-			services: settlement.services,
-			transport: settlement.transport,
-			npcCount: simulation.countInSettlement(settlement.name),
-			buildings: settlement.buildings.map(building => ({
-				buildingId: building.buildingId,
-				name: building.name,
-				condition: building.condition,
-				modifier: building.modifier,
-				items: building.items,
-				npcCount: simulation.countInBuilding(settlement.name, building.buildingId),
-			})),
-		});
+		const area = simulation.areas.get(req.params.name);
+		if (!area) return res.status(404).json({ error: `Unknown area "${req.params.name}"` });
+		sendVersioned(res, req, area.version, () => simulation.getArea(area.id));
 	});
 
 	router.get('/:name/buildings/:buildingId', (req, res) => {
-		const settlement = findSettlement(worldData, req.params.name);
-		if (!settlement) return res.status(404).json({ error: 'Area not found' });
+		const building = simulation.getBuilding(req.params.name, req.params.buildingId);
+		if (!building) return res.status(404).json({ error: `Unknown building "${req.params.buildingId}" in "${req.params.name}"` });
+		sendVersioned(res, req, building.version, () => building);
+	});
 
-		const building = settlement.buildings.find(b => b.buildingId === req.params.buildingId);
-		if (!building) return res.status(404).json({ error: 'Building not found' });
+	// Body: { versions: { [buildingOrNpcId]: lastKnownVersion } }.
+	// Returns only the buildings/npcs whose version moved past what was sent.
+	router.post('/:name/changes', (req, res) => {
+		const area = simulation.areas.get(req.params.name);
+		if (!area) return res.status(404).json({ error: `Unknown area "${req.params.name}"` });
 
-		res.json({
-			...building,
-			settlement: settlement.name,
-			region: settlement.region,
-			npcs: simulation.list({ settlement: settlement.name, buildingId: building.buildingId }),
-		});
+		const knownVersions = req.body?.versions;
+		if (typeof knownVersions !== 'object' || knownVersions === null || Array.isArray(knownVersions)) {
+			return res.status(400).json({ error: '"versions" must be an object mapping id -> version' });
+		}
+
+		res.json(simulation.getAreaChanges(area.id, knownVersions));
 	});
 
 	return router;

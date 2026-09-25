@@ -1,0 +1,79 @@
+{
+  "lore": [
+     {
+      "name": "Stone Tablets",
+      "type": "card",
+      "summary": "Yes, the stone tablets. <p>Seyda Neen is a good starting place.</p>",
+      "related": []
+    },
+    {
+      "name": "Vvardenfell",
+      "type": "region",
+      "summary": "Vvardenfell is the volcanic island at the heart of Morrowind, shaped by ash, ancient settlements, and the looming presence of Red Mountain.",
+      "related": ["Red Mountain", "Vivec", "Seyda Neen"]
+    },
+    {
+      "name": "Red Mountain",
+      "type": "landmark",
+      "summary": "Red Mountain is the great volcanic center of Vvardenfell. Its ash storms and sacred history dominate the island's landscape and politics.",
+      "region": "Vvardenfell",
+      "tags": ["volcano", "ash", "Dagoth Ur"]
+    },
+    {
+      "name": "Vivec",
+      "type": "settlement",
+      "summary": "Vivec is the great temple city of the Tribunal, built as cantons around the palace and shrines of Vivec.",
+      "region": "Ascadian Isles",
+      "related": ["Foreign Quarter Canton", "Temple Canton", "Vivec City"]
+    },
+    {
+      "name": "Vivec City",
+      "type": "settlement",
+      "summary": "Vivec City is a monumental city of cantons, canals, markets, guilds, and temples raised above the waters of southern Vvardenfell.",
+      "region": "Ascadian Isles",
+      "related": ["Vivec", "Redoran Canton", "Telvanni Canton"]
+    },
+    {
+      "name": "Seyda Neen",
+      "type": "settlement",
+      "summary": "Seyda Neen is a small Imperial port on the southern coast of Vvardenfell and the usual first shore seen by arrivals from the mainland.",
+      "region": "Ascadian Isles",
+      "tags": ["port", "Imperial", "starting town"]
+    },
+    {
+      "name": "Foreign Quarter Canton",
+      "type": "building",
+      "summary": "The Foreign Quarter is Vivec's busiest trading canton, filled with merchants, guild visitors, canals, and the city's lower sewers.",
+      "region": "Vivec",
+      "tags": ["Vivec", "trade", "guilds"]
+    },
+    {
+      "name": "Redoran Canton",
+      "type": "building",
+      "summary": "Redoran Canton is the stately Vivec canton associated with House Redoran, family manors, and martial tradition.",
+      "region": "Vivec",
+      "tags": ["Vivec", "House Redoran"]
+    },
+    {
+      "name": "Telvanni Canton",
+      "type": "building",
+      "summary": "Telvanni Canton is Vivec's arcane district, where mushroom towers, eccentric mages, and House Telvanni interests gather.",
+      "region": "Vivec",
+      "tags": ["Vivec", "House Telvanni", "magic"]
+    },
+    {
+      "name": "Temple Canton",
+      "type": "building",
+      "summary": "Temple Canton is a revered district of shrines, ordinators, priests, and the religious administration of Vivec City.",
+      "region": "Vivec",
+      "tags": ["Vivec", "Tribunal", "temple"]
+    },
+    {
+      "name": "Dunmer",
+      "type": "people",
+      "summary": "The Dunmer, or Dark Elves, are the native people of Morrowind, known for their houses, ancestor worship, ashlands, and fierce independence.",
+      "region": "Morrowind",
+      "tags": ["Dark Elf", "Morrowind"]
+    }
+  ]
+}

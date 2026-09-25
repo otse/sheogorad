@@ -29,6 +29,7 @@ async function main() {
 
 	const app = express();
 	app.use(cors());
+	app.use(express.json());
 
 	app.get('/api', (req, res) => {
 		res.json({
@@ -39,6 +40,7 @@ async function main() {
 				'GET /api/areas',
 				'GET /api/areas/:name',
 				'GET /api/areas/:name/buildings/:buildingId',
+				'POST /api/areas/:name/changes',
 				'GET /api/npcs',
 				'GET /api/npcs/:name',
 				'GET /api/lore',

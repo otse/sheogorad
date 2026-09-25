@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Sheogorad API Demo</title>
+<style>
+	body { font-family: system-ui, sans-serif; max-width: 900px; margin: 2rem auto; padding: 0 1rem; background: #1b1b1f; color: #eee; }
+	h1 { color: #d9a441; }
+	section { margin-bottom: 2rem; padding: 1rem; background: #26262c; border-radius: 8px; }
+	h2 { margin-top: 0; color: #9ec5ff; }
+	pre { white-space: pre-wrap; word-break: break-word; background: #111; padding: 0.75rem; border-radius: 6px; max-height: 300px; overflow: auto; }
+	.error { color: #ff6b6b; }
+	button { background: #d9a441; border: none; padding: 0.4rem 0.8rem; border-radius: 4px; cursor: pointer; }
+	.npc-list { display: flex; flex-wrap: wrap; gap: 0.5rem; max-height: 240px; overflow: auto; }
+	.npc-button { display: inline-flex; align-items: center; gap: 0.45rem; }
+	.npc-icon { font-size: 1.25rem; }
+</style>
+</head>
+<body>
+<h1>Sheogorad API Demo</h1>
+<p>This page fetches live data from the server's REST API to confirm it's running. <button id="refresh">Refresh all</button></p>
+
+<section>
+	<h2>World status (<code>/api/world</code>)</h2>
+	<pre id="world">Loading…</pre>
+</section>
+
+<section>
+	<h2>Regions (<code>/api/regions</code>)</h2>
+	<pre id="regions">Loading…</pre>
+</section>
+
+<section>
+	<h2>Region detail (<code>/api/regions/:region</code>)</h2>
+	<p>
+		<input id="region-id" type="text" value="ascadian-isles" spellcheck="false">
+		<button id="region-load">Load</button>
+		<span>e.g. ascadian-isles, bitter-coast, west-gash, ashlands, molag-amur, azuras-coast, grazelands, sheogorad</span>
+	</p>
+	<pre id="region-detail">Pick a region id and click Load…</pre>
+</section>
+
+<section>
+	<h2>Areas (<code>/api/areas</code>)</h2>
+	<pre id="areas">Loading…</pre>
+</section>
+
+<section>
+	<h2>Area detail (<code>/api/areas/:name</code>)</h2>
+	<p>
+		<input id="area-id" type="text" value="vivec" spellcheck="false">
+		<button id="area-load">Load</button>
+		<span>e.g. vivec, ebonheart, suran, seyda-neen, balmora, ald-ruhn</span>
+	</p>
+	<pre id="area-detail">Pick an area id and click Load…</pre>
+</section>
+
+<section>
+	<h2>NPCs (<code>/api/npcs</code>)</h2>
+	<div id="npcs" class="npc-list" aria-label="NPCs">Loading…</div>
+	<pre id="npc-detail" aria-live="polite">Select an NPC to view its details.</pre>
+</section>
+
+<section>
+	<h2>Lore (<code>/api/lore</code>)</h2>
+	<pre id="lore">Loading…</pre>
+</section>
+
+<section>
+	<h2>Area changes (<code>POST /api/areas/:name/changes</code>)</h2>
+	<p>
+		Keeps a client-side map of <code>{ id: version }</code> for every building
+		and npc it has already seen in the area, and sends that map back on every
+		poll. The server only returns the buildings/npcs whose version moved past
+		what's in the map — nothing else is resent, and the client never has to
+		diff anything itself.
+	</p>
+	<p>
+		<input id="changes-area" type="text" value="vivec" spellcheck="false">
+		<button id="changes-start">Watch changes</button>
+		<span id="changes-status"></span>
+	</p>
+	<pre id="changes-log">Pick an area and click Watch changes…</pre>
+</section>
+
+<script>
+	// Falls back to the known server port if this page isn't loaded from the server itself.
+	// The API always lives on the Node server's port, regardless of how this page itself was opened.
+	const API_BASE = location.port === '3001' ? location.origin : 'http://localhost:3001';
+
+	async function loadEndpoint(elementId, path) {
+		const el = document.getElementById(elementId);
+		el.textContent = 'Loading…';
+		el.classList.remove('error');
+		try {
+			// no-store: avoids the browser reusing a stale cached 404 from earlier failed attempts
+			const res = await fetch(API_BASE + path, { cache: 'no-store' });
+			if (!res.ok) throw new Error(`HTTP ${res.status}`);
+			const data = await res.json();
+			el.textContent = JSON.stringify(data, null, 2);
+		} catch (err) {
+			el.classList.add('error');
+			el.textContent = `Failed to load ${path}: ${err.message}`;
+		}
+	}
+
+	function loadAll() {
+		loadEndpoint('world', '/api/world');
+		loadEndpoint('regions', '/api/regions');
+		loadEndpoint('areas', '/api/areas');
+		loadNpcs();
+		loadEndpoint('lore', '/api/lore');
+	}
+
+	async function loadNpcs() {
+		const listEl = document.getElementById('npcs');
+		listEl.textContent = 'Loading…';
+		listEl.classList.remove('error');
+		try {
+			const res = await fetch(API_BASE + '/api/npcs', { cache: 'no-store' });
+			if (!res.ok) throw new Error(`HTTP ${res.status}`);
+			const npcs = await res.json();
+			listEl.replaceChildren();
+			for (const npc of npcs) {
+				const button = document.createElement('button');
+				button.className = 'npc-button';
+				button.type = 'button';
+				button.setAttribute('aria-label', `${npc.icon} ${npc.name}`);
+				const icon = document.createElement('span');
+				icon.className = 'npc-icon';
+				icon.setAttribute('aria-hidden', 'true');
+				icon.textContent = npc.icon;
+				const name = document.createElement('span');
+				name.textContent = npc.name;
+				button.append(icon, name);
+				button.addEventListener('click', () => {
+					loadEndpoint('npc-detail', `/api/npcs/${encodeURIComponent(npc.id)}`);
+				});
+				listEl.append(button);
+			}
+		} catch (err) {
+			listEl.classList.add('error');
+			listEl.textContent = `Failed to load /api/npcs: ${err.message}`;
+		}
+	}
+
+	document.getElementById('refresh').addEventListener('click', loadAll);
+	loadAll();
+
+	document.getElementById('region-load').addEventListener('click', () => {
+		const regionId = document.getElementById('region-id').value.trim();
+		loadEndpoint('region-detail', `/api/regions/${encodeURIComponent(regionId)}`);
+	});
+
+	document.getElementById('area-load').addEventListener('click', () => {
+		const areaId = document.getElementById('area-id').value.trim();
+		loadEndpoint('area-detail', `/api/areas/${encodeURIComponent(areaId)}`);
+	});
+
+	// Area changes: keeps a { id: version } map of everything already seen and
+	// sends it back each poll, so the server only replies with actual deltas.
+	let changesTimer = null;
+	let changesKnownVersions = {};
+	let changesPolls = 0;
+
+	async function pollAreaChanges(areaId) {
+		const statusEl = document.getElementById('changes-status');
+		const logEl = document.getElementById('changes-log');
+		try {
+			const res = await fetch(`${API_BASE}/api/areas/${encodeURIComponent(areaId)}/changes`, {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ versions: changesKnownVersions }),
+				cache: 'no-store',
+			});
+			if (!res.ok) throw new Error(`HTTP ${res.status}`);
+			const body = await res.json();
+			changesPolls += 1;
+
+			for (const building of body.buildings) changesKnownVersions[building.id] = building.version;
+			for (const npc of body.npcs) changesKnownVersions[npc.id] = npc.version;
+
+			const changedCount = body.buildings.length + body.npcs.length;
+			logEl.textContent = JSON.stringify({ areaId: body.areaId, version: body.version, buildings: body.buildings, npcs: body.npcs }, null, 2);
+			statusEl.textContent = `polls: ${changesPolls} · area version: ${body.version} · changed this poll: ${changedCount}`;
+			statusEl.classList.remove('error');
+		} catch (err) {
+			statusEl.classList.add('error');
+			statusEl.textContent = `Failed to poll: ${err.message}`;
+		}
+	}
+
+	document.getElementById('changes-start').addEventListener('click', () => {
+		if (changesTimer) clearInterval(changesTimer);
+		changesKnownVersions = {};
+		changesPolls = 0;
+		const areaId = document.getElementById('changes-area').value.trim();
+		pollAreaChanges(areaId);
+		changesTimer = setInterval(() => pollAreaChanges(areaId), 3000);
+	});
+</script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+VERSION IDS, SIMPLY
+====================
+
+Every object (Region, Area, Building, Npc) has a `version` number, starting
+at 1. It only ever goes up (`.touch()` does `version += 1`).
+
+When the simulation changes an npc (moves it in/out of a building), it bumps:
+- the npc's own version
+- its building's version
+- its area's version
+
+So an area's version isn't about the area itself — it's a "did anything
+inside me change?" counter that goes up whenever a child object changes.
+
+Two ways clients use this:
+
+1. Single object: GET .../:id?knownVersion=X
+   Server compares X to the current version. Same -> { unchanged: true }.
+   Different -> sends the full object back.
+
+2. Whole area at once: POST /areas/:name/changes
+   Client sends { versions: { id: lastKnownVersion, ... } } for everything
+   it's tracking in that area. Server only sends back the buildings/npcs
+   whose version doesn't match — everything unchanged is left out.
+
+Why version numbers instead of diffing objects: comparing two integers is
+free and needs no history on the server. The tradeoff is it only tells you
+THAT something changed, not what field changed — so a changed object is
+resent in full rather than as a field-level patch.

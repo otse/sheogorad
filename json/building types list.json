@@ -1,0 +1,164 @@
+{
+	"buildingTypes": {
+		"telvanni_tower": {
+			"name": "Telvanni Tower",
+			"category": "telvanni",
+			"structure": "vertical_hub",
+			"commonRegions": ["Grazelands", "Azura's Coast"],
+			"rarity": "uncommon",
+			"tags": ["magical", "organic", "asymmetrical"]
+		},
+		"telvanni_pod": {
+			"name": "Telvanni Pod",
+			"category": "telvanni",
+			"structure": "small_cluster",
+			"commonRegions": ["Grazelands", "Azura's Coast"],
+			"rarity": "common",
+			"tags": ["organic", "servant_quarters"]
+		},
+		"hlaalu_manor": {
+			"name": "Hlaalu Manor",
+			"category": "hlaalu",
+			"structure": "connected_rooms",
+			"commonRegions": ["West Gash", "Ascadian Isles"],
+			"rarity": "uncommon",
+			"tags": ["political", "trade", "residential"]
+		},
+		"hlaalu_shop": {
+			"name": "Hlaalu Shop",
+			"category": "hlaalu",
+			"structure": "front_back",
+			"commonRegions": ["West Gash", "Ascadian Isles", "Bitter Coast"],
+			"rarity": "common",
+			"tags": ["commerce", "storage"]
+		},
+		"redoran_manor": {
+			"name": "Redoran Manor",
+			"category": "redoran",
+			"structure": "clustered_hall",
+			"commonRegions": ["West Gash"],
+			"rarity": "uncommon",
+			"tags": ["defensive", "communal"]
+		},
+		"redoran_barracks": {
+			"name": "Redoran Barracks",
+			"category": "redoran",
+			"structure": "hall",
+			"commonRegions": ["West Gash"],
+			"rarity": "common",
+			"tags": ["military", "training"]
+		},
+		"temple_complex": {
+			"name": "Temple Complex",
+			"category": "temple",
+			"structure": "layered",
+			"commonRegions": ["Ascadian Isles", "Ashlands"],
+			"rarity": "uncommon",
+			"tags": ["religious", "ritual"]
+		},
+		"temple_shrine": {
+			"name": "Temple Shrine",
+			"category": "temple",
+			"structure": "linear",
+			"commonRegions": ["Ashlands", "Molag Amur"],
+			"rarity": "common",
+			"tags": ["religious", "small"]
+		},
+		"imperial_fort": {
+			"name": "Imperial Fort",
+			"category": "imperial",
+			"structure": "grid",
+			"commonRegions": ["West Gash", "Bitter Coast"],
+			"rarity": "rare",
+			"tags": ["military", "ordered"]
+		},
+		"imperial_office": {
+			"name": "Imperial Office",
+			"category": "imperial",
+			"structure": "rooms",
+			"commonRegions": ["Ascadian Isles", "Bitter Coast"],
+			"rarity": "common",
+			"tags": ["bureaucratic"]
+		},
+		"velothi_tomb": {
+			"name": "Velothi Tomb",
+			"category": "velothi",
+			"structure": "linear_descent",
+			"commonRegions": ["Ashlands", "Molag Amur"],
+			"rarity": "common",
+			"tags": ["ancestral", "undead"]
+		},
+		"velothi_ruin": {
+			"name": "Velothi Ruin",
+			"category": "velothi",
+			"structure": "branching",
+			"commonRegions": ["Molag Amur", "Azura's Coast"],
+			"rarity": "uncommon",
+			"tags": ["ancient", "decayed"]
+		},
+		"dwemer_ruin": {
+			"name": "Dwemer Ruin",
+			"category": "dwemer",
+			"structure": "looped",
+			"commonRegions": ["West Gash", "Molag Amur"],
+			"rarity": "uncommon",
+			"tags": ["mechanical", "ancient"]
+		},
+		"dwemer_tower": {
+			"name": "Dwemer Tower",
+			"category": "dwemer",
+			"structure": "vertical",
+			"commonRegions": ["Molag Amur"],
+			"rarity": "rare",
+			"tags": ["mechanical", "isolated"]
+		},
+		"kwama_mine": {
+			"name": "Kwama Mine",
+			"category": "kwama",
+			"structure": "branching",
+			"commonRegions": ["Bitter Coast", "Ascadian Isles"],
+			"rarity": "common",
+			"tags": ["organic", "resource"]
+		},
+		"egg_mine_chamber": {
+			"name": "Egg Chamber",
+			"category": "kwama",
+			"structure": "node",
+			"commonRegions": ["Bitter Coast", "Ascadian Isles"],
+			"rarity": "common",
+			"tags": ["organic", "resource", "inner"]
+		},
+		"daedric_shrine": {
+			"name": "Daedric Shrine",
+			"category": "daedric",
+			"structure": "ritual",
+			"commonRegions": ["Azura's Coast", "Ashlands"],
+			"rarity": "uncommon",
+			"tags": ["daedric", "ritual"]
+		},
+		"fishing_shack": {
+			"name": "Fishing Shack",
+			"category": "common",
+			"structure": "minimal",
+			"commonRegions": ["Bitter Coast", "Sheogorad"],
+			"rarity": "common",
+			"tags": ["coastal", "poor"]
+		},
+		"village_hut": {
+			"name": "Village Hut",
+			"category": "common",
+			"structure": "minimal",
+			"commonRegions": ["Ascadian Isles", "Grazelands"],
+			"rarity": "common",
+			"tags": ["residential"]
+		},
+		"storage_shed": {
+			"name": "Storage Shed",
+			"category": "common",
+			"structure": "single_room",
+			"commonRegions": ["all"],
+			"rarity": "common",
+			"tags": ["storage"]
+		}
+	}
+}

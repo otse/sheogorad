@@ -1,28 +1,17 @@
-// 🧙‍♀️ Code magic within
-
 import { Router } from 'express';
+import { sendVersioned } from '../lib/change-tracking.js';
 
-export function createRegionsRouter({ worldData }) {
+export function createRegionsRouter({ simulation }) {
 	const router = Router();
 
 	router.get('/', (req, res) => {
-		res.json(worldData.regions.map(region => ({
-			name: region.name,
-			settlementCount: region.settlements.length,
-			settlements: region.settlements,
-		})));
+		res.json(simulation.listRegions());
 	});
 
 	router.get('/:region', (req, res) => {
-		const region = worldData.regions.find(
-			r => r.name.toLowerCase() === decodeURIComponent(req.params.region).toLowerCase()
-		);
-		if (!region) return res.status(404).json({ error: 'Region not found' });
-
-		res.json({
-			name: region.name,
-			settlements: region.settlements.map(name => worldData.settlements.get(name)),
-		});
+		const region = simulation.regions.get(req.params.region);
+		if (!region) return res.status(404).json({ error: `Unknown region "${req.params.region}"` });
+		sendVersioned(res, req, region.version, () => simulation.getRegion(region.id));
 	});
 
 	return router;

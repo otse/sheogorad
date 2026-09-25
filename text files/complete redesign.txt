@@ -1,0 +1,29 @@
+Hey, 
+
+I need a server with a restful API that can feed the world to the client.
+
+The world starts as a bunch of static information sitting in JSONs. For example, regions contains areas, which contains items and npcs. This data is build into the runtime world. But this is just the starting data. NPCs can move. We don't want to know all NPCs at once, just for certain areas that we are observing.
+
+The client can observe an area, which contains NPCs, Objects, Monsters, et cetera. So the server architecture needs to honor that.
+
+Then the world ticks the entire game. NPCs have routines, but don't necessarily use AI. The storyteller uses AI, and the storyteller pretends that the NPCs are alive when a Hero NPC (Or just Hero Character) interacts with NPCs within that area. The storyteller can then describe what the NPC was doing within its routine. The deterministic simulation can for example describe any oddities that happen to NPCs so that the simulation looks more complex (Cheap Storytelling devices.)
+
+You can look at the deleted git files for a hint of what the old server looked like. But I am setting the precedent for the new architecture.
+
+So I need a simulation model that just ticks the world, moves NPCs around based on their schedule or ai packages, super rudimentary. Most NPCs never really leave their areas, they just live there. They're not crazy or adventurous. This could be one big javascript that just pretends to advance the simulation by a tiny bit, but doesn't' actually do anything. For example there is a very small chance an NPC might leave their house and enter the area that their house or building was in. They're now outside. But they want to go back inside at some point.
+
+Then there needs to be a restful api that can request /area: /region: /npc-details. 
+
+Then there needs to be a model that can track changes and make this obvious to the client. How do we tell that an area list has changed, that the items, objects, monsters and characters have changed? An NPC suddenly left the area. That list will need to re-render. The client might want to just compare lists and then rerender them, but is there a way to set Area IDs or Area State and get the client to refresh it?
+
+The client may have an open window and wants to know what is happening to an entity, monster, item or characer. So it sometimes just wants to simply ask via restful: Did this thing change? So maybe think about that, like there is a My State variable and a Server or Actual State variable that we can compare, and then we can send the new info, and then the client figures it out and updates it because it's outdated.
+
+So one more thing, with the server building its game world on launch, that's perfectly fine now. We don't care about persistent state yet between server shutdowns. Just leave the area sitting in classes and decently serializable, but the serialization is not the point yet. If a server restarts, the simulation starts from that static JSON data, not with the current stored state of that game server.
+
+I need a simple restful server and preferably don't use heavyweight or outdated frameworks, but just core node stuff if we can help it. I prefer from-scratch codebases than using heavy npm packages.
+
+In other words, a game server that can send a list of regions, the areas in a specific region, and then the objects, items, monsters and characters within a specific area.
+
+That is a great start. This isn't the final server design though. Make sure you use multiple folders and a unified design principles, no random code style changes, keep it coherent and neat. Making folders for specific components would be neat, but isn't a requirement if you think it's simpler or better without folders.
+
+Let's write a simple game server without too many bells and whistles.
