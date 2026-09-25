@@ -702,7 +702,7 @@ ul li span {
 
 /* Scrollbar styling with Morrowind textures */
 .rn-scroll::-webkit-scrollbar {
-	width: 20px;
+	width: 15px;
 	/* 21 */
 }
 
