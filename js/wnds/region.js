@@ -16,14 +16,16 @@ export default class RegionViewer extends Wndd {
 	_create() {
 		const template = /** @type {HTMLTemplateElement} */
 			(document.getElementById('area-list-wnd-template'));
-			
+
 		const clone = /** @type {DocumentFragment} */
 			(template.content.cloneNode(true));
 
 		const wnd = new Wnd(
-			`Region Map`,
+			`Regions`,
 			clone,
-			{ width: 400, height: 250, minWidth: 380, minHeight: 250 });
+			{ width: 400, height: 250, minWidth: 380, minHeight: 250,
+				emoji: '🗺️',
+				titleGradient: 'linear-gradient(to bottom, rgb(28, 42, 69), rgb(36 53 62))' });
 		wnd.moveTo(-400, 100);
 		return wnd;
 	}
@@ -86,25 +88,14 @@ export default class RegionViewer extends Wndd {
 						});
 
 						tree2.addItem(tree3);
-						const allNpcs = [
-							...(buildingObject.content.npcs.forced || []),
-							...(buildingObject.content.npcs.pool || [])
-						];
 
-						for (const npcName of allNpcs) {
-							const npc = new Npc(npcName, {
-								name: Sheogorad.formatNpcName(npcName)
-							});
-							Sheogorad.npcs.push(npc);
-							const icon = Sheogorad.iconList.npcIcons[npcName] || '';
-							tree3.addItem({
-								text: `${icon} ${Sheogorad.formatNpcName(npcName)}`,
-								onClick: () => {
-									npc.makeWnd();
-								}
-							});
-						}
-					};
+						tree3.addItem({
+							text: `Opened on the right`,
+							onClick: () => {
+								//that.dockedBuildingViewer?.wnd?.bringToFront();
+							}
+						});
+					}
 				}
 				tree.addItem(tree2);
 			};

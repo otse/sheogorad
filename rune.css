@@ -24,8 +24,8 @@ rn-elements {
 	/* this means the element itself is not rendered, only its children are */
 	display: contents;
 	font-family: 'Pelagiad', serif;
-	color: #dcdcdc;
-	text-shadow: rgb(135 135 135) 0 1.5px 1px, rgb(0 0 0 / 100%) 0 -1.5px 1.5px;
+	color: #e4e4e4;
+	text-shadow: rgb(135 135 135) 0 1px 0px, rgb(0 0 0 / 100%) 0 -2px 1px;
 }
 
 rn-elements :is(input, select, button) {
@@ -142,7 +142,7 @@ rn-elements button:hover {
 	display: flex;
 	/* background: url(img/RockRough0001_2_download600.jpg); */
 	background-size: 50%;
-	width: 800px;
+	width: 700px;
 	height: calc(40vh);
 	/* border: 3px inset #ffffff38; */
 	border-radius: 3px;
@@ -195,7 +195,7 @@ rn-elements button:hover {
 }
 
 .rn-wnd-title-bar>span:nth-of-type(1) {
-	background: linear-gradient(to bottom, rgb(255 255 255 / 0%), rgb(105 105 105 / 30%));
+	background: linear-gradient(to bottom, rgb(255 255 255 / 0%), rgb(105 105 105 / 40%));
 	width: -webkit-fill-available;
 	height: -webkit-fill-available;
 	margin: 2px 0;
@@ -616,7 +616,7 @@ ul li .label {
 }
 
 .tree-building.label {
-	color: #e7e7e7;
+	/* color: #e7e7e7; */
 }
 
 .label.region-ascadian-isles {
@@ -702,7 +702,7 @@ ul li span {
 
 /* Scrollbar styling with Morrowind textures */
 .rn-scroll::-webkit-scrollbar {
-	width: 27px;
+	width: 20px;
 	/* 21 */
 }
 
@@ -737,12 +737,12 @@ ul li span {
 }
 
 .rn-scroll::-webkit-scrollbar-thumb {
-	background: #444;
+	background: #ddd;
 	background-clip: content-box;
 	border: 3px solid transparent;
-	border-right: 4px solid transparent !important;
-	border-left: 4px solid transparent !important;
-	/* border-radius: 4px; */
+	border-right: 3px solid transparent !important;
+	border-left: 3px solid transparent !important;
+	border-radius: 3px;
 }
 
 .rn-scroll::-webkit-scrollbar-button:vertical:start,
@@ -755,7 +755,7 @@ ul li span {
 
 /* Buttons: thin border frame + arrow icon (inline SVG for proper centering), inset 5px */
 .rn-scroll::-webkit-scrollbar-button:vertical:start {
-	color: #bbbbbb;
+	color: #ddd;
 	background-image:
 		url('rune2/menu_thin_border_top_left_corner.png'),
 		url('rune2/menu_thin_border_top_right_corner.png'),
@@ -765,7 +765,7 @@ ul li span {
 		url('rune2/menu_thin_border_bottom.png'),
 		url('rune2/menu_thin_border_left.png'),
 		url('rune2/menu_thin_border_right.png'),
-		url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M6 3L2 9h8z' fill='%23444'/%3E%3C/svg%3E");
+		url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M6 3L2 9h8z' fill='%23ddd'/%3E%3C/svg%3E");
 	background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, repeat-x, repeat-x, repeat-y, repeat-y, no-repeat;
 	background-position: top left, top right, bottom left, bottom right, top, bottom, left, right, center;
 	xx-background-size: 1px 1px, 1px 1px, 1px 1px, 1px 1px, 256px 1px, 256px 1px, 1px 256px, 1px 256px, 15px 15px;
@@ -783,7 +783,7 @@ ul li span {
 		url('rune2/menu_thin_border_bottom.png'),
 		url('rune2/menu_thin_border_left.png'),
 		url('rune2/menu_thin_border_right.png'),
-		url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M6 9l4-6H2z' fill='%23444'/%3E%3C/svg%3E");
+		url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M6 9l4-6H2z' fill='%23ddd'/%3E%3C/svg%3E");
 	background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, repeat-x, repeat-x, repeat-y, repeat-y, no-repeat;
 	background-position: top left, top right, bottom left, bottom right, top, bottom, left, right, center;
 	xx-background-size: 1px 1px, 1px 1px, 1px 1px, 1px 1px, 256px 1px, 256px 1px, 1px 256px, 1px 256px, 15px 15px;

@@ -398,9 +398,10 @@ export default class Wnd {
 			this.warnWindowDestroyed();
 			return;
 		}
-		const titleSpan = /** @type {HTMLElement | null} */ (this.el.querySelector('.rn-wnd-title-bar>div>span>span'));
-		if (!titleSpan)
-			return;
+		const titleSpan2 = /** @type {HTMLElement} */ (this.el.querySelector('.rn-wnd-title-bar>div>span'));
+		if (this.options.emoji)
+			titleSpan2.appendChild(document.createTextNode(this.options.emoji));
+		const titleSpan = /** @type {HTMLElement} */ (this.el.querySelector('.rn-wnd-title-bar>div>span>span'));
 		titleSpan.innerHTML = `${title}`;
 		titleSpan.setAttribute('data-text', title);
 	}
@@ -421,6 +422,11 @@ export default class Wnd {
 		}
 	}
 
+	/**
+	 * @param {string} title
+	 * @param {Node | string} content
+	 * @param {{ width?: number, height?: number, minWidth?: number, minHeight?: number, wndcard?: boolean, emoji?: string, titleGradient?: string }} [options]
+	 */
 	constructor(title, content, options = {}) {
 		const rnWndTemplate = /** @type {HTMLTemplateElement} */ (document.getElementById('rn-wnd-template'));
 		const clone = /** @type {DocumentFragment} */ (rnWndTemplate.content.cloneNode(true));
@@ -442,7 +448,8 @@ export default class Wnd {
 		const el = this.el;
 		const posEl = this.posEl;
 
-		if (options.wndcard)
+		this.options = options;
+		if (this.options.wndcard)
 			el.classList.add('rn-wndcard');
 
 		// Entrance animation lives on el, not posEl, so it doesn't clash with interact.js's drag/resize transform
@@ -457,6 +464,11 @@ export default class Wnd {
 		el.style.minHeight = (options.minHeight || 100) + 'px';
 
 		this.setWndTitle(title);
+		if (options.titleGradient) {
+			const titleSpan = /** @type {HTMLElement | null} */
+				(el.querySelector('.rn-wnd-title-bar>div>span>span'));
+			titleSpan?.classList.add('blue');
+		}
 
 		const contentContainer = /** @type {HTMLElement} */ (el.querySelector('.rn-wnd-content'));
 

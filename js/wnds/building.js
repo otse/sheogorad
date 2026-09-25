@@ -50,8 +50,12 @@ export default class BuildingViewer extends Wndd {
         if (!this.wnd)
             return;
 
-        const target = /** @type {HTMLElement} */
-            (this.wnd.wndContent.querySelector('div.rnl-building-wnd-div'));
+        const firstDiv = /** @type {HTMLElement} */ this.wnd.wndContent.querySelector('div.rnl-building-wnd-div');
+        if(!firstDiv)
+            return;
+        const target = firstDiv;
+
+        firstDiv.innerHTML = '';
 
         const serverBuilding = this.findServerBuilding(this.data.building_id);
         const building = serverBuilding || this.data.buildingObject;
@@ -128,7 +132,8 @@ export default class BuildingViewer extends Wndd {
         const list = document.createElement('ul');
         for (const value of values) {
             const item = document.createElement('li');
-            item.textContent = Sheogorad.formatNpcName(value);
+            const icon = clickable ? Sheogorad.iconList.npcIcons[value] || '' : '';
+            item.textContent = `${icon}${icon ? ' ' : ''}${Sheogorad.formatNpcName(value)}`;
             if (clickable) {
                 item.className = 'tree-building';
                 item.tabIndex = 0;

@@ -34,15 +34,19 @@
 
 .text-gradient-gold,
 [data-text-gradient="gold"] {
-	--text-gradient-image: linear-gradient(to top, rgb(104 71 0), rgb(127 104 0));
+	--text-gradient-image: linear-gradient(to bottom, rgb(76 65 38), rgb(99 94 76));
 }
 
 .text-gradient-title,
 [data-text-gradient="title"] {
-	--text-gradient-image: linear-gradient(to bottom, rgb(44 44 44), rgb(74 74 74));
+	--text-gradient-image: linear-gradient(to bottom, rgb(75 75 75), rgb(62 53 36));
 }
 .text-gradient-title::after {
 	text-decoration: underline ! important;
+}
+.text-gradient-title.blue,
+[data-text-gradient="title"].blue {
+	--text-gradient-image: linear-gradient(to bottom, rgb(53 63 80), rgb(25 36 53));
 }
 
 .text-gradient-button,
