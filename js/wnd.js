@@ -369,7 +369,7 @@ export default class Wnd {
 		el.style.minWidth = (options.minWidth || 100) + 'px';
 		el.style.minHeight = (options.minHeight || 100) + 'px';
 
-		const titleSpan = /** @type {HTMLElement} */ (el.querySelector('.rn-wnd-title>span:nth-of-type(2)>span'));
+		const titleSpan = /** @type {HTMLElement} */ (el.querySelector('.rn-wnd-title-bar>div>span>span'));
 		titleSpan.innerHTML = `${title}`;
 		titleSpan.setAttribute('data-text', title);
 
@@ -444,7 +444,7 @@ export default class Wnd {
 		if (el.hasAttribute('moveable')) {
 			interactable.draggable({
 				// Cards have no title bar, so drag from their content instead
-				allowFrom: options.wndcard ? '.rn-wnd-content' : '.rn-wnd-title',
+				allowFrom: options.wndcard ? '.rn-wnd-content' : '.rn-wnd-title-bar',
 				modifiers: [
 					interact.modifiers.restrictRect({
 						restriction: getGridRestriction,

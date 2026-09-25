@@ -174,16 +174,12 @@ rn-elements button:hover {
 	overflow: hidden;
 }
 
-.rn-wnd-title div {
+.rn-wnd-title-bar div {
 	display: flex;
-	position: absolute;
-	top: 0px;
-	right: -4px;
-	x-margin-right: 1px;
-	x-white-space: nowrap;
+	margin-right: -4px;
 }
 
-.rn-wnd-title {
+.rn-wnd-title-bar {
 	color: var(--dark-text);
 	top: 0;
 	left: 0;
@@ -194,11 +190,11 @@ rn-elements button:hover {
 	user-select: none;
 	margin: 0px 4px;
 	/* box-shadow: inset 0px 0px 10px var(--title-bar-gradient-color); */
-	justify-content: center;
+	justify-content: flex-end;
 }
 
-.rn-wnd-title>span:nth-of-type(1) {
-	/* background: linear-gradient(to bottom, rgb(255 255 255 / 0%), rgb(151 151 151 / 20%)); */
+.rn-wnd-title-bar>span:nth-of-type(1) {
+	background: linear-gradient(to bottom, rgb(255 255 255 / 0%), rgb(88 88 88 / 30%));
 	width: -webkit-fill-available;
 	height: -webkit-fill-available;
 	margin: 2px 0;
@@ -208,21 +204,34 @@ rn-elements button:hover {
 	left: 0;
 }
 
-.rn-wnd-title>span:nth-of-type(2) {
-	content: attr(data-title);
-	/* z-index: 1; */
+.rn-wnd-title-bar>div:nth-of-type(1) {
+	display: flex;
+	/* position: relative; */
+	/* padding: 0 12px; */
+	width: -webkit-fill-available;
+	height: inherit;
+	align-items: center;
+	justify-content: center;
+}
+
+.rn-wnd-title-bar>div:nth-of-type(1)>span {
 	display: inline-flex;
-	position: relative;
-	padding: 0 12px;
-	font-size: 90%;
-	font-weight: bold;
+	/* position: relative; */
+	/* padding: 0 12px; */
+	/* width: -webkit-fill-available; */
 	height: inherit;
 	background-image: url(rune2/title-3-active.png);
-	/* border-radius: 9px; */
+	border-radius: 9px;
 	background-repeat: repeat-x;
 	background-position: center;
 	background-size: calc(60px / 2) calc(50px / 2);
 	align-items: center;
+}
+
+.rn-wnd-title-bar>div:nth-of-type(1)>span>span {
+	letter-spacing: 3px;
+	font-size: 90%;
+	text-decoration: underline;
 }
 
 .rn-wnd-position.active {
@@ -291,7 +300,7 @@ rn-elements button:hover {
 	height: calc(42px / 2) !important;
 }
 
-.rn-wnd[data-minimized] .rn-wnd-title div {
+.rn-wnd[data-minimized] .rn-wnd-title-bar div {
 	display: none;
 }
 
@@ -378,7 +387,7 @@ rn-elements button:hover {
 	border: 0;
 }
 
-.rn-wndcard .rn-wnd-title {
+.rn-wndcard .rn-wnd-title-bar {
 	display: none;
 }
 
@@ -391,29 +400,12 @@ rn-elements button:hover {
 .rn-title-bar-button.min,
 .rn-title-bar-button.close {}
 
-.rn-title-bar-button.close {
+.rn-title-bar-button {
 	position: relative;
 }
 
-.rn-title-bar-button.close span {
+.rn-title-bar-button span {
 	font-size: inherit;
-}
-
-/* gradient-clipped duplicate of the 'x' glyph, laid over the shadowed original */
-.rn-title-bar-button.close span::after {
-	content: "x";
-	position: absolute;
-	inset: 0;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	pointer-events: none;
-	background-image: linear-gradient(to bottom, #54290f, #666666);
-	-webkit-background-clip: text;
-	background-clip: text;
-	color: transparent;
-	-webkit-text-fill-color: transparent;
-	text-shadow: none;
 }
 
 .rn-title-bar-button.close .gem-icon {
@@ -430,10 +422,8 @@ rn-elements button:hover {
 
 .rn-title-bar-button {
 	display: flex;
-	/* color: #54290f; */
-	font-weight: normal;
-	font-style: italic;
-	font-size: 100%;
+	/* font-style: italic; */
+	font-size: 90%;
 	text-shadow: inherit;
 	border: none;
 	overflow: hidden;
@@ -453,7 +443,7 @@ rn-elements button:hover {
 	background: url(rune2/minimize-active.png) center / contain no-repeat;
 	background: transparent;
 	width: calc(34px / 2);
-	margin-right: 6px;
+	margin-right: 3px;
 	color: var(--dark-text);
 }
 
@@ -464,6 +454,7 @@ rn-elements button:hover {
 .rn-big-button.gold {
 	color: gold;
 }
+
 .rn-big-button {
 	display: flex;
 	box-shadow: 0px 0px 3px #2b2b2b;
@@ -478,14 +469,14 @@ rn-elements button:hover {
 	font-size: 1rem;
 	background-color: transparent;
 	background-image: url('rune2/menu_button_frame_top_left_corner.png'),
-  url('rune2/menu_button_frame_top_right_corner.png'),
-  url('rune2/menu_button_frame_bottom_left_corner.png'),
-  url('rune2/menu_button_frame_bottom_right_corner.png'),
-  url('rune2/menu_button_frame_top.png'),
-  url('rune2/menu_button_frame_bottom.png'),
-  url('rune2/menu_button_frame_left.png'),
-  url('rune2/menu_button_frame_right.png'),
-  url(img/RockRough0001_2_download600.jpg);
+		url('rune2/menu_button_frame_top_right_corner.png'),
+		url('rune2/menu_button_frame_bottom_left_corner.png'),
+		url('rune2/menu_button_frame_bottom_right_corner.png'),
+		url('rune2/menu_button_frame_top.png'),
+		url('rune2/menu_button_frame_bottom.png'),
+		url('rune2/menu_button_frame_left.png'),
+		url('rune2/menu_button_frame_right.png'),
+		url(img/RockRough0001_2_download600.jpg);
 	background-repeat:
 		no-repeat,
 		no-repeat,
@@ -572,7 +563,7 @@ rn-elements button:hover {
 		url(rune2/menu_thin_border_left.png),
 		url(rune2/menu_thin_border_right.png);
 	background-size:
-		
+
 		1px 1px,
 		1px 1px,
 		1px 1px,

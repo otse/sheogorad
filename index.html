@@ -193,15 +193,19 @@
 		<template id="rn-wnd-template">
 			<div class="rn-wnd-position">
 				<div class="rn-wnd" moveable resizeable closable minimizable title="Example">
-					<div class="rn-wnd-title">
-						<span gradient></span>
-						<span><span class="text-gradient-title" data-text="Wnd">Wnd</span></span>
+					<div class="rn-wnd-title-bar">
+						<span></span>
+						<div>
+							<span>
+								<span class="text-gradient-title" data-text="Wnd">Wnd</span>
+							</span>
+						</div>
 						<div style="">
 							<button type="button" class="rn-title-bar-button min" title="Min">
-								<span>-</span> <!-- ⤥ -->
+								<span class="text-gradient-button" data-text="-">-</span> <!-- ⤥ -->
 							</button>
 							<button type="button" class="rn-title-bar-button close" title="Close">
-								<span>x</span> <!-- <span class="gem-icon">💎</span> -->
+								<span class="text-gradient-button" data-text="x">x</span> <!-- <span class="gem-icon">💎</span> -->
 							</button>
 						</div>
 					</div>

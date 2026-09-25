@@ -34,10 +34,15 @@
 
 .text-gradient-gold,
 [data-text-gradient="gold"] {
-	--text-gradient-image: linear-gradient(to top, rgb(87 60 0), rgb(127 93 0));
+	--text-gradient-image: linear-gradient(to top, rgb(104 71 0), rgb(127 104 0));
 }
 
 .text-gradient-title,
 [data-text-gradient="title"] {
-	--text-gradient-image: linear-gradient(to bottom, rgb(71 71 71), rgb(84 71 51));
+	--text-gradient-image: linear-gradient(to bottom, rgb(59 55 34), rgb(94 70 50));
+}
+
+.text-gradient-button,
+[data-text-gradient="button"] {
+    --text-gradient-image: linear-gradient(to bottom, #461e06, #666666);
 }

@@ -1,0 +1,11 @@
+run this through an ai pal and don't go nuts this is insane
+
+the server is responsible for the world tick, state, storage, storytelling, events, combat, economy, restful api, motivation schemes, game systems, data logging, and more. this text files looks at hard issues and proposes a scheme.
+
+so how do i keep the ai api costs down per npc? how many npcs will red year feature? what is the world tick? how do I add predictable return schemes to my ai? how do i make everything work the way it should?
+
+let's say i don't want to grow poor on ai credit costs. i don't own the ip, can't charge money, it's just a fan project.
+
+let's assume i don't have the money to tick 300 npcs every server tick. how do we prevent a double slit experiment where the world starts moving at a retroactive effect when we observe npcs that we haven't in a while? for example, i don't care if npcs in a cave lead a complex life, when there's no hero around them.
+
+can we think of a model that acts for npcs retroactively? sheogorad's list of places view is meant to show you a world that is acting, not just reacting. classic rpgs barely simulate anything except for what you directly see in a frustum.
