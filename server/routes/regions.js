@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { sendVersioned } from '../lib/change-tracking.js';
 
+/** @param {{ simulation: import('../domain/simulation.js').Simulation }} dependencies */
 export function createRegionsRouter({ simulation }) {
 	const router = Router();
 	router.get('/', (req, res) => res.json(simulation.listRegions()));

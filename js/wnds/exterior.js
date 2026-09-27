@@ -2,6 +2,7 @@
 
 import Wnd from "../wnd.js";
 import CellViewer from "./cell.js";
+import Sheogorad from "../sheogorad.js";
 
 // An Exterior Cell: a settlement/area itself, outside of any building.
 export default class ExteriorViewer extends CellViewer {

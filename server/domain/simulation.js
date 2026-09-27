@@ -1,9 +1,17 @@
 import { buildWorld } from './world.js';
 
+/**
+ * @typedef {import('./world.js').Region} Region
+ * @typedef {import('./world.js').Area} Area
+ * @typedef {import('./world.js').Building} Building
+ * @typedef {import('./world.js').Npc} Npc
+ */
+
 const CHANCE_TO_STEP_OUT = 0.04;
 const CHANCE_TO_RETURN_HOME = 0.2;
 
 export class Simulation {
+	/** @param {import('../data/load-world-data.js').WorldData} worldData */
 	constructor(worldData) {
 		this.worldData = worldData;
 		const { regions, areas, buildings, npcs } = buildWorld(worldData.canon, worldData.icons);
@@ -27,8 +35,9 @@ export class Simulation {
 		}
 	}
 
+	/** @param {Npc} npc */
 	#moveOutside(npc) {
-		const building = this.buildings.get(npc.buildingId);
+		const building = npc.buildingId ? this.buildings.get(npc.buildingId) : undefined;
 		npc.buildingId = null;
 		npc.status = 'outside';
 		npc.lastEvent = building ? `stepped outside ${building.name}` : 'stepped outside';
@@ -37,6 +46,7 @@ export class Simulation {
 		this.areas.get(npc.areaId)?.touch();
 	}
 
+	/** @param {Npc} npc */
 	#moveHome(npc) {
 		const building = this.buildings.get(npc.homeBuildingId);
 		npc.buildingId = npc.homeBuildingId;
@@ -63,6 +73,7 @@ export class Simulation {
 		return [...this.regions.values()].map((region) => this.serializeRegion(region));
 	}
 
+	/** @param {string} id */
 	getRegion(id) {
 		const region = this.regions.get(id);
 		return region ? this.serializeRegion(region) : null;
@@ -72,11 +83,13 @@ export class Simulation {
 		return [...this.areas.values()].map((area) => this.serializeArea(area));
 	}
 
+	/** @param {string} id */
 	getArea(id) {
 		const area = this.areas.get(id);
 		return area ? this.serializeArea(area, { withBuildings: true }) : null;
 	}
 
+	/** @param {string} areaId @param {string} buildingId */
 	getBuilding(areaId, buildingId) {
 		const building = this.buildings.get(buildingId);
 		if (!building || building.areaId !== areaId)
@@ -84,6 +97,7 @@ export class Simulation {
 		return this.serializeBuilding(building, { withNpcs: true });
 	}
 
+	/** @param {string} areaId @param {Record<string, number>} [knownVersions] */
 	getAreaChanges(areaId, knownVersions = {}) {
 		const area = this.areas.get(areaId);
 		if (!area)
@@ -93,6 +107,8 @@ export class Simulation {
 		const npcIds = new Set();
 		for (const buildingId of area.buildingIds) {
 			const building = this.buildings.get(buildingId);
+			if (!building)
+				continue;
 			for (const npcId of building.npcIds)
 				npcIds.add(npcId);
 			if (knownVersions[buildingId] !== building.version)
@@ -102,13 +118,14 @@ export class Simulation {
 		const npcs = [];
 		for (const npcId of npcIds) {
 			const npc = this.npcs.get(npcId);
-			if (knownVersions[npcId] !== npc.version)
+			if (npc && knownVersions[npcId] !== npc.version)
 				npcs.push(this.serializeNpc(npc));
 		}
 
 		return { areaId: area.id, version: area.version, buildings, npcs };
 	}
 
+	/** @param {{ region?: string, settlement?: string, buildingId?: string, name?: string }} [filters] */
 	listNpcs({ region, settlement, buildingId, name } = {}) {
 		let list = [...this.npcs.values()];
 		if (region)
@@ -124,6 +141,7 @@ export class Simulation {
 		return list.map((npc) => this.serializeNpc(npc));
 	}
 
+	/** @param {Region} region */
 	serializeRegion(region) {
 		return {
 			id: region.id,
@@ -131,11 +149,14 @@ export class Simulation {
 			version: region.version,
 			areas: region.areaIds.map((id) => {
 				const area = this.areas.get(id);
+				if (!area)
+					return null;
 				return { id: area.id, name: area.name, version: area.version, npcCount: this.#npcCountForArea(area.id) };
-			})
+			}).filter((area) => area !== null)
 		};
 	}
 
+	/** @param {Area} area @param {{ withBuildings?: boolean }} [options] */
 	serializeArea(area, { withBuildings = false } = {}) {
 		const base = {
 			id: area.id,
@@ -153,13 +174,17 @@ export class Simulation {
 
 		return {
 			...base,
-			buildings: area.buildingIds.map((id) => this.serializeBuilding(this.buildings.get(id), { withNpcs: true })),
+			buildings: area.buildingIds.flatMap((id) => {
+				const building = this.buildings.get(id);
+				return building ? [this.serializeBuilding(building, { withNpcs: true })] : [];
+			}),
 			npcsOutside: [...this.npcs.values()]
 				.filter((npc) => npc.areaId === area.id && npc.status === 'outside')
 				.map((npc) => this.serializeNpc(npc))
 		};
 	}
 
+	/** @param {Building} building @param {{ withNpcs?: boolean }} [options] */
 	serializeBuilding(building, { withNpcs = false } = {}) {
 		const base = {
 			id: building.id,
@@ -175,9 +200,16 @@ export class Simulation {
 		if (!withNpcs)
 			return base;
 
-		return { ...base, npcs: building.npcIds.map((id) => this.serializeNpc(this.npcs.get(id))) };
+		return {
+			...base,
+			npcs: building.npcIds.flatMap((id) => {
+				const npc = this.npcs.get(id);
+				return npc ? [this.serializeNpc(npc)] : [];
+			})
+		};
 	}
 
+	/** @param {Npc} npc */
 	serializeNpc(npc) {
 		return {
 			id: npc.id,
@@ -194,6 +226,7 @@ export class Simulation {
 		};
 	}
 
+	/** @param {string} areaId */
 	#npcCountForArea(areaId) {
 		let count = 0;
 		for (const npc of this.npcs.values()) {

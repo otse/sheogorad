@@ -1,11 +1,17 @@
 import { Router } from 'express';
 import { sendVersioned } from '../lib/change-tracking.js';
 
+/** @param {{ simulation: import('../domain/simulation.js').Simulation }} dependencies */
 export function createNpcsRouter({ simulation }) {
 	const router = Router();
 	router.get('/', (req, res) => {
 		const { region, settlement, buildingId, name } = req.query;
-		res.json(simulation.listNpcs({ region, settlement, buildingId, name }));
+		res.json(simulation.listNpcs({
+			region: typeof region === 'string' ? region : undefined,
+			settlement: typeof settlement === 'string' ? settlement : undefined,
+			buildingId: typeof buildingId === 'string' ? buildingId : undefined,
+			name: typeof name === 'string' ? name : undefined
+		}));
 	});
 
 	router.get('/:name', (req, res) => {

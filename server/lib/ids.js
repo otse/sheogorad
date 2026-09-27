@@ -1,3 +1,4 @@
+/** @param {string} text */
 export function slugify(text) {
 	return String(text)
 		.toLowerCase()
@@ -6,6 +7,7 @@ export function slugify(text) {
 		.replace(/^-+|-+$/g, '');
 }
 
+/** @param {string} id */
 export function titleCase(id) {
 	return String(id)
 		.replace(/[_-]+/g, ' ')

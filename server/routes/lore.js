@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { slugify } from '../lib/ids.js';
 
+/** @param {{ worldData: import('../data/load-world-data.js').WorldData }} dependencies */
 export function createLoreRouter({ worldData }) {
 	const router = Router();
 	const bySlug = new Map(worldData.lore.map((entry) => [slugify(entry.name), entry]));

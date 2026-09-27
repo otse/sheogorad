@@ -10,16 +10,19 @@ class Versioned {
 	}
 }
 
-class Region extends Versioned {
+export class Region extends Versioned {
+	/** @param {string} id @param {string} name */
 	constructor(id, name) {
 		super();
 		this.id = id;
 		this.name = name;
+		/** @type {string[]} */
 		this.areaIds = [];
 	}
 }
 
-class Area extends Versioned {
+export class Area extends Versioned {
+	/** @param {string} id @param {string} name @param {string} regionId @param {import('../data/load-world-data.js').CanonSettlement} settlement */
 	constructor(id, name, regionId, settlement) {
 		super();
 		this.id = id;
@@ -29,11 +32,13 @@ class Area extends Versioned {
 		this.alignment = settlement.alignment ?? null;
 		this.services = settlement.services ?? [];
 		this.transport = settlement.transport ?? {};
+		/** @type {string[]} */
 		this.buildingIds = [];
 	}
 }
 
-class Building extends Versioned {
+export class Building extends Versioned {
+	/** @param {string} id @param {string} key @param {string} areaId @param {import('../data/load-world-data.js').CanonBuilding['instance']} instance @param {import('../data/load-world-data.js').CanonBuilding['content']} content */
 	constructor(id, key, areaId, instance, content) {
 		super();
 		this.id = id;
@@ -43,11 +48,13 @@ class Building extends Versioned {
 		this.condition = instance?.condition ?? null;
 		this.modifier = instance?.modifier ?? null;
 		this.items = content?.items?.pool ?? [];
+		/** @type {string[]} */
 		this.npcIds = [];
 	}
 }
 
-class Npc extends Versioned {
+export class Npc extends Versioned {
+	/** @param {string} id @param {string} homeAreaId @param {string} homeBuildingId @param {boolean} isForced @param {string | undefined} icon */
 	constructor(id, homeAreaId, homeBuildingId, isForced, icon) {
 		super();
 		this.id = id;
@@ -57,12 +64,19 @@ class Npc extends Versioned {
 		this.homeAreaId = homeAreaId;
 		this.homeBuildingId = homeBuildingId;
 		this.areaId = homeAreaId;
+		/** @type {string | null} */
 		this.buildingId = homeBuildingId;
+		/** @type {'inside' | 'outside'} */
 		this.status = 'inside';
 		this.lastEvent = null;
 	}
 }
 
+/**
+ * @param {import('../data/load-world-data.js').CanonData} canon
+ * @param {{ npcIcons?: Record<string, string> }} [icons]
+ * @returns {{ regions: Map<string, Region>, areas: Map<string, Area>, buildings: Map<string, Building>, npcs: Map<string, Npc> }}
+ */
 export function buildWorld(canon, icons) {
 	const regions = new Map();
 	const areas = new Map();
@@ -102,6 +116,7 @@ export function buildWorld(canon, icons) {
 	return { regions, areas, buildings, npcs };
 }
 
+/** @param {Map<string, Npc>} npcs @param {string} npcId @param {string} areaId @param {string} buildingId @param {boolean} forced @param {Record<string, string>} npcIcons @param {Building} building */
 function registerNpc(npcs, npcId, areaId, buildingId, forced, npcIcons, building) {
 	const existing = npcs.get(npcId);
 	if (existing) {
