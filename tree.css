@@ -1,24 +1,4 @@
 /* Tree view styles. */
-:root {
-    --region-ascadian-isles: #8fcf8f;
-    --region-bitter-coast: #6cc4c7;
-    --region-west-gash: #e0bd73;
-    --region-ashlands: #dc8177;
-    --region-molag-amur: #c991d1;
-    --region-azura-s-coast: #79b9e8;
-    --region-grazelands: #bddc78;
-    --region-sheogorad: #d7a27c;
-}
-
-.tree-elbow-item {
-    display: none;
-    list-style-type: none;
-    position: absolute;
-    top: -4px;
-    left: 6px;
-    height: 0;
-}
-
 .tree-view {
     position: relative;
     margin: 0;
@@ -26,53 +6,21 @@
 }
 
 .tree-view li {
-    /* list-style-type: none; */
+    list-style-type: none;
     padding: 0;
 }
 
-.tree-view li .tree-label {
+.tree-view [role="button"] {
     cursor: pointer;
 }
 
-/* Region flavor colors for top-level tree labels */
-.tree-label[class*="tree-region-"] {
-    display: block;
-    /* padding: 3px; */
-    /* text-shadow: none; */
-    /* font-weight: 600; */
-    /* font-size: 110%; */
+.tree-view [role="button"] {
+    display: list-item;
+    list-style-type: circle;
 }
 
-.tree-label.tree-region-ascadian-isles {
-    color: var(--region-ascadian-isles);
-}
-
-.tree-label.tree-region-bitter-coast {
-    color: var(--region-bitter-coast);
-}
-
-.tree-label.tree-region-west-gash {
-    color: var(--region-west-gash);
-}
-
-.tree-label.tree-region-ashlands {
-    color: var(--region-ashlands);
-}
-
-.tree-label.tree-region-molag-amur {
-    color: var(--region-molag-amur);
-}
-
-.tree-label.tree-region-azura-s-coast {
-    color: var(--region-azura-s-coast);
-}
-
-.tree-label.tree-region-grazelands {
-    color: var(--region-grazelands);
-}
-
-.tree-label.tree-region-sheogorad {
-    color: var(--region-sheogorad);
+.tree-view [role="button"][aria-expanded="true"] {
+    list-style-type: disc;
 }
 
 .tree-view li > div {

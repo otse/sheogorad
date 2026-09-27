@@ -3,7 +3,7 @@
 export default class Tree {
 	constructor(items = [], options = {}) {
 		this.ul = document.createElement('ul');
-		this.ul.className = options.className || 'tree-view';
+		this.ul.className = 'tree-view';
 		this.ul.hidden = true;
 		this.root = this.ul;
 		this.items = [];
@@ -12,22 +12,25 @@ export default class Tree {
 		if (options.name) {
 			const wrapper = document.createElement('div');
 			const label = document.createElement('span');
-			const elbowItem = document.createElement('li');
-			elbowItem.className = 'tree-elbow-item';
-			const expandedClass = 'tree-expanded';
-			elbowItem.textContent = '↳';
-			this.ul.appendChild(elbowItem);
+			const elbow = document.createElement('span');
+			elbow.setAttribute('aria-hidden', 'true');
+			elbow.textContent = ' ⤷'; // ⤵ ⤥ ⤷
+			elbow.style.visibility = 'hidden';
 			label.appendChild(document.createTextNode(options.name));
+			label.appendChild(elbow);
 			label.style.cursor = 'pointer';
-			label.classList.add('tree-label');
-			if (options.labelClassName) {
-				label.classList.add(options.labelClassName);
+			label.setAttribute('role', 'button');
+			label.tabIndex = 0;
+			label.setAttribute('aria-expanded', 'false');
+			if (options.hideLabel) {
+				label.hidden = true;
+				this.ul.hidden = false;
 			}
 
 			// Start collapsed and keep both hidden/display in sync for reliability.
 
 			label.addEventListener('click', () => {
-				const shouldShow = !label.classList.contains(expandedClass);
+				const shouldShow = label.getAttribute('aria-expanded') !== 'true';
 				if (shouldShow && this.items.length === 0 && !this.emptyItem) {
 					this.emptyItem = document.createElement('li');
 					this.emptyItem.textContent = 'Empty';
@@ -44,6 +47,7 @@ export default class Tree {
 					{ duration: 180, easing: 'ease-in-out' }
 				);
 				this.ulAnimation = animation;
+				elbow.style.visibility = !shouldShow ? 'hidden' : 'visible';
 				animation.onfinish = () => {
 					if (this.ulAnimation !== animation) {
 						return;
@@ -53,10 +57,15 @@ export default class Tree {
 					this.ul.style.overflow = '';
 					this.ulAnimation = null;
 				};
-				label.classList.toggle(expandedClass, shouldShow);
-				//elbow.textContent = shouldShow ? ' ↳' : ''; // ☇ ↴↳
+				label.setAttribute('aria-expanded', String(shouldShow));
 				if (options.onClick) {
 					options.onClick();
+				}
+			});
+			label.addEventListener('keydown', event => {
+				if (event.key === 'Enter' || event.key === ' ') {
+					event.preventDefault();
+					label.click();
 				}
 			});
 
@@ -77,7 +86,6 @@ export default class Tree {
 			li.appendChild(item.root);
 		} else /*if (item.text && item.onClick)*/ {
 			const span = document.createElement('span');
-			span.className = 'tree-clickable';
 			span.textContent = item.text || item.toString();
 			span.style.cursor = 'pointer';
 			span.addEventListener('click', item.onClick);

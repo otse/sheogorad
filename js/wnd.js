@@ -238,6 +238,8 @@ export default class Wnd {
 			this.warnWindowDestroyed();
 			return;
 		}
+		if (this.options.closable === false)
+			return;
 		this.closeChildren();
 		if (this.parent) {
 			const index = this.parent.children.indexOf(this);
@@ -425,7 +427,7 @@ export default class Wnd {
 	/**
 	 * @param {string} title
 	 * @param {Node | string} content
-	 * @param {{ width?: number, height?: number, minWidth?: number, minHeight?: number, maxWidth?: number, maxHeight?: number, wndcard?: boolean, emoji?: string, titleGradient?: string }} [options]
+	 * @param {{ width?: number, height?: number, minWidth?: number, minHeight?: number, maxWidth?: number, maxHeight?: number, wndcard?: boolean, emoji?: string, titleGradient?: string, closable?: boolean }} [options]
 	 */
 	constructor(title, content, options = {}) {
 		const rnWndTemplate = /** @type {HTMLTemplateElement} */ (document.getElementById('rn-wnd-template'));
@@ -449,6 +451,10 @@ export default class Wnd {
 		const posEl = this.posEl;
 
 		this.options = options;
+		if (options.closable === false) {
+			el.removeAttribute('closable');
+			el.querySelector('.rn-title-bar-button.close')?.remove();
+		}
 		if (this.options.wndcard)
 			el.classList.add('rn-wndcard');
 

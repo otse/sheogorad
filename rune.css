@@ -213,6 +213,7 @@ rn-elements button:hover {
 	height: inherit;
 	align-items: center;
 	justify-content: center;
+	overflow: hidden;
 }
 
 .rn-wnd-title-bar>div:nth-of-type(1)>span {
@@ -233,6 +234,7 @@ rn-elements button:hover {
 	/* letter-spacing: 3px; */
 	font-size: 90%;
 	text-decoration: underline;
+	text-wrap: nowrap;
 }
 
 .rn-wnd-position.active {

@@ -82,16 +82,25 @@ export default class RegionViewer extends Wndd {
 			(this.wnd.wndContent.querySelector('.rnl-region-wnd-list'));
 		target.innerHTML = '';
 
+		const tamriel = new Tree([], {
+			name: 'Tamriel'
+		});
+		const morrowind = new Tree([], {
+			name: 'Morrowind'
+		});
 		const vvardenfell = new Tree([], {
-			name: 'Vvardenfell',
-			className: 'tree-view'
+			name: 'Vvardenfell'
+		});
+		const mainland = new Tree([], {
+			name: 'Mainland'
+		});
+		const esroniet = new Tree([], {
+			name: 'Esroniet'
 		});
 
 		for (const region in Sheogorad.canonList) {
 			const tree = new Tree([], {
-				name: `${Sheogorad.formatRegionName(region)}`,
-				className: 'tree-view',
-				labelClassName: Sheogorad.regionClassName(region)
+				name: `${Sheogorad.formatRegionName(region)}`
 			});
 
 			// Regions aren't cells, so this makes little sense
@@ -106,7 +115,6 @@ export default class RegionViewer extends Wndd {
 				// tree.addItem(settlement.name);
 				const tree2 = new Tree([], {
 					name: /*A:*/`${settlement.name}`,
-					className: 'tree-view',
 					//onClick: () => {
 					//	that.dockedBuildingViewer?.setData({ settlement });
 					//}
@@ -142,7 +150,11 @@ export default class RegionViewer extends Wndd {
 			};
 			vvardenfell.addItem(tree);
 		}
-		target.appendChild(vvardenfell.getElement());
+		morrowind.addItem(vvardenfell);
+		morrowind.addItem(mainland);
+		tamriel.addItem(morrowind);
+		tamriel.addItem(esroniet);
+		target.appendChild(tamriel.getElement());
 
 		const divider = document.createElement('div');
 		divider.className = 'rn-divider';

@@ -155,14 +155,6 @@ export const Sheogorad = {
 		return name.replace(/_/g, ' ').replace(/\b\w/g, char => char.toUpperCase());
 	},
 
-	regionClassName(regionName) {
-		const slug = regionName
-			.toLowerCase()
-			.replace(/[^a-z0-9]+/g, '-')
-			.replace(/^-+|-+$/g, '');
-		return `tree-region-${slug}`;
-	},
-
 	formatRegionName(regionName) {
 		return `${regionName/*.toUpperCase()*/}`;
 	},
