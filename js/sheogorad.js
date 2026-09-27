@@ -160,7 +160,7 @@ export const Sheogorad = {
 			.toLowerCase()
 			.replace(/[^a-z0-9]+/g, '-')
 			.replace(/^-+|-+$/g, '');
-		return `region-${slug}`;
+		return `rnt-region-${slug}`;
 	},
 
 	formatRegionName(regionName) {

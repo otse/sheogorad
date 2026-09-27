@@ -3,7 +3,7 @@
 export default class Tree {
 	constructor(items = [], options = {}) {
 		this.ul = document.createElement('ul');
-		this.ul.className = options.className || 'tree';
+		this.ul.className = options.className || 'rnt-tree';
 		this.ul.hidden = true;
 		this.root = this.ul;
 		this.items = [];
@@ -12,12 +12,13 @@ export default class Tree {
 			const wrapper = document.createElement('div');
 			const label = document.createElement('span');
 			const caret = document.createElement('span');
-			const expandedClass = 'expanded';
+			caret.classList.add('rnt-caret');
+			const expandedClass = 'rnt-expanded';
 			caret.textContent = '';
-			label.appendChild(document.createTextNode(options.name));
 			label.appendChild(caret);
+			label.appendChild(document.createTextNode(options.name));
 			label.style.cursor = 'pointer';
-			label.classList.add('label');
+			label.classList.add('rnt-label');
 			if (options.labelClassName) {
 				label.classList.add(options.labelClassName);
 			}
@@ -25,11 +26,29 @@ export default class Tree {
 			// Start collapsed and keep both hidden/display in sync for reliability.
 
 			label.addEventListener('click', () => {
-				const shouldShow = this.ul.hidden;
-				this.ul.hidden = !shouldShow;
-				this.ul.style.display = shouldShow ? 'block' : 'none';
+				const shouldShow = !label.classList.contains(expandedClass);
+				const currentHeight = this.ul.hidden ? 0 : this.ul.getBoundingClientRect().height;
+				this.ulAnimation?.cancel();
+				this.ul.hidden = false;
+				this.ul.style.height = `${currentHeight}px`;
+				this.ul.style.overflow = 'hidden';
+				const targetHeight = shouldShow ? this.ul.scrollHeight : 0;
+				const animation = this.ul.animate(
+					[{ height: `${currentHeight}px` }, { height: `${targetHeight}px` }],
+					{ duration: 180, easing: 'ease-in-out' }
+				);
+				this.ulAnimation = animation;
+				animation.onfinish = () => {
+					if (this.ulAnimation !== animation) {
+						return;
+					}
+					this.ul.hidden = !shouldShow;
+					this.ul.style.height = shouldShow ? 'auto' : '';
+					this.ul.style.overflow = '';
+					this.ulAnimation = null;
+				};
 				label.classList.toggle(expandedClass, shouldShow);
-				caret.textContent = shouldShow ? ' ↴' : ''; // ☇
+				caret.textContent = shouldShow ? ' ↳' : ''; // ☇ ↴↳
 				if (options.onClick) {
 					options.onClick();
 				}
@@ -50,7 +69,7 @@ export default class Tree {
 			li.appendChild(item.root);
 		} else /*if (item.text && item.onClick)*/ {
 			const span = document.createElement('span');
-			span.className = 'clickable';
+			span.className = 'rnt-clickable';
 			span.textContent = item.text || item.toString();
 			span.style.cursor = 'pointer';
 			span.addEventListener('click', item.onClick);

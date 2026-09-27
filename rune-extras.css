@@ -1,0 +1,126 @@
+/* this is rune layout stuff, and it's pretty specific
+ *
+ * if it's not generic it's layout specific put it in here
+*/
+.rnl-region-wnd-list {
+    position: relative;
+    min-width: 220px;
+    max-width: 500px;
+    width: 50%;
+    /* padding: 6px; */
+}
+
+.rnl-region-wnd-area {
+    width: 50%;
+    min-width: 200px;
+    /* width: -webkit-fill-available; */
+    height: -webkit-fill-available;
+    background: transparent;
+}
+
+.rnl-region-wnd-docking-zone {
+    position: relative;
+    flex: 1 1 auto;
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
+    box-sizing: border-box;
+    background: #ffff001a;
+    /* width: inherit; */
+    height: -webkit-fill-available;
+}
+
+.rnl-building-wnd-div {
+    display: flex;
+    flex-direction: column;
+    width: -webkit-fill-available;
+}
+
+/* rune tree / color and animated trees */
+
+:root {
+    --region-ascadian-isles: #8fcf8f;
+    --region-bitter-coast: #6cc4c7;
+    --region-west-gash: #e0bd73;
+    --region-ashlands: #dc8177;
+    --region-molag-amur: #c991d1;
+    --region-azura-s-coast: #79b9e8;
+    --region-grazelands: #bddc78;
+    --region-sheogorad: #d7a27c;
+}
+
+.rnt-caret {
+    position: absolute;
+    margin-top: 1lh;
+    margin-left: 6px;
+    display: inline-block;
+}
+
+.rnt-tree {
+    x-margin: 0.25rem 0;
+    margin: 0;
+    padding-left: 1.5rem;
+}
+
+.rnt-tree li {
+    list-style-type: none;
+    x-margin: 0.125rem 0;
+    padding: 0;
+}
+
+.rnt-tree li .rnt-label {
+    cursor: pointer;
+}
+
+/* Region flavor colors for top-level tree labels */
+.rnt-label[class*="rnt-region-"] {
+    display: block;
+    /* padding: 3px; */
+    text-shadow: none;
+    font-weight: 600;
+    font-size: 110%;
+}
+
+.rnt-tree-building.rnt-label {
+    /* color: #e7e7e7; */
+}
+
+.rnt-label.rnt-region-ascadian-isles {
+    color: var(--region-ascadian-isles);
+}
+
+.rnt-label.rnt-region-bitter-coast {
+    color: var(--region-bitter-coast);
+}
+
+.rnt-label.rnt-region-west-gash {
+    color: var(--region-west-gash);
+}
+
+.rnt-label.rnt-region-ashlands {
+    color: var(--region-ashlands);
+}
+
+.rnt-label.rnt-region-molag-amur {
+    color: var(--region-molag-amur);
+}
+
+.rnt-label.rnt-region-azura-s-coast {
+    color: var(--region-azura-s-coast);
+}
+
+.rnt-label.rnt-region-grazelands {
+    color: var(--region-grazelands);
+}
+
+.rnt-label.rnt-region-sheogorad {
+    color: var(--region-sheogorad);
+}
+
+.rnt-label.rnt-expanded {
+    x-text-decoration: underline;
+}
+
+.rnt-tree li > div {
+    display: contents;
+}

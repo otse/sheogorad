@@ -135,7 +135,7 @@ export default class BuildingViewer extends Wndd {
             const icon = clickable ? Sheogorad.iconList.npcIcons[value] || '' : '';
             item.textContent = `${icon}${icon ? ' ' : ''}${Sheogorad.formatNpcName(value)}`;
             if (clickable) {
-                item.className = 'tree-building';
+                item.className = 'rnt-tree-building';
                 item.tabIndex = 0;
                 item.addEventListener('click', () => {
                     const npc = new Npc(value, { name: Sheogorad.formatNpcName(value) });

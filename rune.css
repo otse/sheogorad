@@ -13,7 +13,7 @@
 
 * {
 	font-family: 'Pelagiad';
-	font-size: 20px;
+	font-size: 18px;
 	font-weight: 100;
 	/* text-transform: lowercase; */
 	letter-spacing: 2px;
@@ -332,7 +332,7 @@ rn-elements button:hover {
 	/* Box shadows are not OSR */
 	box-shadow: 0px 0px 27px rgba(0, 0, 0, 0.5);
 	border-radius: 2px;
-	/* border: 1px outset #3a3a3a; */
+	/* border: 1px solid #3a3a3a; */
 	x-background: rgba(127, 127, 127, 0.5);
 	background-image: url(img/RockRough0001_1_download600.jpg);
 	padding: calc(50px / 2) calc(8px / 2) calc(8px / 2);
@@ -463,7 +463,7 @@ rn-elements button:hover {
 	color: var(--dark-text);
 	padding: 6px 6px;
 	border: none;
-	border: 2px outset rgb(124 124 124 / 50%);
+	/* border: 2px outset rgb(124 124 124 / 50%); */
 	border-radius: 0px;
 	cursor: pointer;
 	font-family: 'Pelagiad', serif;
@@ -590,75 +590,6 @@ rn-elements button:hover {
 	x-background-image: url(img/RockRough0001_1_download600.jpg);
 }
 
-ul {
-	x-margin: 0.25rem 0;
-	margin: 0;
-	padding-left: 1rem;
-}
-
-ul li {
-	list-style-type: none;
-	x-margin: 0.125rem 0;
-	padding: 0;
-}
-
-ul li .label {
-	cursor: pointer;
-}
-
-/* Region flavor colors for top-level menu labels */
-.label[class*="region-"] {
-	x-display: block;
-	x-padding: 1px;
-	x-text-shadow: none;
-	x-font-weight: 600;
-	x-letter-spacing: 0.03em;
-}
-
-.tree-building.label {
-	/* color: #e7e7e7; */
-}
-
-.label.region-ascadian-isles {
-	color: var(--region-ascadian-isles);
-}
-
-.label.region-bitter-coast {
-	color: var(--region-bitter-coast);
-}
-
-.label.region-west-gash {
-	color: var(--region-west-gash);
-}
-
-.label.region-ashlands {
-	color: var(--region-ashlands);
-}
-
-.label.region-molag-amur {
-	color: var(--region-molag-amur);
-}
-
-.label.region-azura-s-coast {
-	color: var(--region-azura-s-coast);
-}
-
-.label.region-grazelands {
-	color: var(--region-grazelands);
-}
-
-.label.region-sheogorad {
-	color: var(--region-sheogorad);
-}
-
-.label.expanded {
-	x-text-decoration: underline;
-}
-
-li>div {
-	display: contents;
-}
-
 /* a otse tree set is a list of items that can be expanded to show more items */
 ul.treeSet {
 	x-background: rgba(0, 0, 0, 0.5);
@@ -672,7 +603,7 @@ ul li.dropdown {
 }
 
 ul li span {
-	text-wrap: nowrap;
+	/* text-wrap: nowrap; */
 }
 
 .explanator {

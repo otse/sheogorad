@@ -425,7 +425,7 @@ export default class Wnd {
 	/**
 	 * @param {string} title
 	 * @param {Node | string} content
-	 * @param {{ width?: number, height?: number, minWidth?: number, minHeight?: number, wndcard?: boolean, emoji?: string, titleGradient?: string }} [options]
+	 * @param {{ width?: number, height?: number, minWidth?: number, minHeight?: number, maxWidth?: number, maxHeight?: number, wndcard?: boolean, emoji?: string, titleGradient?: string }} [options]
 	 */
 	constructor(title, content, options = {}) {
 		const rnWndTemplate = /** @type {HTMLTemplateElement} */ (document.getElementById('rn-wnd-template'));
@@ -589,7 +589,7 @@ export default class Wnd {
 				modifiers: [
 					interact.modifiers.restrictSize({
 						min: { width: options.minWidth || 100, height: options.minHeight || 100 },
-						// max: { width: options.maxWidth || 500, height: 100 },
+						max: { width: options.maxWidth ?? Infinity, height: options.maxHeight ?? Infinity },
 					}),
 					interact.modifiers.restrictEdges({
 						outer: getGridRestriction,

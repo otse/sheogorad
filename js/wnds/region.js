@@ -23,7 +23,13 @@ export default class RegionViewer extends Wndd {
 		const wnd = new Wnd(
 			`Regions`,
 			clone,
-			{ width: 400, height: 250, minWidth: 380, minHeight: 250,
+			{
+				width: 580,
+				height: 250, 
+				minWidth: 380,
+				minHeight: 250,
+				maxWidth: 800,
+				maxHeight: 600,
 				emoji: '🗺️',
 				titleGradient: 'linear-gradient(to bottom, rgb(28, 42, 69), rgb(36 53 62))' });
 		wnd.moveTo(-400, 100);
@@ -58,14 +64,14 @@ export default class RegionViewer extends Wndd {
 		for (const region in Sheogorad.canonList) {
 			const tree = new Tree([], {
 				name: Sheogorad.formatRegionName(region),
-				className: 'tree',
+				className: 'rnt-tree',
 				labelClassName: Sheogorad.regionClassName(region)
 			});
 			for (const settlement of Sheogorad.canonList[region]) {
 				// tree.addItem(settlement.name);
 				const tree2 = new Tree([], {
 					name: settlement.name,
-					className: 'tree',
+					className: 'rnt-tree',
 					//onClick: () => {
 					//	that.dockedBuildingViewer?.setData({ settlement });
 					//}
@@ -76,23 +82,13 @@ export default class RegionViewer extends Wndd {
 					//console.warn(' building_ids ', building_id);
 
 					for (const buildingObject of building_ids[building_id]) {
-						// console.warn(' building ', buildingObject.instance.name);
-						const tree3 = new Tree([], {
-							name: buildingObject.instance.name,
-							labelClassName: 'tree-building',
+						tree2.addItem({
+							text: buildingObject.instance.name,
+							//labelClassName: 'rnt-tree-building',
 							onClick: () => {
 								console.warn('Building clicked:', buildingObject.instance.name);
 
 								that.dockedBuildingViewer?.setData({ settlement, building_id, buildingObject }, { merge: true });
-							}
-						});
-
-						tree2.addItem(tree3);
-
-						tree3.addItem({
-							text: `Opened on the right`,
-							onClick: () => {
-								//that.dockedBuildingViewer?.wnd?.bringToFront();
 							}
 						});
 					}
@@ -103,7 +99,7 @@ export default class RegionViewer extends Wndd {
 
 			const divider = document.createElement('div');
 			divider.className = 'rn-divider';
-			// target.appendChild(divider);
+			target.appendChild(divider);
 		}
 	}
 
