@@ -78,6 +78,9 @@ export default class RegionViewer extends Wndd {
 			return;
 		const that = this;
 
+		const divider = document.createElement('div');
+		divider.className = 'rn-divider';
+
 		const target = /** @type {HTMLElement} */
 			(this.wnd.wndContent.querySelector('.rnl-region-wnd-list'));
 		target.innerHTML = '';
@@ -152,12 +155,15 @@ export default class RegionViewer extends Wndd {
 		}
 		morrowind.addItem(vvardenfell);
 		morrowind.addItem(mainland);
+
+		//morrowind.addItem(divider.cloneNode(true));
+		//vvardenfell.addItem(divider.cloneNode(true));
+		//mainland.addItem(divider.cloneNode(true));
+
 		tamriel.addItem(morrowind);
 		tamriel.addItem(esroniet);
 		target.appendChild(tamriel.getElement());
 
-		const divider = document.createElement('div');
-		divider.className = 'rn-divider';
 		target.appendChild(divider);
 	}
 

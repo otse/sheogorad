@@ -14,8 +14,9 @@ export default class Tree {
 			const label = document.createElement('span');
 			const elbow = document.createElement('span');
 			elbow.setAttribute('aria-hidden', 'true');
-			elbow.textContent = ' ⤷'; // ⤵ ⤥ ⤷
-			elbow.style.visibility = 'hidden';
+			elbow.textContent = ' ⤥'; // ⤵ ⤥ ⤷ ⟹ ⟿
+			elbow.style.fontSize = '80%';
+			elbow.hidden = true;
 			label.appendChild(document.createTextNode(options.name));
 			label.appendChild(elbow);
 			label.style.cursor = 'pointer';
@@ -47,7 +48,7 @@ export default class Tree {
 					{ duration: 180, easing: 'ease-in-out' }
 				);
 				this.ulAnimation = animation;
-				elbow.style.visibility = !shouldShow ? 'hidden' : 'visible';
+				elbow.hidden = !shouldShow;
 				animation.onfinish = () => {
 					if (this.ulAnimation !== animation) {
 						return;
@@ -84,7 +85,11 @@ export default class Tree {
 
 		if (item instanceof Tree) {
 			li.appendChild(item.root);
-		} else /*if (item.text && item.onClick)*/ {
+		}
+		else if (item instanceof HTMLElement) {
+			this.ul.appendChild(item);
+		}
+		else /*if (item.text && item.onClick)*/ {
 			const span = document.createElement('span');
 			span.textContent = item.text || item.toString();
 			span.style.cursor = 'pointer';

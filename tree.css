@@ -16,11 +16,11 @@
 
 .tree-view [role="button"] {
     display: list-item;
-    list-style-type: circle;
+    list-style-type: none;
 }
 
 .tree-view [role="button"][aria-expanded="true"] {
-    list-style-type: disc;
+    /* list-style-type: none; */
 }
 
 .tree-view li > div {
