@@ -11,17 +11,18 @@
 }
 
 .tree-elbow-item {
+    display: none;
     list-style-type: none;
     position: absolute;
-    top: 0;
-    left: 0;
+    top: -4px;
+    left: 6px;
     height: 0;
 }
 
 .tree-view {
     position: relative;
     margin: 0;
-    padding-left: 1.5rem;
+    padding-left: 1rem;
 }
 
 .tree-view li {
@@ -37,9 +38,9 @@
 .tree-label[class*="tree-region-"] {
     display: block;
     /* padding: 3px; */
-    text-shadow: none;
-    font-weight: 600;
-    font-size: 110%;
+    /* text-shadow: none; */
+    /* font-weight: 600; */
+    /* font-size: 110%; */
 }
 
 .tree-label.tree-region-ascadian-isles {
