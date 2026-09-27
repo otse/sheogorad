@@ -3,22 +3,23 @@
 export default class Tree {
 	constructor(items = [], options = {}) {
 		this.ul = document.createElement('ul');
-		this.ul.className = options.className || 'rnt-tree';
+		this.ul.className = options.className || 'tree-view';
 		this.ul.hidden = true;
 		this.root = this.ul;
 		this.items = [];
+		this.emptyItem = null;
 
 		if (options.name) {
 			const wrapper = document.createElement('div');
 			const label = document.createElement('span');
-			const caret = document.createElement('span');
-			caret.classList.add('rnt-caret');
-			const expandedClass = 'rnt-expanded';
-			caret.textContent = '';
-			label.appendChild(caret);
+			const elbowItem = document.createElement('li');
+			elbowItem.className = 'tree-elbow-item';
+			const expandedClass = 'tree-expanded';
+			elbowItem.textContent = '↳';
+			this.ul.appendChild(elbowItem);
 			label.appendChild(document.createTextNode(options.name));
 			label.style.cursor = 'pointer';
-			label.classList.add('rnt-label');
+			label.classList.add('tree-label');
 			if (options.labelClassName) {
 				label.classList.add(options.labelClassName);
 			}
@@ -27,6 +28,11 @@ export default class Tree {
 
 			label.addEventListener('click', () => {
 				const shouldShow = !label.classList.contains(expandedClass);
+				if (shouldShow && this.items.length === 0 && !this.emptyItem) {
+					this.emptyItem = document.createElement('li');
+					this.emptyItem.textContent = 'Empty';
+					this.ul.appendChild(this.emptyItem);
+				}
 				const currentHeight = this.ul.hidden ? 0 : this.ul.getBoundingClientRect().height;
 				this.ulAnimation?.cancel();
 				this.ul.hidden = false;
@@ -48,7 +54,7 @@ export default class Tree {
 					this.ulAnimation = null;
 				};
 				label.classList.toggle(expandedClass, shouldShow);
-				caret.textContent = shouldShow ? ' ↳' : ''; // ☇ ↴↳
+				//elbow.textContent = shouldShow ? ' ↳' : ''; // ☇ ↴↳
 				if (options.onClick) {
 					options.onClick();
 				}
@@ -63,13 +69,15 @@ export default class Tree {
 	}
 
 	addItem(item) {
+		this.emptyItem?.remove();
+		this.emptyItem = null;
 		const li = document.createElement('li');
 
 		if (item instanceof Tree) {
 			li.appendChild(item.root);
 		} else /*if (item.text && item.onClick)*/ {
 			const span = document.createElement('span');
-			span.className = 'rnt-clickable';
+			span.className = 'tree-clickable';
 			span.textContent = item.text || item.toString();
 			span.style.cursor = 'pointer';
 			span.addEventListener('click', item.onClick);

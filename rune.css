@@ -331,7 +331,7 @@ rn-elements button:hover {
 
 	/* Box shadows are not OSR */
 	box-shadow: 0px 0px 27px rgba(0, 0, 0, 0.5);
-	border-radius: 2px;
+	/* border-radius: 2px; */
 	/* border: 1px solid #3a3a3a; */
 	x-background: rgba(127, 127, 127, 0.5);
 	background-image: url(img/RockRough0001_1_download600.jpg);

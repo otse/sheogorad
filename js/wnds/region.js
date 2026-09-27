@@ -63,28 +63,35 @@ export default class RegionViewer extends Wndd {
 
 		for (const region in Sheogorad.canonList) {
 			const tree = new Tree([], {
-				name: Sheogorad.formatRegionName(region),
-				className: 'rnt-tree',
+				name: `${Sheogorad.formatRegionName(region)}`,
+				className: 'tree-view',
 				labelClassName: Sheogorad.regionClassName(region)
 			});
 			for (const settlement of Sheogorad.canonList[region]) {
 				// tree.addItem(settlement.name);
 				const tree2 = new Tree([], {
-					name: settlement.name,
-					className: 'rnt-tree',
+					name: /*A:*/`${settlement.name}`,
+					className: 'tree-view',
 					//onClick: () => {
 					//	that.dockedBuildingViewer?.setData({ settlement });
 					//}
 				});
 				const building_ids = settlement.buildings;
 
+				tree2.addItem({
+					text: 'Area itself',
+					onClick: () => {
+						console.log('If Fargoth left his house he would be in the Area Itself.');
+					}
+				});
+
 				for (const building_id in building_ids) {
 					//console.warn(' building_ids ', building_id);
 
 					for (const buildingObject of building_ids[building_id]) {
 						tree2.addItem({
-							text: buildingObject.instance.name,
-							//labelClassName: 'rnt-tree-building',
+							text: /*I:*/`${buildingObject.instance.name}`,
+							//labelClassName: 'tree-building',
 							onClick: () => {
 								console.warn('Building clicked:', buildingObject.instance.name);
 
