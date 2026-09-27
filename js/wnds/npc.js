@@ -45,7 +45,7 @@ export default class Npc {
 	icon = '';
 	constructor(name, stats = {}) {
 		this.name = name;
-		this.icon = Sheogorad.iconList.npcIcons[name] || '';
+		this.icon = stats.icon || Sheogorad.iconList.npcIcons[name] || '';
 		this.stats = { ...DEFAULT_STATS, ...random_stats(), ...stats };
 	}
 	makeWnd() {

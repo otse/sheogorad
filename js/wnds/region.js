@@ -55,6 +55,9 @@ export default class RegionViewer extends Wndd {
 
 		this.dockCellViewer(this.dockedBuildingViewer);
 	}
+	refresh() {
+		// The region and area hierarchy is stable and should not be rebuilt.
+	}
 
 	/**
 	 * Docks the given cell viewer into the shared area dock, silently closing
@@ -101,9 +104,10 @@ export default class RegionViewer extends Wndd {
 			name: 'Esroniet'
 		});
 
-		for (const region in Sheogorad.canonList) {
+		const areasById = new Map((Sheogorad.serverData?.areas ?? []).map((area) => [area.id, area]));
+		for (const region of Sheogorad.serverData?.regions ?? []) {
 			const tree = new Tree([], {
-				name: `${Sheogorad.formatRegionName(region)}`
+				name: `${Sheogorad.formatRegionName(region.name)}`
 			});
 
 			// Regions aren't cells, so this makes little sense
@@ -114,7 +118,8 @@ export default class RegionViewer extends Wndd {
 				}
 			});*/
 
-			for (const settlement of Sheogorad.canonList[region]) {
+			for (const areaSummary of region.areas ?? []) {
+				const settlement = areasById.get(areaSummary.id) ?? areaSummary;
 				// tree.addItem(settlement.name);
 				const tree2 = new Tree([], {
 					name: /*A:*/`${settlement.name}`,
@@ -122,8 +127,6 @@ export default class RegionViewer extends Wndd {
 					//	that.dockedBuildingViewer?.setData({ settlement });
 					//}
 				});
-				const building_ids = settlement.buildings;
-
 				tree2.addItem({
 					text: 'Area itself',
 					onClick: () => {
@@ -134,20 +137,16 @@ export default class RegionViewer extends Wndd {
 					}
 				});
 
-				for (const building_id in building_ids) {
-					//console.warn(' building_ids ', building_id);
-
-					for (const buildingObject of building_ids[building_id]) {
-						tree2.addItem({
-							text: /*I:*/`${buildingObject.instance.name}`,
-							//labelClassName: 'tree-building',
-							onClick: () => {
-								that.dockedBuildingViewer?.setData({ settlement, building_id, building_name: buildingObject.instance.name, buildingObject }, { merge: true });
-								if (that.dockedBuildingViewer)
-									that.dockCellViewer(that.dockedBuildingViewer);
-							}
-						});
-					}
+				for (const buildingObject of settlement.buildings ?? []) {
+					const building_id = buildingObject.id;
+					tree2.addItem({
+						text: buildingObject.name,
+						onClick: () => {
+							that.dockedBuildingViewer?.setData({ settlement, building_id, building_name: buildingObject.name, buildingObject }, { merge: true });
+							if (that.dockedBuildingViewer)
+								that.dockCellViewer(that.dockedBuildingViewer);
+						}
+					});
 				}
 				tree.addItem(tree2);
 			};

@@ -21,8 +21,9 @@ export const Sheogorad = {
 	},
 
 	global: randomData,
+
 	serverClient: new ServerClient(),
-	/** @type {{ world: any, regions: any, areas: any, npcs: any, lore: any } | null} */
+	/** @type {{ world: any, regions: any[], areas: any[], npcs: any[], lore: any[] } | null} */
 	serverData: null,
 
 	/** @type {ThingsToDo | null} */
@@ -36,7 +37,6 @@ export const Sheogorad = {
 	/** @type {MusicPlayer | null} */
 	musicPlayer: null,
 
-	canonList: {},
 	lore: {},
 	iconList: {},
 
@@ -48,9 +48,28 @@ export const Sheogorad = {
 	async init() {
 		console.log('sheogorad initialized');
 
-		await this.loadCanonList();
-		await this.loadLore();
-		await this.loadIconList();
+		const refreshDataBtn = document.getElementById('refresh-data-btn');
+		const refreshStatus = document.getElementById('data-refresh-status');
+		const refresh = async () => {
+			refreshDataBtn?.setAttribute('aria-busy', 'true');
+			refreshDataBtn?.setAttribute('disabled', '');
+			if (refreshStatus)
+				refreshStatus.textContent = 'Refreshing';
+			try {
+				await this.refreshServerData();
+				if (refreshStatus)
+					refreshStatus.textContent = `Updated ${new Date().toLocaleTimeString()}`;
+			} catch (error) {
+				console.error('Failed to refresh server data:', error);
+				if (refreshStatus)
+					refreshStatus.textContent = 'Refresh failed';
+			} finally {
+				refreshDataBtn?.removeAttribute('aria-busy');
+				refreshDataBtn?.removeAttribute('disabled');
+			}
+		};
+		refreshDataBtn?.addEventListener('click', refresh);
+		await refresh();
 		this.setupEventListeners();
 
 		Wnd.init();
@@ -117,33 +136,20 @@ export const Sheogorad = {
 
 
 	},
-	async loadJson(filePath) {
-		try {
-			const response = await fetch(filePath);
-			const data = await response.json();
-			if (this.config.debug) console.log(`Loaded ${filePath}:`, data);
-			return data;
-		} catch (error) {
-			console.error(`Error loading ${filePath}:`, error);
-			throw error;
-		}
-	},
-
 	async downloadServerData() {
 		this.serverData = await this.serverClient.downloadAll();
 		return this.serverData;
 	},
 
-	async loadCanonList() {
-		this.canonList = await this.loadJson('json/canon list.json');
-	},
-
-	async loadLore() {
-		this.lore = await this.loadJson('json/lore.json');
-	},
-
-	async loadIconList() {
-		this.iconList = await this.loadJson('json/icon list.json');
+	async refreshServerData() {
+		const data = await this.downloadServerData();
+		this.lore = data.lore;
+		this.iconList = {
+			npcIcons: Object.fromEntries(data.npcs.map((npc) => [npc.id, npc.icon]))
+		};
+		LorePanel.resetArticleIndex();
+		await Wnd.refreshAll();
+		return data;
 	},
 
 	playClickSound() {

@@ -40,6 +40,16 @@ export default class BuildingViewer extends CellViewer {
 		this.make();
 		this.wnd?.setWndTitle(`${this.data.building_name || this.data.building_id || 'Cell'}`);
 	}
+	refresh() {
+		const areaId = this.data.settlement?.id;
+		const area = Sheogorad.serverData?.areas.find((entry) => entry.id === areaId);
+		const building = area?.buildings?.find((entry) => entry.id === this.data.building_id);
+		if (area && building) {
+			this.data = { ...this.data, settlement: area, buildingObject: building, building_name: building.name };
+			this.wnd?.setWndTitle(building.name);
+		}
+		super.refresh();
+	}
 	_render() {
 		if (!this.wnd)
 			return;
@@ -54,8 +64,8 @@ export default class BuildingViewer extends CellViewer {
 		const serverBuilding = this.findServerBuilding(this.data.building_id);
 
 		const building = serverBuilding || this.data.buildingObject;
-		const instance = building?.instance || {};
-		const content = building?.content || {};
+		const instance = building?.instance || building || {};
+		const content = building?.content || building || {};
 	
 		if (!building) {
 			target.appendChild(document.createTextNode('Choose a building to view its details.'));
@@ -71,9 +81,12 @@ export default class BuildingViewer extends CellViewer {
 			this.addDetail(target, 'Description', instance.modifier);
 
 		const npcs = content.npcs || {};
-		this.addList(target, 'Residents', [...(npcs.forced || []), ...(npcs.pool || [])], true);
+		const residents = Array.isArray(building?.npcs)
+			? building.npcs
+			: [...(npcs.forced || []), ...(npcs.pool || [])];
+		this.addList(target, 'Residents', residents, true);
 		const items = content.items || {};
-		this.addList(target, 'Items', [...(items.forced || []), ...(items.pool || [])]);
+		this.addList(target, 'Items', building?.items || [...(items.forced || []), ...(items.pool || [])]);
 	}
 
 	findServerBuilding(buildingId) {

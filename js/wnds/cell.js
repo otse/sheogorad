@@ -101,14 +101,17 @@ export default class CellViewer extends Wndd {
 
 		const list = document.createElement('ul');
 		for (const value of values) {
+			const npcId = typeof value === 'string' ? value : value.id;
 			const item = document.createElement('li');
-			const icon = clickable ? Sheogorad.iconList.npcIcons[value] || '' : '';
-			item.textContent = `${icon}${icon ? ' ' : ''}${Sheogorad.formatNpcName(value)}`;
+			const icon = clickable ? (value.icon || Sheogorad.iconList.npcIcons[npcId] || '') : '';
+			const name = typeof value === 'string' ? Sheogorad.formatNpcName(value) : value.name;
+			const status = typeof value === 'string' || !value.status ? '' : ` (${value.status})`;
+			item.textContent = `${icon}${icon ? ' ' : ''}${name}${status}`;
 			if (clickable) {
 				item.className = 'tree-building';
 				item.tabIndex = 0;
 				item.addEventListener('click', () => {
-					const npc = new Npc(value, { name: Sheogorad.formatNpcName(value) });
+					const npc = new Npc(npcId, { ...value, name });
 					Sheogorad.npcs.push(npc);
 					npc.makeWnd();
 				});

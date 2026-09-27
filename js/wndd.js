@@ -20,9 +20,13 @@ export default class Wndd {
 		if (!this.wnd || this.wnd.isDestroyed) {
 			this.wnd = this._create();
 		}
+		this.wnd.setRefreshHandler(() => this.refresh());
 		this.render();
 	}
 	render() {
+	}
+	refresh() {
+		this.render();
 	}
 	close() {
 		if (this.wnd) {

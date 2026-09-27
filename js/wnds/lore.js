@@ -64,6 +64,10 @@ export default class LorePanel extends Wndd {
 	/** @type {Map<string, Article> | null} */
 	static _articleIndex = null;
 
+	static resetArticleIndex() {
+		LorePanel._articleIndex = null;
+	}
+
 	/**
 	 * Walks the lore tree once and caches every named entry, keyed by lowercased name.
 	 * @returns {Map<string, Article>}

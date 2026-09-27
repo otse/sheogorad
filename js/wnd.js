@@ -67,7 +67,15 @@ let stoneWnds;
 // A Mw / Ds Wnd
 export default class Wnd {
 
-	static wnds = []; // Static
+	/** @type {Wnd[]} */
+	static wnds = [];
+
+	static async refreshAll() {
+		for (const wnd of [...Wnd.wnds]) {
+			if (!wnd.isDestroyed)
+				await wnd.refresh();
+		}
+	}
 
 	/** @type {Map<HTMLElement, object>} Dockable areas registered via Wnd.defineDockZone() */
 	static dockZones = new Map();
@@ -125,6 +133,8 @@ export default class Wnd {
 
 	isDestroyed = false;
 	isMinimized = false;
+	/** @type {(() => void | Promise<void>) | null} */
+	refreshHandler = null;
 
 	/** @type {Wnd | null} Wnd whose spawned link created this wnd, if any */
 	parent = null;
@@ -251,6 +261,17 @@ export default class Wnd {
 		this.el = null;
 		this.posEl = null;
 		this.isDestroyed = true;
+		const index = Wnd.wnds.indexOf(this);
+		if (index !== -1)
+			Wnd.wnds.splice(index, 1);
+	}
+
+	setRefreshHandler(handler) {
+		this.refreshHandler = handler;
+	}
+
+	async refresh() {
+		await this.refreshHandler?.();
 	}
 
 	// A wnd spawned this wnd by clicking a link within it
@@ -582,6 +603,7 @@ export default class Wnd {
 			handle.className = `rn-wnd-resize-handle rn-wnd-resize-${edge}`;
 			el.appendChild(handle);
 		});
+		Wnd.wnds.push(this);
 
 		if (el.hasAttribute('resizeable')) {
 			interactable.resizable({

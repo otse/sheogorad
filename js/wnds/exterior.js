@@ -38,6 +38,15 @@ export default class ExteriorViewer extends CellViewer {
 		this.make();
 		this.wnd?.setWndTitle(`${this.data.settlement?.name || 'Cell'}`);
 	}
+	refresh() {
+		const areaId = this.data.settlement?.id;
+		const area = Sheogorad.serverData?.areas.find((entry) => entry.id === areaId);
+		if (area) {
+			this.data = { ...this.data, settlement: area };
+			this.wnd?.setWndTitle(area.name);
+		}
+		super.refresh();
+	}
 	_render() {
 		if (!this.wnd)
 			return;
@@ -63,9 +72,9 @@ export default class ExteriorViewer extends CellViewer {
 		if (settlement.services?.length)
 			this.addDetail(target, 'Services', settlement.services.join(', '));
 
-		const content = settlement.content || {};
+		const content = settlement.content || settlement;
 		const npcs = content.npcs || {};
-		this.addList(target, 'Residents', [...(npcs.forced || []), ...(npcs.pool || [])], true);
+		this.addList(target, 'Residents', settlement.npcsOutside || [...(npcs.forced || []), ...(npcs.pool || [])], true);
 		const items = content.items || {};
 		this.addList(target, 'Items', [...(items.forced || []), ...(items.pool || [])]);
 	}
