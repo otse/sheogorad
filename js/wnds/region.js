@@ -48,7 +48,7 @@ export default class RegionViewer extends Wndd {
 		this.dockingElement = /** @type {HTMLElement} */
 			(this.wnd.wndContent.querySelector('.rnl-region-wnd-docking-zone'));
 
-		Wnd.defineDockZone(this.dockingElement);
+		Wnd.defineDockZone(this.dockingElement, { internal: true });
 
 		this.dockedBuildingViewer = new BuildingViewer();
 		this.dockedBuildingViewer.make();

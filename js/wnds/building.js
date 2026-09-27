@@ -4,6 +4,7 @@ import Sheogorad from "../sheogorad.js";
 
 import Wnd from "../wnd.js";
 import CellViewer from "./cell.js";
+import ExteriorViewer from "./exterior.js";
 
 // An Interior Cell: a building housing its own npcs/items.
 export default class BuildingViewer extends CellViewer {
@@ -61,6 +62,14 @@ export default class BuildingViewer extends CellViewer {
 
 		target.innerHTML = '';
 
+		if (this.data.settlement) {
+			const goOutsideLink = document.createElement('rn-link');
+			goOutsideLink.className = 'rnl-go-outside-link';
+			goOutsideLink.textContent = '< Go outside?';
+			goOutsideLink.addEventListener('click', () => this.goOutside());
+			target.appendChild(goOutsideLink);
+		}
+
 		const serverBuilding = this.findServerBuilding(this.data.building_id);
 
 		const building = serverBuilding || this.data.buildingObject;
@@ -87,6 +96,18 @@ export default class BuildingViewer extends CellViewer {
 		this.addList(target, 'Residents', residents, true);
 		const items = content.items || {};
 		this.addList(target, 'Items', building?.items || [...(items.forced || []), ...(items.pool || [])]);
+	}
+
+	// Shows this building's area as an exterior wnd, docked in the shared area dock.
+	goOutside() {
+		const settlement = this.data.settlement;
+		const areaList = Sheogorad.areaList;
+		if (!settlement || !areaList)
+			return;
+
+		areaList.exteriorViewer ??= new ExteriorViewer();
+		areaList.exteriorViewer.setData({ settlement }, { merge: true });
+		areaList.dockCellViewer(areaList.exteriorViewer);
 	}
 
 	findServerBuilding(buildingId) {

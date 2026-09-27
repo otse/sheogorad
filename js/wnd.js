@@ -84,7 +84,9 @@ export default class Wnd {
 	 * Marks an element as a dock target. Windows dragged over it will
 	 * highlight it, and dropping there docks the window to its position.
 	 * @param {HTMLElement | string} element Element or CSS selector
-	 * @param {{ resize?: boolean }} [options]
+	 * @param {{ resize?: boolean, internal?: boolean }} [options] Set `internal: true` for
+	 * zones only ever hard-docked programmatically (e.g. RegionViewer's cell dock), so users
+	 * can't drag arbitrary wnds into them.
 	 */
 	static defineDockZone(element, options = {}) {
 		if (typeof element === 'string')
@@ -93,8 +95,12 @@ export default class Wnd {
 			console.warn('Wnd.defineDockZone: element not found');
 			return;
 		}
-		element.classList.add('rn-dock-zone');
 		Wnd.dockZones.set(element, options);
+
+		if (options.internal)
+			return element;
+
+		element.classList.add('rn-dock-zone');
 
 		interact(element).dropzone({
 			accept: '.rn-wnd-position',
@@ -145,6 +151,8 @@ export default class Wnd {
 	dockedZone = null;
 	/** @type {{ host: HTMLElement, nextSibling: ChildNode | null, posStyle: string, elStyle: string } | null} */
 	hardDockState = null;
+	/** @type {import('./wndd.js').default | null} Wndd that owns this wnd, if any (set by Wndd.make()) */
+	wndd = null;
 
 	beforeMinSize = { width: 0, height: 0 };
 	beforeMinXY = { x: 0, y: 0 };
@@ -385,7 +393,8 @@ export default class Wnd {
 		this.el.style.minWidth = '0';
 		this.el.style.minHeight = '0';
 
-		this.interactable.draggable(false);
+		// Dragging stays enabled so the title bar still starts a gesture, but the
+		// 'start' listener below redirects it to a spawned clone instead of moving this posEl.
 		this.interactable.resizable(false);
 		this.dockedZone = zoneEl;
 		this.posEl.setAttribute('data-hard-docked', 'true');
@@ -414,6 +423,31 @@ export default class Wnd {
 			this.interactable.draggable(true);
 		if (this.el.hasAttribute('resizeable'))
 			this.interactable.resizable(true);
+	}
+
+	/**
+	 * Spawns a floating copy of this wnd at its current on-screen position, via
+	 * the owning Wndd (see Wndd.clone()), so the copy is a live, refreshable
+	 * viewer rather than a static DOM snapshot.
+	 * @returns {Wnd}
+	 */
+	cloneAsFloating() {
+		if (!this.el) {
+			this.warnWindowDestroyed();
+			return this;
+		}
+		if (!this.wndd) {
+			console.warn('Wnd.cloneAsFloating: this wnd has no owning Wndd to clone');
+			return this;
+		}
+		const rect = this.el.getBoundingClientRect();
+		const copy = this.wndd.clone();
+		if (!copy.wnd || !copy.wnd.el)
+			return this;
+		copy.wnd.el.style.width = rect.width + 'px';
+		copy.wnd.el.style.height = rect.height + 'px';
+		copy.wnd.moveTo(rect.left - window.innerWidth / 2, rect.top - window.innerHeight / 2);
+		return copy.wnd;
 	}
 
 	setWndTitle(title) {
@@ -581,11 +615,20 @@ export default class Wnd {
 					}),
 				],
 				listeners: {
-					start() {
+					start(event) {
+						if (that.hardDockState) {
+							// Hard-docked wnds can't be dragged in place; spawn a floating
+							// clone and hand the rest of this gesture off to it instead.
+							const clone = that.cloneAsFloating();	
+							event.interaction.start({ name: 'drag' }, clone.interactable, clone.posEl);
+							return;
+						}
 						if (that.dockedZone)
 							that.undock();
 					},
 					move(event) {
+						if (that.hardDockState)
+							return;
 						const target = event.target;
 						// console.log('event target', target);
 
