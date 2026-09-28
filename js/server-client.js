@@ -1,7 +1,35 @@
-const DEFAULT_API_BASE = typeof location !== 'undefined' && /^https?:$/.test(location.protocol)
-	? location.origin
-	: 'http://localhost:3001';
-const LOCAL_API_FALLBACK = typeof location !== 'undefined'
+// Lets a page opened from a different host/port (e.g. a dev server, or a file:// copy)
+// still reach the API, by pointing it at a specific host via ?apiHost= or a saved override.
+const STORAGE_KEY = 'sheogoradApiHost';
+
+function getConfiguredApiHost() {
+	if (typeof location === 'undefined')
+		return null;
+
+	const fromQuery = new URLSearchParams(location.search).get('apiHost');
+	if (fromQuery) {
+		try {
+			localStorage.setItem(STORAGE_KEY, fromQuery);
+		} catch {
+			// localStorage may be unavailable (e.g. privacy mode); the query param still works this load
+		}
+		return fromQuery;
+	}
+
+	try {
+		return localStorage.getItem(STORAGE_KEY);
+	} catch {
+		return null;
+	}
+}
+
+const CONFIGURED_API_HOST = getConfiguredApiHost();
+const DEFAULT_API_BASE = CONFIGURED_API_HOST
+	? CONFIGURED_API_HOST.replace(/\/$/, '')
+	: typeof location !== 'undefined' && /^https?:$/.test(location.protocol)
+		? location.origin
+		: 'http://localhost:3001';
+const LOCAL_API_FALLBACK = !CONFIGURED_API_HOST && typeof location !== 'undefined'
 	&& ['localhost', '127.0.0.1'].includes(location.hostname)
 	&& location.port !== '3001'
 	? 'http://localhost:3001'

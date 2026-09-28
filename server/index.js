@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { networkInterfaces } from 'node:os';
 
 import { loadWorldData } from './data/load-world-data.js';
 import { Simulation } from './domain/simulation.js';
@@ -54,6 +55,17 @@ async function main() {
 	app.listen(PORT, () => {
 		console.log(`Sheogorad server listening on http://localhost:${PORT}`);
 		console.log(`API root: http://localhost:${PORT}/api`);
+
+		const lanAddresses = Object.values(networkInterfaces())
+			.flat()
+			.filter((info) => info?.family === 'IPv4' && !info.internal)
+			.map((info) => info.address);
+
+		if (lanAddresses.length) {
+			console.log('On your network, others can open:');
+			for (const address of lanAddresses)
+				console.log(`  http://${address}:${PORT}`);
+		}
 	});
 }
 

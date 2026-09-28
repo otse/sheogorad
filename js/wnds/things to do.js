@@ -18,7 +18,7 @@ export default class ThingsToDo extends Wndd {
 			`Things To Do`,
 			clone,
 			{ width: 400, height: 310 });
-		wnd.moveTo(400, 100);
+		wnd.moveTo(0 - 400 / 2, 0 - 310 / 2);
 		return wnd;
 	}
 }

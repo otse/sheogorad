@@ -34,3 +34,44 @@
     flex-direction: column;
     width: -webkit-fill-available;
 }
+
+.rn-todo {
+    display: flex;
+    flex-direction: column;
+    height: -webkit-fill-available;
+    width: -webkit-fill-available;
+}
+
+.rn-todo-list {
+    list-style: none;
+    /* width: 100%; */
+    margin: 0;
+    padding: 6px 4px;
+    flex: 1 1 auto;
+}
+
+.rn-todo-list li {
+    position: relative;
+    padding: 6px 8px 6px 26px;
+    margin: 2px 0;
+    color: var(--text-blue);
+    border-radius: 3px;
+    transition: background-color 0.15s ease, padding-left 0.15s ease;
+}
+
+.rn-todo-list li::before {
+    content: '';
+    position: absolute;
+    left: 8px;
+    top: 50%;
+    width: 7px;
+    height: 7px;
+    transform: translateY(-50%) rotate(45deg);
+    background: linear-gradient(to bottom, rgb(212 175 55), rgb(120 96 30));
+    box-shadow: 0 0 3px rgb(212 175 55 / 0.6);
+}
+
+.rn-todo-list li:hover {
+    background-color: rgb(212 175 55 / 0.12);
+    padding-left: 30px;
+}

@@ -11,7 +11,7 @@ import Wnd from "../wnd.js";
 import Wndd from "../wndd.js";
 
 export default class RegionViewer extends Wndd {
-	
+
 	/** @type {BuildingViewer | null} */
 	dockedBuildingViewer = null;
 
@@ -20,6 +20,9 @@ export default class RegionViewer extends Wndd {
 
 	/** @type {HTMLElement | null} */
 	dockingElement = null;
+
+	/** @type {Tree | null} */
+	tamrielTree = null;
 
 	_create() {
 		const template = /** @type {HTMLTemplateElement} */
@@ -40,7 +43,7 @@ export default class RegionViewer extends Wndd {
 				maxHeight: 600,
 				emoji: '🗺️',
 				titleGradient: 'linear-gradient(to bottom, rgb(28, 42, 69), rgb(36 53 62))' });
-		wnd.moveTo(-400, 100);
+		wnd.moveTo(-400, 0);
 		return wnd;
 	}
 	render() {
@@ -57,6 +60,10 @@ export default class RegionViewer extends Wndd {
 		this.dockedBuildingViewer.make();
 
 		this.dockCellViewer(this.dockedBuildingViewer);
+
+		// Only now is dockingElement set, so the default reveal can actually dock a viewer.
+		if (Sheogorad.serverData?.regions?.length)
+			this.revealPath('Morrowind', 'Vvardenfell', 'Bitter Coast', 'Seyda Neen', 'Census and Excise Office');
 	}
 	async refresh() { 
 		// The region and area hierarchy is stable and should not be rebuilt.
@@ -170,6 +177,17 @@ export default class RegionViewer extends Wndd {
 		target.appendChild(tamriel.getElement());
 
 		target.appendChild(divider);
+		this.tamrielTree = tamriel;
+	}
+
+	/**
+	 * Expands the chain of trees matching the given names in order, e.g.
+	 * `revealPath('Tamriel', 'Morrowind', 'Vvardenfell', 'Bitter Coast', 'Seyda Neen')`
+	 * or `revealPath(['Tamriel', 'Morrowind', 'Vvardenfell', 'Bitter Coast', 'Seyda Neen'])`.
+	 * @param {...(string | string[])} names
+	 */
+	revealPath(...names) {
+		this.tamrielTree?.revealPath(.../** @type {string[]} */ (names));
 	}
 
 }

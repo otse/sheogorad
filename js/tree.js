@@ -8,6 +8,8 @@ export default class Tree {
 		this.root = this.ul;
 		this.items = [];
 		this.emptyItem = null;
+		this.name = options.name ?? null;
+		this.label = null;
 
 		if (options.name) {
 			const wrapper = document.createElement('div');
@@ -73,9 +75,68 @@ export default class Tree {
 			wrapper.appendChild(label);
 			wrapper.appendChild(this.ul);
 			this.root = wrapper;
+			this.label = label;
 		}
 
 		items.forEach(item => this.addItem(item));
+	}
+
+	/**
+	 * Opens this tree (no-op if already open or if it has no label to toggle).
+	 */
+	expand() {
+		if (this.label && this.label.getAttribute('aria-expanded') !== 'true')
+			this.label.click();
+	}
+
+	/**
+	 * Finds a direct child (a sub-tree or a leaf item) whose name/text matches
+	 * (case/whitespace-insensitive).
+	 * @param {string} name
+	 * @returns {Tree | { text?: string, onClick?: () => void } | null}
+	 */
+	findChildByName(name) {
+		const target = name.trim().toLowerCase();
+		for (const item of this.items) {
+			if (item instanceof Tree && item.name && item.name.trim().toLowerCase() === target)
+				return item;
+			if (!(item instanceof Tree) && !(item instanceof HTMLElement) && item.text && item.text.trim().toLowerCase() === target)
+				return item;
+		}
+		return null;
+	}
+
+	/**
+	 * Expands this tree, then walks down descendants matching the given names in
+	 * order, expanding each one, e.g. `tree.revealPath('Morrowind', 'Vvardenfell')`
+	 * or `tree.revealPath(['Morrowind', 'Vvardenfell'])`.
+	 * @param {...(string | string[])} names
+	 */
+	revealPath(...names) {
+		/** @type {string[]} */
+		const path = names.length === 1 && Array.isArray(names[0]) ? names[0] : /** @type {string[]} */ (names);
+
+		this.expand();
+		// Allow the path to optionally start with this tree's own name.
+		const rest = this.name && path[0]?.trim().toLowerCase() === this.name.trim().toLowerCase()
+			? path.slice(1)
+			: path;
+
+		let current = /** @type {Tree | null} */ (this);
+		for (const name of rest) {
+			if (!current)
+				return;
+			const child = current.findChildByName(name);
+			if (child instanceof Tree) {
+				child.expand();
+				current = child;
+			}
+			else {
+				// Not a sub-tree — it's a leaf item, so just fire its click handler.
+				child?.onClick?.();
+				current = null;
+			}
+		}
 	}
 
 	addItem(item) {

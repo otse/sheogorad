@@ -53,7 +53,11 @@ export const Sheogorad = {
 
 		const refreshDataBtn = document.getElementById('refresh-data-btn');
 		const refreshStatus = document.getElementById('data-refresh-status');
+		let isRefreshing = false;
 		const refresh = async () => {
+			if (isRefreshing)
+				return;
+			isRefreshing = true;
 			refreshDataBtn?.setAttribute('aria-busy', 'true');
 			refreshDataBtn?.setAttribute('disabled', '');
 			if (refreshStatus)
@@ -67,6 +71,7 @@ export const Sheogorad = {
 				if (refreshStatus)
 					refreshStatus.textContent = 'Refresh failed';
 			} finally {
+				isRefreshing = false;
 				refreshDataBtn?.removeAttribute('aria-busy');
 				refreshDataBtn?.removeAttribute('disabled');
 			}
@@ -74,6 +79,7 @@ export const Sheogorad = {
 		// Fixes a bug where region.js is never rebuilt
 		refreshDataBtn?.addEventListener('click', refresh);
 		await refresh();
+		window.setInterval(() => void refresh(), 2000);
 		this.setupEventListeners();
 
 		Wnd.init();

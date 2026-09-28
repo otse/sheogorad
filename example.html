@@ -82,7 +82,9 @@
 <script>
 	// Falls back to the known server port if this page isn't loaded from the server itself.
 	// The API always lives on the Node server's port, regardless of how this page itself was opened.
-	const API_BASE = location.port === '3001' ? location.origin : 'http://localhost:3001';
+	// Add ?apiHost=http://<lan-ip>:3001 to point this page at a server on another host.
+	const API_BASE = new URLSearchParams(location.search).get('apiHost')
+		|| (location.port === '3001' ? location.origin : 'http://localhost:3001');
 
 	async function loadEndpoint(elementId, path) {
 		const el = document.getElementById(elementId);
