@@ -20,7 +20,7 @@ export default class Tree {
 			elbow.style.fontSize = '80%';
 			elbow.hidden = true;
 			label.appendChild(document.createTextNode(options.name));
-			label.appendChild(elbow);
+			// label.appendChild(elbow);
 			label.style.cursor = 'pointer';
 			label.setAttribute('role', 'button');
 			label.tabIndex = 0;

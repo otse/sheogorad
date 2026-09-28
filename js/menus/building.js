@@ -2,13 +2,13 @@
 
 import Sheogorad from "../sheogorad.js";
 
-import Wnd from "../wnd.js";
-import CellViewer from "./cell.js";
-import ExteriorViewer from "./exterior.js";
+import Menu from "../menu.js";
+import MenuCell from "./cell.js";
+import MenuExterior from "./exterior.js";
 
 // An Interior Cell: a building housing its own npcs/items.
-export default class BuildingViewer extends CellViewer {
-	/** @type {BuildingViewer | null} */
+export default class MenuBuilding extends MenuCell {
+	/** @type {MenuBuilding | null} */
 	static instance = null;
 
 	/**
@@ -22,7 +22,7 @@ export default class BuildingViewer extends CellViewer {
 			(document.getElementById('cell-viewer-wnd-template'));
 		const clone = /** @type {DocumentFragment} */
 			(template.content.cloneNode(true));
-		const wnd = new Wnd(
+		const wnd = new Menu(
 			`Interior`,
 			clone,
 			{ width: 400, height: 250, minWidth: 380, minHeight: 250 });
@@ -111,7 +111,7 @@ export default class BuildingViewer extends CellViewer {
 		if (!settlement || !areaList)
 			return;
 
-		areaList.exteriorViewer ??= new ExteriorViewer();
+		areaList.exteriorViewer ??= new MenuExterior();
 		areaList.exteriorViewer.setData({ settlement }, { merge: true });
 		areaList.dockCellViewer(areaList.exteriorViewer);
 	}

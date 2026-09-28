@@ -2,12 +2,14 @@
 .tree-view {
     position: relative;
     margin: 0;
-    padding-left: 1rem;
+    padding-left: 2ex;
 }
 
 .tree-view li {
-    list-style-type: none;
+    list-style-type: circle;
+    /* list-style-type: square; */
     padding: 0;
+    text-decoration: underline;
 }
 
 .tree-view [role="button"] {

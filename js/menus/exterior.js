@@ -1,12 +1,12 @@
 // 🧙‍♀️ Code magic within
 
-import Wnd from "../wnd.js";
-import CellViewer from "./cell.js";
+import Menu from "../menu.js";
+import MenuCell from "./cell.js";
 import Sheogorad from "../sheogorad.js";
 
 // An Exterior Cell: a settlement/area itself, outside of any building.
-export default class ExteriorViewer extends CellViewer {
-	/** @type {ExteriorViewer | null} */
+export default class MenuExterior extends MenuCell {
+	/** @type {MenuExterior | null} */
 	static instance = null;
 
 	/**
@@ -22,7 +22,7 @@ export default class ExteriorViewer extends CellViewer {
 		const clone = /** @type {DocumentFragment} */
 			(template.content.cloneNode(true));
 
-		const wnd = new Wnd(
+		const wnd = new Menu(
 			`Exterior`,
 			clone,
 			{ width: 400, height: 250, minWidth: 380, minHeight: 250 });

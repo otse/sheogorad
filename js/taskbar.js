@@ -1,6 +1,6 @@
 // 🧙‍♀️ Code magic within
 
-import Wnd from './wnd.js';
+import Menu from './menu.js';
 
 function overrideToggle(e) {
 	console.warn('Rita Vritaski');
@@ -25,7 +25,7 @@ export const Taskbar = {
 	},
 
 	async admitOne(wnd) {
-		if (!(wnd instanceof Wnd)) {
+		if (!(wnd instanceof Menu)) {
 			console.error('Only Wnd instances can be admitted to the taskbar');
 			return;
 		}
@@ -35,7 +35,7 @@ export const Taskbar = {
 	},
 
 	async removeOne(wnd) {
-		if (!(wnd instanceof Wnd)) {
+		if (!(wnd instanceof Menu)) {
 			console.error('Only Wnd instances can be removed from the taskbar');
 			return;
 		}

@@ -2,9 +2,9 @@
  * This is a kind of Wnd but it's just a Card.
  */
 
-import Wnd from "./wnd.js";
+import Menu from "./menu.js";
 
-export default class WndCard extends Wnd {
+export default class SlabMenu extends Menu {
 
     constructor(title, content, options = {}) {
         super(title, content, { ...options, wndcard: true });

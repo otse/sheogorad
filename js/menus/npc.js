@@ -3,7 +3,7 @@
 import { bindTemplate } from "../bind.js";
 
 import Sheogorad from "../sheogorad.js";
-import Wnd from "../wnd.js";
+import Menu from "../menu.js";
 
 function formatNpcName(name) {
 	return name.replace(/_/g, ' ').replace(/\b\w/g, char => char.toUpperCase());
@@ -39,8 +39,8 @@ const random_stats = () => ({
 	},
 });
 
-export default class Npc {
-	/** @type {Wnd | null} */
+export default class MenuNpc {
+	/** @type {Menu | null} */
 	wnd = null;
 	icon = '';
 	constructor(name, stats = {}) {
@@ -60,7 +60,7 @@ export default class Npc {
 		});
 
 		// ${this.icon}
-		this.wnd = new Wnd(
+		this.wnd = new Menu(
 			`${formatNpcName(this.name)}`,
 			`Details about ${formatNpcName(this.name)}`,
 			{ width: 200, height: 300, minWidth: 220, minHeight: 200 });

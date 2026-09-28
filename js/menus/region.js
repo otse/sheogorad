@@ -1,21 +1,21 @@
 // 🧙‍♀️ Code magic within
 
-import Npc from "./npc.js";
+import MenuNpc from "./npc.js";
 
 import Sheogorad from "../sheogorad.js";
-import BuildingViewer from "./building.js";
-import ExteriorViewer from "./exterior.js";
+import MenuBuilding from "./building.js";
+import MenuExterior from "./exterior.js";
 
 import Tree from "../tree.js";
-import Wnd from "../wnd.js";
-import Wndd from "../wndd.js";
+import Menu from "../menu.js";
+import MenuBase from "../menu-base.js";
 
-export default class RegionViewer extends Wndd {
+export default class MenuRegion extends MenuBase {
 
-	/** @type {BuildingViewer | null} */
+	/** @type {MenuBuilding | null} */
 	dockedBuildingViewer = null;
 
-	/** @type {ExteriorViewer | null} */
+	/** @type {MenuExterior | null} */
 	exteriorViewer = null;
 
 	/** @type {HTMLElement | null} */
@@ -31,17 +31,18 @@ export default class RegionViewer extends Wndd {
 		const clone = /** @type {DocumentFragment} */
 			(template.content.cloneNode(true));
 
-		const wnd = new Wnd(
+		const wnd = new Menu(
 			`Regions`,
 			clone,
 			{
+				closable: false,
+				// emoji: '🗺️',
 				width: 580,
 				height: 250, 
 				minWidth: 380,
 				minHeight: 250,
 				maxWidth: 800,
 				maxHeight: 600,
-				emoji: '🗺️',
 				titleGradient: 'linear-gradient(to bottom, rgb(28, 42, 69), rgb(36 53 62))' });
 		wnd.moveTo(-400, 0);
 		return wnd;
@@ -54,9 +55,9 @@ export default class RegionViewer extends Wndd {
 		this.dockingElement = /** @type {HTMLElement} */
 			(this.wnd.wndContent.querySelector('.rnl-region-wnd-docking-zone'));
 
-		Wnd.defineDockZone(this.dockingElement, { internal: true });
+		Menu.defineDockZone(this.dockingElement, { internal: true });
 
-		this.dockedBuildingViewer = new BuildingViewer();
+		this.dockedBuildingViewer = new MenuBuilding();
 		this.dockedBuildingViewer.make();
 
 		this.dockCellViewer(this.dockedBuildingViewer);
@@ -75,7 +76,7 @@ export default class RegionViewer extends Wndd {
 	/**
 	 * Docks the given cell viewer into the shared area dock, silently closing
 	 * whichever one (building or exterior) currently occupies it.
-	 * @param {BuildingViewer | ExteriorViewer} viewer
+	 * @param {MenuBuilding | MenuExterior} viewer
 	 */
 	dockCellViewer(viewer) {
 		if (!this.dockingElement || !viewer.wnd)
@@ -141,10 +142,10 @@ export default class RegionViewer extends Wndd {
 					//}
 				});
 				tree2.addItem({
-					text: 'Area itself',
+					text: 'Exterior',
 					onClick: () => {
 						if (!that.exteriorViewer)
-							that.exteriorViewer = new ExteriorViewer();
+							that.exteriorViewer = new MenuExterior();
 						that.exteriorViewer.setData({ settlement }, { merge: true });
 						that.dockCellViewer(that.exteriorViewer);
 					}

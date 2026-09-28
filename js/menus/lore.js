@@ -1,16 +1,16 @@
 // 🧙‍♀️ Code magic within
 
 import Sheogorad from "../sheogorad.js";
-import Wnd from "../wnd.js";
-import WndCard from "../wnd card.js";
-import Wndd from "../wndd.js";
+import Menu from "../menu.js";
+import SlabMenu from "../slab-menu.js";
+import MenuBase from "../menu-base.js";
 
 const swathOfText = `
 <img src="art/638b44a70bc44ac4ad982110203105d5-74ec7314ca1a4b69.png" style="width: 100%; height: auto; margin-bottom: 10px;" alt="Seyda Neen, the port town you start in on Vvardenfell. It looks like a place where you would get scurvy.">
 Browse through Vvardenfell using Stone Tablets.
 `;
 
-export default class LorePanel extends Wndd {
+export default class MenuLore extends MenuBase {
 	static handleLink(event) {
 		event.preventDefault();
 		event.stopPropagation();
@@ -20,16 +20,16 @@ export default class LorePanel extends Wndd {
 		if (!query)
 			return;
 
-		const article = LorePanel.findBestArticle(query);
+		const article = MenuLore.findBestArticle(query);
 		if (!article)
 			return;
 
-		const card = new WndCard(
+		const card = new SlabMenu(
 			article.title,
 			`<div style="display: flex; flex-direction: column;">
 			${article.title}
 			<div class="rn-divider"></div>
-			<div class="rn-scroll">${LorePanel.articleMarkup(article.value)}</div>
+			<div class="rn-scroll">${MenuLore.articleMarkup(article.value)}</div>
 			</div>`,
 			{
 				width: 360,
@@ -40,10 +40,10 @@ export default class LorePanel extends Wndd {
 			event.clientX - window.innerWidth / 2,
 			event.clientY - window.innerHeight / 2);
 
-		LorePanel.linkifyArticles(card.wndContent, article.title);
-		LorePanel.bindRunes(card.wndContent);
+		MenuLore.linkifyArticles(card.wndContent, article.title);
+		MenuLore.bindRunes(card.wndContent);
 
-		const parentWndEl = /** @type {(HTMLElement & { _wndInstance?: Wnd }) | null} */ (rune.closest('.rn-wnd'));
+		const parentWndEl = /** @type {(HTMLElement & { _wndInstance?: Menu }) | null} */ (rune.closest('.rn-wnd'));
 		const parentWnd = parentWndEl && parentWndEl._wndInstance;
 		if (parentWnd)
 			parentWnd.addChild(card);
@@ -65,7 +65,7 @@ export default class LorePanel extends Wndd {
 	static _articleIndex = null;
 
 	static resetArticleIndex() {
-		LorePanel._articleIndex = null;
+		MenuLore._articleIndex = null;
 	}
 
 	/**
@@ -73,8 +73,8 @@ export default class LorePanel extends Wndd {
 	 * @returns {Map<string, Article>}
 	 */
 	static articleIndex() {
-		if (LorePanel._articleIndex)
-			return LorePanel._articleIndex;
+		if (MenuLore._articleIndex)
+			return MenuLore._articleIndex;
 
 		const index = new Map();
 
@@ -99,7 +99,7 @@ export default class LorePanel extends Wndd {
 		}
 
 		visit(Sheogorad.lore);
-		LorePanel._articleIndex = index;
+		MenuLore._articleIndex = index;
 		return index;
 	}
 
@@ -108,7 +108,7 @@ export default class LorePanel extends Wndd {
 	 * @returns {Article | null}
 	 */
 	static findBestArticle(query) {
-		return LorePanel.articleIndex().get(query.toLowerCase().trim()) || null;
+		return MenuLore.articleIndex().get(query.toLowerCase().trim()) || null;
 	}
 
 	/**
@@ -116,7 +116,7 @@ export default class LorePanel extends Wndd {
 	 * @returns {string[]}
 	 */
 	static collectArticleNames() {
-		return [...LorePanel.articleIndex().values()]
+		return [...MenuLore.articleIndex().values()]
 			.map((article) => article.title)
 			.sort((a, b) => b.length - a.length);
 	}
@@ -128,7 +128,7 @@ export default class LorePanel extends Wndd {
 	 * @param {string} [excludeName] Article name to skip, e.g. the article currently being viewed.
 	 */
 	static linkifyArticles(container, excludeName) {
-		const names = LorePanel.collectArticleNames()
+		const names = MenuLore.collectArticleNames()
 			.filter((name) => !excludeName || name.toLowerCase() !== excludeName.toLowerCase());
 		if (!names.length)
 			return;
@@ -181,7 +181,7 @@ export default class LorePanel extends Wndd {
 
 	static articleMarkup(value) {
 		const summary = value.summary
-			? `<span class="lore-entry-summary">${LorePanel.escapeHtml(value.summary)}</span>`
+			? `<span class="lore-entry-summary">${MenuLore.escapeHtml(value.summary)}</span>`
 			: '';
 		return `<article class="lore-entry">${summary}</article>`;
 	}
@@ -198,18 +198,18 @@ export default class LorePanel extends Wndd {
 		contentContainer.querySelectorAll('*').forEach((element) => {
 			if (!element.tagName.toLowerCase().startsWith('rn-') || element.dataset.loreBound)
 				return;
-			element.addEventListener('click', (event) => LorePanel.handleLink(event));
+			element.addEventListener('click', (event) => MenuLore.handleLink(event));
 			element.dataset.loreBound = 'true';
 		});
 	}
 	_create() {
-		const wnd = new WndCard(
+		const wnd = new SlabMenu(
 			`Tome of Info`,
 			`<div class="rn-bordered rn-scroll">${swathOfText}</div>`,
 			{ width: 400, height: 310 });
 		wnd.moveTo(0, -250);
-		LorePanel.linkifyArticles(wnd.wndContent);
-		LorePanel.bindRunes(wnd.wndContent);
+		MenuLore.linkifyArticles(wnd.wndContent);
+		MenuLore.bindRunes(wnd.wndContent);
 		return wnd;
 	}
 }

@@ -1,14 +1,14 @@
 // 🧙‍♀️ Code magic within
 
 import Tree from './tree.js';
-import Npc from './wnds/npc.js';
-import Wnd from './wnd.js';
-import Wndd from './wndd.js';
-import MusicPlayer from './wnds/music player.js';
-import LorePanel from './wnds/lore.js';
-import ThingsToDo from './wnds/things to do.js';
-import RegionViewer from './wnds/region.js';
-import BuildingViewer from './wnds/building.js';
+import MenuNpc from './menus/npc.js';
+import Menu from './menu.js';
+import MenuBase from './menu-base.js';
+import MenuMusic from './menus/music.js';
+import MenuLore from './menus/lore.js';
+import MenuThingsToDo from './menus/things to do.js';
+import MenuRegion from './menus/region.js';
+import MenuBuilding from './menus/building.js';
 import ServerClient from './server-client.js';
 
 import randomData from './global.js';
@@ -29,21 +29,21 @@ export const Sheogorad = {
 	/** @type {ServerData | null} */
 	serverData: null,
 
-	/** @type {ThingsToDo | null} */
+	/** @type {MenuThingsToDo | null} */
 	thingsToDo: null,
-	/** @type {LorePanel | null} */
+	/** @type {MenuLore | null} */
 	lorePanel: null,
-	/** @type {RegionViewer | null} */
+	/** @type {MenuRegion | null} */
 	areaList: null,
-	/** @type {BuildingViewer | null} */
+	/** @type {MenuBuilding | null} */
 	buildingViewer: null,
-	/** @type {MusicPlayer | null} */
+	/** @type {MenuMusic | null} */
 	musicPlayer: null,
 
 	lore: {},
 	iconList: {},
 
-	/** @type {Npc[]} */
+	/** @type {MenuNpc[]} */
 	npcs: [],
 
 	musicToggle: true,
@@ -82,16 +82,16 @@ export const Sheogorad = {
 		window.setInterval(() => void refresh(), 2000);
 		this.setupEventListeners();
 
-		Wnd.init();
+		Menu.init();
 
 		// new Wnd('History', null, { width: 300, height: 150 });
 
-		this.lorePanel = new LorePanel();
+		this.lorePanel = new MenuLore();
 
-		this.thingsToDo = new ThingsToDo();
+		this.thingsToDo = new MenuThingsToDo();
 		this.thingsToDo.make();
 
-		this.areaList = new RegionViewer();
+		this.areaList = new MenuRegion();
 		this.areaList.make();
 
 		// RegionViewer.render() already creates and hard-docks its own BuildingViewer
@@ -140,7 +140,7 @@ export const Sheogorad = {
 					muteBtn.title = 'Unmute';
 				}*/
 				Sheogorad.playClickSound();
-				Sheogorad.musicPlayer ??= new MusicPlayer();
+				Sheogorad.musicPlayer ??= new MenuMusic();
 				Sheogorad.musicPlayer.toggle(this.musicToggle);
 			});
 
@@ -158,8 +158,8 @@ export const Sheogorad = {
 		this.iconList = {
 			npcIcons: Object.fromEntries(data.npcs.map((npc) => [npc.id, npc.icon]))
 		};
-		LorePanel.resetArticleIndex();
-		await Wndd.refreshAll();
+		MenuLore.resetArticleIndex();
+		await MenuBase.refreshAll();
 		return data;
 	},
 
@@ -192,8 +192,8 @@ export const Sheogorad = {
 		}
 
 		// Define some dock zones
-		Wnd.defineDockZone('#dockingZoneLeft');
-		Wnd.defineDockZone('#dockingZoneRight');
+		Menu.defineDockZone('#dockingZoneLeft');
+		Menu.defineDockZone('#dockingZoneRight');
 	},
 
 	populate() {

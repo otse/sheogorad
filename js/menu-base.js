@@ -1,21 +1,21 @@
 // 🧙‍♀️ Code magic within
 
-import Wnd from "./wnd.js";
+import Menu from "./menu.js";
 
 /**
  * Base class for windowed components.
  */
-export default class Wndd {
-	/** @type {Wndd[]} All live Wndds, for Wndd.refreshAll() */
+export default class MenuBase {
+	/** @type {MenuBase[]} All live Wndds, for Wndd.refreshAll() */
 	static instances = [];
 
 	static async refreshAll() {
-		await Promise.all([...Wndd.instances]
+		await Promise.all([...MenuBase.instances]
 			.filter((wndd) => !wndd.wnd?.isDestroyed)
 			.map((wndd) => wndd.runRefresh()));
 	}
 
-	/** @type {Wnd | null} */
+	/** @type {Menu | null} */
 	wnd = null;
 	/** Set to false for viewers whose refresh() never changes anything visible */
 	showsRefreshSpinner = true;
@@ -23,7 +23,7 @@ export default class Wndd {
 	spinnerShownAt = 0;
 	/**
 	 * @protected
-	 * @returns {Wnd}
+	 * @returns {Menu}
 	 */
 	// this is essentially a private method
 	_create() {
@@ -36,8 +36,8 @@ export default class Wndd {
 			if (title !== undefined)
 				this.wnd.setWndTitle(title);
 		}
-		if (!Wndd.instances.includes(this))
-			Wndd.instances.push(this);
+		if (!MenuBase.instances.includes(this))
+			MenuBase.instances.push(this);
 		this.wnd.setCloneHandler(() => {
 			const copy = this.clone();
 			return copy.wnd;
@@ -88,9 +88,9 @@ export default class Wndd {
 		spinner.classList.add('hidden');
 	}
 	close() {
-		const index = Wndd.instances.indexOf(this);
+		const index = MenuBase.instances.indexOf(this);
 		if (index !== -1)
-			Wndd.instances.splice(index, 1);
+			MenuBase.instances.splice(index, 1);
 		if (this.wnd) {
 			this.wnd.close();
 		}
@@ -99,10 +99,10 @@ export default class Wndd {
 	/**
 	 * Creates a fresh, independently live instance of this viewer (same class,
 	 * same `data`), used by Wnd.cloneAsFloating() to detach a hard-docked wnd.
-	 * @returns {Wndd}
+	 * @returns {MenuBase}
 	 */
 	clone() {
-		const Ctor = /** @type {new (data?: any) => Wndd} */ (this.constructor);
+		const Ctor = /** @type {new (data?: any) => MenuBase} */ (this.constructor);
 		const title = this.wnd?.title;
 		const copy = new Ctor(/** @type {any} */ (this).data);
 		copy.make();

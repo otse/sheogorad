@@ -1,10 +1,10 @@
 // 🧙‍♀️ Code magic within
 
-import Npc from "./npc.js";
+import MenuNpc from "./npc.js";
 import Sheogorad from "../sheogorad.js";
 
-import Wnd from "../wnd.js";
-import Wndd from "../wndd.js";
+import Menu from "../menu.js";
+import MenuBase from "../menu-base.js";
 
 /**
  * Generic viewer for a Cell: anything that can contain Npcs, Objects,
@@ -12,7 +12,7 @@ import Wndd from "../wndd.js";
  * Meant to be subclassed (e.g. Interior/Exterior cell viewers) which can
  * override `_render()` and the `add*` helpers to customize presentation.
  */
-export default class CellViewer extends Wndd {
+export default class MenuCell extends MenuBase {
 	data = {};
 
 	/**
@@ -28,7 +28,7 @@ export default class CellViewer extends Wndd {
 			(document.getElementById('cell-viewer-wnd-template'));
 		const clone = /** @type {DocumentFragment} */
 			(template.content.cloneNode(true));
-		const wnd = new Wnd(
+		const wnd = new Menu(
 			`${this.data.name || 'Cell'}`,
 			clone,
 			{ width: 400, height: 250, minWidth: 380, minHeight: 250 });
@@ -111,7 +111,7 @@ export default class CellViewer extends Wndd {
 				item.className = 'tree-building';
 				item.tabIndex = 0;
 				item.addEventListener('click', () => {
-					const npc = new Npc(npcId, { ...value, name });
+					const npc = new MenuNpc(npcId, { ...value, name });
 					Sheogorad.npcs.push(npc);
 					npc.makeWnd();
 				});

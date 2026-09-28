@@ -36,7 +36,7 @@ const RESIZE_HANDLES = ['n', 's', 'e', 'w', 'ne', 'nw', 'se', 'sw'];
 let rnWnds;
 
 // A Mw / Ds Wnd
-export default class Wnd {
+export default class Menu {
 
 	/**
 	 * @typedef {object} DockZoneOptions
@@ -67,9 +67,9 @@ export default class Wnd {
 	 * @property {string} posStyle
 	 * @property {string} elStyle
 	 */
-	/** @typedef {HTMLElement & { _wndInstance: Wnd }} WndElement */
+	/** @typedef {HTMLElement & { _wndInstance: Menu }} WndElement */
 
-	/** @type {Wnd[]} */
+	/** @type {Menu[]} */
 	static wnds = [];
 
 	/** @type {Map<HTMLElement, DockZoneOptions>} Dockable areas registered via Wnd.defineDockZone() */
@@ -90,7 +90,7 @@ export default class Wnd {
 			console.warn('Wnd.defineDockZone: element not found');
 			return;
 		}
-		Wnd.dockZones.set(element, options);
+		Menu.dockZones.set(element, options);
 
 		if (options.internal)
 			return element;
@@ -132,12 +132,12 @@ export default class Wnd {
 	isDestroyed = false;
 	isMinimized = false;
 	title = '';
-	/** @type {(() => Wnd | null) | null} */
+	/** @type {(() => Menu | null) | null} */
 	cloneHandler = null;
 
-	/** @type {Wnd | null} Wnd whose spawned link created this wnd, if any */
+	/** @type {Menu | null} Wnd whose spawned link created this wnd, if any */
 	parent = null;
-	/** @type {Wnd[]} Wnds spawned from links inside this wnd */
+	/** @type {Menu[]} Wnds spawned from links inside this wnd */
 	children = [];
 
 	/** @type {HTMLElement | null} Dock zone this wnd is currently snapped to, if any */
@@ -237,9 +237,9 @@ export default class Wnd {
 		this.el = null;
 		this.posEl = null;
 		this.isDestroyed = true;
-		const index = Wnd.wnds.indexOf(this);
+		const index = Menu.wnds.indexOf(this);
 		if (index !== -1)
-			Wnd.wnds.splice(index, 1);
+			Menu.wnds.splice(index, 1);
 	}
 
 	setCloneHandler(handler) {
@@ -377,7 +377,7 @@ export default class Wnd {
 	 * Spawns a floating copy of this wnd at its current on-screen position, via
 	 * its registered clone handler, so the copy is a live, refreshable viewer
 	 * rather than a static DOM snapshot.
-	 * @returns {Wnd}
+	 * @returns {Menu}
 	 */
 	cloneAsFloating() {
 		if (!this.el) {
@@ -581,7 +581,7 @@ export default class Wnd {
 			handle.className = `rn-wnd-resize-handle rn-wnd-resize-${edge}`;
 			el.appendChild(handle);
 		});
-		Wnd.wnds.push(this);
+		Menu.wnds.push(this);
 
 		if (el.hasAttribute('resizeable')) {
 			interactable.resizable({

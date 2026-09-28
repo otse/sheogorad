@@ -3,10 +3,10 @@
 // 🧙‍♀️ Code magic within
 
 import Sheogorad from "../sheogorad.js";
-import Wnd from "../wnd.js";
-import Wndd from "../wndd.js";
+import Menu from "../menu.js";
+import MenuBase from "../menu-base.js";
 
-export default class ThingsToDo extends Wndd {
+export default class MenuThingsToDo extends MenuBase {
 	hasNewData() {
 		return false;
 	}
@@ -14,7 +14,7 @@ export default class ThingsToDo extends Wndd {
 		const template = /** @type {HTMLTemplateElement} */ (document.getElementById('things-to-do-wnd-template'));
 		const clone = /** @type {DocumentFragment} */ (template.content.cloneNode(true));
 
-		const wnd = new Wnd(
+		const wnd = new Menu(
 			`Things To Do`,
 			clone,
 			{ width: 400, height: 310 });
