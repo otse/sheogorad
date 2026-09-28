@@ -30,4 +30,4 @@ npm start
 
 Open `http://localhost:3001`. The browser loads world, region, area, NPC, and lore data through the `/api` endpoints. Use **Refresh data** to pull the latest server snapshot; versioned region and area responses avoid resending unchanged details.
 
-The source datasets live in `server/data` and are loaded only by the backend. Server source paths are not exposed by the static client server.
+The source datasets live in `server/data/world` and are loaded only by the backend. Server source paths are not exposed by the static client server.

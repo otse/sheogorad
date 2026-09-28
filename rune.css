@@ -231,14 +231,39 @@ rn-elements button:hover {
 }
 
 .rn-wnd-title-bar>div:nth-of-type(1)>span>span {
-	/* letter-spacing: 3px; */
+	letter-spacing: 3px;
 	font-size: 90%;
 	text-decoration: underline;
 	text-wrap: nowrap;
 }
 
+.rn-wnd-spinner {
+	display: inline-block;
+	width: 9px;
+	height: 9px;
+	margin-left: 6px;
+	border: 2px solid rgb(255 255 255 / 30%);
+	border-top-color: var(--dark-text);
+	border-radius: 50%;
+	animation: rn-wnd-spin 0.8s linear infinite;
+	flex: 0 0 auto;
+	opacity: 1;
+	transition: opacity 0.3s ease;
+}
+
+.rn-wnd-spinner.hidden {
+	opacity: 0;
+	pointer-events: none;
+}
+
 .rn-wnd-position.active {
 	z-index: 1;
+}
+
+@keyframes rn-wnd-spin {
+	to {
+		transform: rotate(360deg);
+	}
 }
 
 @keyframes rn-wnd-enter {

@@ -7,6 +7,9 @@ import Wnd from "../wnd.js";
 import Wndd from "../wndd.js";
 
 export default class ThingsToDo extends Wndd {
+	hasNewData() {
+		return false;
+	}
 	_create() {
 		const template = /** @type {HTMLTemplateElement} */ (document.getElementById('things-to-do-wnd-template'));
 		const clone = /** @type {DocumentFragment} */ (template.content.cloneNode(true));

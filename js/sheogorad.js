@@ -3,6 +3,7 @@
 import Tree from './tree.js';
 import Npc from './wnds/npc.js';
 import Wnd from './wnd.js';
+import Wndd from './wndd.js';
 import MusicPlayer from './wnds/music player.js';
 import LorePanel from './wnds/lore.js';
 import ThingsToDo from './wnds/things to do.js';
@@ -11,6 +12,8 @@ import BuildingViewer from './wnds/building.js';
 import ServerClient from './server-client.js';
 
 import randomData from './global.js';
+
+/** @typedef {Awaited<ReturnType<ServerClient['downloadAll']>>} ServerData */
 
 export const Sheogorad = {
 
@@ -23,7 +26,7 @@ export const Sheogorad = {
 	global: randomData,
 
 	serverClient: new ServerClient(),
-	/** @type {{ world: any, regions: any[], areas: any[], npcs: any[], lore: any[] } | null} */
+	/** @type {ServerData | null} */
 	serverData: null,
 
 	/** @type {ThingsToDo | null} */
@@ -68,6 +71,7 @@ export const Sheogorad = {
 				refreshDataBtn?.removeAttribute('disabled');
 			}
 		};
+		// Fixes a bug where region.js is never rebuilt
 		refreshDataBtn?.addEventListener('click', refresh);
 		await refresh();
 		this.setupEventListeners();
@@ -142,13 +146,14 @@ export const Sheogorad = {
 	},
 
 	async refreshServerData() {
+		const previousData = JSON.stringify(this.serverData);
 		const data = await this.downloadServerData();
 		this.lore = data.lore;
 		this.iconList = {
 			npcIcons: Object.fromEntries(data.npcs.map((npc) => [npc.id, npc.icon]))
 		};
 		LorePanel.resetArticleIndex();
-		await Wnd.refreshAll();
+		await Wndd.refreshAll();
 		return data;
 	},
 

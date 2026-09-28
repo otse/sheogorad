@@ -1,4 +1,4 @@
-import { slugify, titleCase } from '../lib/ids.js';
+import { slugify, titleCase } from '../lib/text-formatting.js';
 
 class Versioned {
 	constructor() {

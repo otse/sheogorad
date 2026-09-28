@@ -18,13 +18,17 @@ export default class ExteriorViewer extends CellViewer {
 	_create() {
 		const template = /** @type {HTMLTemplateElement} */
 			(document.getElementById('cell-viewer-wnd-template'));
+
 		const clone = /** @type {DocumentFragment} */
 			(template.content.cloneNode(true));
+
 		const wnd = new Wnd(
 			`Exterior`,
 			clone,
 			{ width: 400, height: 250, minWidth: 380, minHeight: 250 });
+			
 		wnd.moveTo(0, 100);
+
 		return wnd;
 	}
 
@@ -39,14 +43,19 @@ export default class ExteriorViewer extends CellViewer {
 		this.make();
 		this.wnd?.setWndTitle(`${this.data.settlement?.name || 'Cell'}`);
 	}
-	refresh() {
+	hasNewData() {
+		const areaId = this.data.settlement?.id;
+		const area = Sheogorad.serverData?.areas.find((entry) => entry.id === areaId);
+		return JSON.stringify(area) !== JSON.stringify(this.data.settlement);
+	}
+	async refresh() {
 		const areaId = this.data.settlement?.id;
 		const area = Sheogorad.serverData?.areas.find((entry) => entry.id === areaId);
 		if (area) {
 			this.data = { ...this.data, settlement: area };
 			this.wnd?.setWndTitle(area.name);
 		}
-		super.refresh();
+		await super.refresh();
 	}
 	_render() {
 		if (!this.wnd)

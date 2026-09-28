@@ -41,7 +41,13 @@ export default class BuildingViewer extends CellViewer {
 		this.make();
 		this.wnd?.setWndTitle(`${this.data.building_name || this.data.building_id || 'Cell'}`);
 	}
-	refresh() {
+	hasNewData() {
+		if (!this.data.building_id)
+			return false;
+		return JSON.stringify(this.findServerBuilding(this.data.building_id))
+			!== JSON.stringify(this.data.buildingObject);
+	}
+	async refresh() {
 		const areaId = this.data.settlement?.id;
 		const area = Sheogorad.serverData?.areas.find((entry) => entry.id === areaId);
 		const building = area?.buildings?.find((entry) => entry.id === this.data.building_id);
@@ -49,7 +55,7 @@ export default class BuildingViewer extends CellViewer {
 			this.data = { ...this.data, settlement: area, buildingObject: building, building_name: building.name };
 			this.wnd?.setWndTitle(building.name);
 		}
-		super.refresh();
+		await super.refresh();
 	}
 	_render() {
 		if (!this.wnd)

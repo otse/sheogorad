@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { slugify } from '../lib/ids.js';
+import { slugify } from '../lib/text-formatting.js';
 
 /** @param {{ worldData: import('../data/load-world-data.js').WorldData }} dependencies */
 export function createLoreRouter({ worldData }) {

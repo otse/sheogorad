@@ -3,7 +3,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const JSON_ROOT = __dirname;
+const JSON_ROOT = path.join(__dirname, 'world');
 
 /**
  * @typedef {{ instance?: { name?: string, condition?: string, modifier?: string }, content?: { npcs?: { forced?: string[], pool?: string[] }, items?: { forced?: string[], pool?: string[] } } }} CanonBuilding
@@ -22,9 +22,9 @@ async function readJson(fileName) {
 /** @returns {Promise<WorldData>} */
 export async function loadWorldData() {
 	const [canon, buildingTypes, icons, loreFile] = await Promise.all([
-		readJson('canon list.json'),
-		readJson('building types list.json'),
-		readJson('icon list.json'),
+		readJson('canon-settlements.json'),
+		readJson('building-types.json'),
+		readJson('npc-icons.json'),
 		readJson('lore.json')
 	]);
 

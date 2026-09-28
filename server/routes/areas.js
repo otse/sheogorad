@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { sendVersioned } from '../lib/change-tracking.js';
+import { sendVersioned } from '../http/versioned-response.js';
 
 /** @param {{ simulation: import('../domain/simulation.js').Simulation }} dependencies */
 export function createAreasRouter({ simulation }) {

@@ -11,10 +11,13 @@ import Wnd from "../wnd.js";
 import Wndd from "../wndd.js";
 
 export default class RegionViewer extends Wndd {
+	
 	/** @type {BuildingViewer | null} */
 	dockedBuildingViewer = null;
+
 	/** @type {ExteriorViewer | null} */
 	exteriorViewer = null;
+
 	/** @type {HTMLElement | null} */
 	dockingElement = null;
 
@@ -55,8 +58,11 @@ export default class RegionViewer extends Wndd {
 
 		this.dockCellViewer(this.dockedBuildingViewer);
 	}
-	refresh() {
+	async refresh() { 
 		// The region and area hierarchy is stable and should not be rebuilt.
+	}
+	hasNewData() {
+		return true;
 	}
 
 	/**

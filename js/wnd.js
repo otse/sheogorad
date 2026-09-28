@@ -2,9 +2,6 @@
 
 import Sheogorad from './sheogorad.js';
 import Taskbar from './taskbar.js';
-// Dynamically imported in bindRunes() to avoid a circular import chain
-// (wnd.js -> lore panel.js -> wnd card.js -> wnd.js) that leaves Wnd
-// undefined when wnd card.js's class extends it.
 
 function getGridRestriction() {
 	return {
@@ -14,28 +11,6 @@ function getGridRestriction() {
 		bottom: window.innerHeight
 	};
 }
-/*
-function getTranslateAreaFor(rect) {
-	const centerX = window.innerWidth / 2;
-	const centerY = window.innerHeight / 2;
-
-	// Calculate maximum allowed offsets to stay within bounds
-	// Left bound: leftmost position where window fits in restriction area
-	const maxLeftOffset = gridRestriction.left - centerX;
-	// Right bound: rightmost position where window still fits
-	const maxRightOffset = gridRestriction.right - centerX - rect.width;
-	// Top bound: topmost position where window fits
-	const maxTopOffset = gridRestriction.top - centerY;
-	// Bottom bound: bottommost position where window still fits
-	const maxBottomOffset = gridRestriction.bottom - centerY - rect.height;
-
-	return {
-		left: maxLeftOffset,
-		top: maxTopOffset,
-		right: maxRightOffset,
-		bottom: maxBottomOffset
-	};
-}*/
 
 function moveWithin(parent, el, x, y) {
 	const pw = parent.clientWidth / 2;
@@ -48,10 +23,6 @@ function moveWithin(parent, el, x, y) {
 	const clampedY = Math.max(-ph, Math.min(y, (ph) - eh));
 
 	return [clampedX, clampedY];
-
-	/*el.style.transform = `translate(${clampedX}px, ${clampedY}px)`;
-	el.dataset.x = clampedX;
-	el.dataset.y = clampedY;*/
 }
 
 const RESIZE_HANDLES = ['n', 's', 'e', 'w', 'ne', 'nw', 'se', 'sw'];
@@ -62,29 +33,53 @@ const RESIZE_HANDLES = ['n', 's', 'e', 'w', 'ne', 'nw', 'se', 'sw'];
 
 // the intended lifecycle is create → destroy → recreate, not create → hide → show.
 
-let stoneWnds;
+let rnWnds;
 
 // A Mw / Ds Wnd
 export default class Wnd {
 
+	/**
+	 * @typedef {object} DockZoneOptions
+	 * @property {boolean} [resize] Resize the window to fit the dock zone.
+	 * @property {boolean} [internal] Mark a zone as programmatic-only.
+	 */
+	/**
+	 * @typedef {object} DockOptions
+	 * @property {boolean} [resize] Resize the window to fit the dock zone.
+	 */
+	/**
+	 * @typedef {object} WindowOptions
+	 * @property {number} [width]
+	 * @property {number} [height]
+	 * @property {number} [minWidth]
+	 * @property {number} [minHeight]
+	 * @property {number} [maxWidth]
+	 * @property {number} [maxHeight]
+	 * @property {boolean} [wndcard]
+	 * @property {string} [emoji]
+	 * @property {string} [titleGradient]
+	 * @property {boolean} [closable]
+	 */
+	/**
+	 * @typedef {object} HardDockState
+	 * @property {HTMLElement} host
+	 * @property {ChildNode | null} nextSibling
+	 * @property {string} posStyle
+	 * @property {string} elStyle
+	 */
+	/** @typedef {HTMLElement & { _wndInstance: Wnd }} WndElement */
+
 	/** @type {Wnd[]} */
 	static wnds = [];
 
-	static async refreshAll() {
-		for (const wnd of [...Wnd.wnds]) {
-			if (!wnd.isDestroyed)
-				await wnd.refresh();
-		}
-	}
-
-	/** @type {Map<HTMLElement, object>} Dockable areas registered via Wnd.defineDockZone() */
+	/** @type {Map<HTMLElement, DockZoneOptions>} Dockable areas registered via Wnd.defineDockZone() */
 	static dockZones = new Map();
 
 	/**
 	 * Marks an element as a dock target. Windows dragged over it will
 	 * highlight it, and dropping there docks the window to its position.
 	 * @param {HTMLElement | string} element Element or CSS selector
-	 * @param {{ resize?: boolean, internal?: boolean }} [options] Set `internal: true` for
+	 * @param {DockZoneOptions} [options] Set `internal: true` for
 	 * zones only ever hard-docked programmatically (e.g. RegionViewer's cell dock), so users
 	 * can't drag arbitrary wnds into them.
 	 */
@@ -128,9 +123,6 @@ export default class Wnd {
 	/** @type {HTMLElement} */
 	wndContent = document.createElement('div');
 
-	/**
-	 * @typedef {HTMLElement & { _wndInstance: Wnd }} WndElement
-	 */
 	/** @type {WndElement | null}  */
 	el = null;
 
@@ -139,8 +131,9 @@ export default class Wnd {
 
 	isDestroyed = false;
 	isMinimized = false;
-	/** @type {(() => void | Promise<void>) | null} */
-	refreshHandler = null;
+	title = '';
+	/** @type {(() => Wnd | null) | null} */
+	cloneHandler = null;
 
 	/** @type {Wnd | null} Wnd whose spawned link created this wnd, if any */
 	parent = null;
@@ -149,26 +142,18 @@ export default class Wnd {
 
 	/** @type {HTMLElement | null} Dock zone this wnd is currently snapped to, if any */
 	dockedZone = null;
-	/** @type {{ host: HTMLElement, nextSibling: ChildNode | null, posStyle: string, elStyle: string } | null} */
+	/** @type {HardDockState | null} */
 	hardDockState = null;
-	/** @type {import('./wndd.js').default | null} Wndd that owns this wnd, if any (set by Wndd.make()) */
-	wndd = null;
-
 	beforeMinSize = { width: 0, height: 0 };
 	beforeMinXY = { x: 0, y: 0 };
 
 	static init() {
-		stoneWnds = document.querySelector('rn-wnds');
+		rnWnds = document.querySelector('rn-wnds');
 	}
 
-	warnWindowDestroyed() {
-		if (!this.el) {
-			console.warn('Attempted to interact with a destroyed wnd');
-		}
-	}
-
-	convertToWndcard() {
-
+	/** Warns and returns `undefined`, for use as `return this.warnDestroyed();` in a guard clause. */
+	warnDestroyed() {
+		console.warn('Attempted to interact with a destroyed wnd');
 	}
 
 	toggleMin() {
@@ -182,10 +167,7 @@ export default class Wnd {
 	}
 
 	minimize() {
-		if (!this.el || !this.posEl) {
-			this.warnWindowDestroyed();
-			return;
-		}
+		if (!this.el || !this.posEl) return this.warnDestroyed();
 		// this.dsWnd.style.display = 'none';
 		this.beforeMinSize.width = this.posEl.offsetWidth;
 		this.beforeMinSize.height = this.posEl.offsetHeight;
@@ -193,14 +175,10 @@ export default class Wnd {
 		this.beforeMinXY.y = parseFloat(this.posEl.getAttribute('data-y') || '') || 0;
 		this.el.setAttribute('data-minimized', 'true');
 
-		console.warn('Min imize');
-
 		this.moveWithinTranslateTerritory(
 			-window.innerWidth, -window.innerHeight);
 		this.posEl.style.transition = 'transform 0.3s ease';
-		//
 		Taskbar.admitOne(this);
-		this.el.setAttribute('data-minimized', 'true');
 		// Hide the content part, but keep the title bar visible for now
 		/** @type {HTMLElement | null} */
 		const contentContainer = this.el.querySelector('.rn-wnd-content');
@@ -214,11 +192,7 @@ export default class Wnd {
 	}
 
 	maximize() {
-		if (!this.el || !this.posEl) {
-			this.warnWindowDestroyed();
-			return;
-		}
-		//
+		if (!this.el || !this.posEl) return this.warnDestroyed();
 		Taskbar.removeOne(this);
 		this.moveTo(this.beforeMinXY.x, this.beforeMinXY.y);
 		this.el.removeAttribute('data-minimized');
@@ -240,10 +214,7 @@ export default class Wnd {
 
 	// Obscure method, completely hides our Wnd (not minimize)
 	toggle() {
-		if (!this.el || !this.posEl) {
-			this.warnWindowDestroyed();
-			return;
-		}
+		if (!this.el || !this.posEl) return this.warnDestroyed();
 		if (this.posEl.style.display === 'none') {
 			this.posEl.style.display = 'block';
 		} else {
@@ -252,10 +223,7 @@ export default class Wnd {
 	}
 
 	close() {
-		if (!this.el || !this.posEl) {
-			this.warnWindowDestroyed();
-			return;
-		}
+		if (!this.el || !this.posEl) return this.warnDestroyed();
 		if (this.options.closable === false)
 			return;
 		this.closeChildren();
@@ -274,12 +242,8 @@ export default class Wnd {
 			Wnd.wnds.splice(index, 1);
 	}
 
-	setRefreshHandler(handler) {
-		this.refreshHandler = handler;
-	}
-
-	async refresh() {
-		await this.refreshHandler?.();
+	setCloneHandler(handler) {
+		this.cloneHandler = handler;
 	}
 
 	// A wnd spawned this wnd by clicking a link within it
@@ -294,20 +258,13 @@ export default class Wnd {
 	}
 
 	moveWithinTranslateTerritory(mx, my) {
-		if (!this.el || !this.posEl) {
-			this.warnWindowDestroyed();
-			return;
-		}
-		const clut = moveWithin(stoneWnds, this.posEl, mx, my);
+		if (!this.el || !this.posEl) return this.warnDestroyed();
+		const clut = moveWithin(rnWnds, this.posEl, mx, my);
 		this.moveTo(clut[0], clut[1]);
-		// this.moveTo(mx, my);
 	}
 
 	moveTo(x, y) {
-		if (!this.el || !this.posEl) {
-			this.warnWindowDestroyed();
-			return;
-		}
+		if (!this.el || !this.posEl) return this.warnDestroyed();
 		this.posEl.style.transform = `translate(${x}px, ${y}px)`;
 		this.posEl.setAttribute('data-x', x);
 		this.posEl.setAttribute('data-y', y);
@@ -316,13 +273,10 @@ export default class Wnd {
 	/**
 	 * Snaps this wnd into a dock zone registered via Wnd.defineDockZone().
 	 * @param {HTMLElement} zoneEl
-	 * @param {{ resize?: boolean }} [options]
+	 * @param {DockOptions} [options]
 	 */
 	dock(zoneEl, options = {}) {
-		if (!this.el || !this.posEl) {
-			this.warnWindowDestroyed();
-			return;
-		}
+		if (!this.el || !this.posEl) return this.warnDestroyed();
 		const zoneRect = zoneEl.getBoundingClientRect();
 		const elRect = this.posEl.getBoundingClientRect();
 		const curX = parseFloat(this.posEl.getAttribute('data-x') || '') || 0;
@@ -342,10 +296,7 @@ export default class Wnd {
 
 	/** Clears the docked state set by dock(), if any. */
 	undock() {
-		if (!this.el || !this.posEl) {
-			this.warnWindowDestroyed();
-			return;
-		}
+		if (!this.el || !this.posEl) return this.warnDestroyed();
 		this.dockedZone = null;
 		this.posEl.removeAttribute('data-docked');
 		this.el.classList.remove('rn-wnd-docked');
@@ -357,10 +308,7 @@ export default class Wnd {
 	 * @param {HTMLElement} zoneEl
 	 */
 	hardDock(zoneEl) {
-		if (!this.el || !this.posEl) {
-			this.warnWindowDestroyed();
-			return;
-		}
+		if (!this.el || !this.posEl) return this.warnDestroyed();
 		if (!(zoneEl instanceof HTMLElement))
 			throw new TypeError('Wnd.hardDock requires an HTMLElement zone');
 
@@ -427,47 +375,45 @@ export default class Wnd {
 
 	/**
 	 * Spawns a floating copy of this wnd at its current on-screen position, via
-	 * the owning Wndd (see Wndd.clone()), so the copy is a live, refreshable
-	 * viewer rather than a static DOM snapshot.
+	 * its registered clone handler, so the copy is a live, refreshable viewer
+	 * rather than a static DOM snapshot.
 	 * @returns {Wnd}
 	 */
 	cloneAsFloating() {
 		if (!this.el) {
-			this.warnWindowDestroyed();
+			this.warnDestroyed();
 			return this;
 		}
-		if (!this.wndd) {
-			console.warn('Wnd.cloneAsFloating: this wnd has no owning Wndd to clone');
+		if (!this.cloneHandler) {
+			console.warn('Wnd.cloneAsFloating: no clone handler is registered');
 			return this;
 		}
 		const rect = this.el.getBoundingClientRect();
-		const copy = this.wndd.clone();
-		if (!copy.wnd || !copy.wnd.el)
+		const copy = this.cloneHandler();
+		if (!copy?.el)
 			return this;
-		copy.wnd.el.style.width = rect.width + 'px';
-		copy.wnd.el.style.height = rect.height + 'px';
-		copy.wnd.moveTo(rect.left - window.innerWidth / 2, rect.top - window.innerHeight / 2);
-		return copy.wnd;
+		copy.el.style.width = rect.width + 'px';
+		copy.el.style.height = rect.height + 'px';
+		copy.moveTo(rect.left - window.innerWidth / 2, rect.top - window.innerHeight / 2);
+		return copy;
 	}
 
 	setWndTitle(title) {
-		if (!this.el) {
-			this.warnWindowDestroyed();
-			return;
-		}
-		const titleSpan2 = /** @type {HTMLElement} */ (this.el.querySelector('.rn-wnd-title-bar>div>span'));
-		if (this.options.emoji)
-			titleSpan2.appendChild(document.createTextNode(this.options.emoji));
-		const titleSpan = /** @type {HTMLElement} */ (this.el.querySelector('.rn-wnd-title-bar>div>span>span'));
-		titleSpan.innerHTML = `${title}`;
+		if (!this.el) return this.warnDestroyed();
+		this.title = title;
+		const titleSpan = /** @type {HTMLElement} */
+			(this.el.querySelector('.rn-wnd-title-bar>div>span>.text-gradient-title'));
+		titleSpan.innerHTML = title;
 		titleSpan.setAttribute('data-text', title);
+		// Only strip stray text (e.g. a stale emoji), never the spinner element
+		if (titleSpan.nextSibling?.nodeType === Node.TEXT_NODE)
+			titleSpan.nextSibling.remove();
+		if (this.options.emoji)
+			titleSpan.before(document.createTextNode(this.options.emoji));
 	}
 
 	setContent(content) {
-		if (!this.el) {
-			this.warnWindowDestroyed();
-			return;
-		}
+		if (!this.el) return this.warnDestroyed();
 		const contentContainer = this.el.querySelector('.rn-wnd-content');
 		if (!contentContainer)
 			return;
@@ -482,7 +428,7 @@ export default class Wnd {
 	/**
 	 * @param {string} title
 	 * @param {Node | string} content
-	 * @param {{ width?: number, height?: number, minWidth?: number, minHeight?: number, maxWidth?: number, maxHeight?: number, wndcard?: boolean, emoji?: string, titleGradient?: string, closable?: boolean }} [options]
+	 * @param {WindowOptions} [options]
 	 */
 	constructor(title, content, options = {}) {
 		const rnWndTemplate = /** @type {HTMLTemplateElement} */ (document.getElementById('rn-wnd-template'));
@@ -517,7 +463,7 @@ export default class Wnd {
 		el.classList.add('rn-wnd-enter');
 		el.addEventListener('animationend', () => el.classList.remove('rn-wnd-enter'), { once: true });
 
-		stoneWnds.appendChild(clone);
+		rnWnds.appendChild(clone);
 
 		el.style.width = (options.width || 200) + 'px';
 		el.style.height = (options.height || 200) + 'px';
@@ -535,7 +481,6 @@ export default class Wnd {
 
 		this.wndContent = contentContainer;
 
-		// if content is a string
 		if (typeof content === 'string')
 			contentContainer.innerHTML = content;
 		else {
@@ -544,20 +489,12 @@ export default class Wnd {
 			contentContainer.appendChild(content);
 		}
 
-		//darkstoneUI.appendChild(clone);
-
 		const interactable = interact(posEl);
 		this.interactable = interactable;
-
-		const rect = posEl.getBoundingClientRect();
-		//dsWnd.style.left = (window.innerWidth / 2 - rect.width / 2) + 'px';
-		//dsWnd.style.top = (window.innerHeight / 2 - rect.height / 2) + 'px';
 
 		posEl.style.transform = 'none';
 
 		const that = this;
-
-		// Set up interact let's
 
 		const activate = () => {
 			document.querySelectorAll('.rn-wnd-position').forEach((box) => box.classList.remove('active'));
@@ -619,7 +556,7 @@ export default class Wnd {
 						if (that.hardDockState) {
 							// Hard-docked wnds can't be dragged in place; spawn a floating
 							// clone and hand the rest of this gesture off to it instead.
-							const clone = that.cloneAsFloating();	
+							const clone = that.cloneAsFloating();
 							event.interaction.start({ name: 'drag' }, clone.interactable, clone.posEl);
 							return;
 						}
@@ -630,8 +567,6 @@ export default class Wnd {
 						if (that.hardDockState)
 							return;
 						const target = event.target;
-						// console.log('event target', target);
-
 						const x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx;
 						const y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
 
@@ -678,18 +613,12 @@ export default class Wnd {
 						const posEl = event.target;
 						const el = event.target.children[0];
 
-						let x = parseFloat(posEl.getAttribute('data-x')) || 0;
-						let y = parseFloat(posEl.getAttribute('data-y')) || 0;
-
-						x += event.deltaRect.left;
-						y += event.deltaRect.top;
+						const x = (parseFloat(posEl.getAttribute('data-x')) || 0) + event.deltaRect.left;
+						const y = (parseFloat(posEl.getAttribute('data-y')) || 0) + event.deltaRect.top;
 
 						el.style.width = event.rect.width + 'px';
 						el.style.height = event.rect.height + 'px';
-						posEl.style.transform = `translate(${x}px, ${y}px)`;
-
-						posEl.setAttribute('data-x', x);
-						posEl.setAttribute('data-y', y);
+						that.moveTo(x, y);
 					},
 				},
 			});
